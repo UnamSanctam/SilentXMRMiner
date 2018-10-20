@@ -1,7 +1,7 @@
 
 <img src="https://i.imgur.com/xMwdvQv.gif">
 
-# Lime Miner v0.1
+# Lime Miner v0.2
 
 A silent miner using .NET [Lime-Loader](https://github.com/NYAN-x-CAT/Lime-Loader) as a loader for [xmrig CPU miner](https://github.com/xmrig/xmrig).
 The loader will determines PC status, If the user is idle, the miner will use 90% of CPU usage, If the user is active again the miner will lower to 50%

