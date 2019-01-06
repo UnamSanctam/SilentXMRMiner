@@ -101,7 +101,7 @@ Partial Class Form1
         Me.HuraForm1.ForeColor = System.Drawing.Color.Gray
         Me.HuraForm1.Location = New System.Drawing.Point(0, 0)
         Me.HuraForm1.Name = "HuraForm1"
-        Me.HuraForm1.Size = New System.Drawing.Size(652, 450)
+        Me.HuraForm1.Size = New System.Drawing.Size(665, 477)
         Me.HuraForm1.TabIndex = 0
         Me.HuraForm1.Text = "Lime Miner v0.3"
         '
@@ -112,7 +112,7 @@ Partial Class Form1
         Me.HuraControlBox1.BackColor = System.Drawing.Color.Black
         Me.HuraControlBox1.ColorScheme = Lime_Miner.HuraControlBox.ColorSchemes.Dark
         Me.HuraControlBox1.ForeColor = System.Drawing.Color.Black
-        Me.HuraControlBox1.Location = New System.Drawing.Point(529, 13)
+        Me.HuraControlBox1.Location = New System.Drawing.Point(509, 13)
         Me.HuraControlBox1.Name = "HuraControlBox1"
         Me.HuraControlBox1.Size = New System.Drawing.Size(100, 25)
         Me.HuraControlBox1.TabIndex = 1
@@ -705,7 +705,7 @@ Partial Class Form1
         Me.txtLog.Multiline = True
         Me.txtLog.Name = "txtLog"
         Me.txtLog.ReadOnly = True
-        Me.txtLog.Size = New System.Drawing.Size(599, 229)
+        Me.txtLog.Size = New System.Drawing.Size(599, 207)
         Me.txtLog.Style = Lime_Miner.HuraTextBox.Styles.Normal
         Me.txtLog.TabIndex = 15
         Me.txtLog.Text = "..."
@@ -732,7 +732,7 @@ Partial Class Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(652, 450)
+        Me.ClientSize = New System.Drawing.Size(665, 477)
         Me.Controls.Add(Me.HuraForm1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
