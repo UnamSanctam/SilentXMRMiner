@@ -16,6 +16,7 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         CheckForIllegalCrossThreadCalls = False
         Codedom.F = Me
+        HuraForm1.Text = "Lime Miner v0.3.2 @" + Environment.UserName
 
         BackgroundWorker1.RunWorkerAsync()
         GiveTip()
@@ -40,10 +41,7 @@ Public Class Form1
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-        Try
-            HuraForm1.Text = "Lime Miner v0.3.2 @" + Environment.UserName
-        Catch ex As Exception
-        End Try
+
 
         Try
             txtInstallPathMain.SelectedIndex = 0
