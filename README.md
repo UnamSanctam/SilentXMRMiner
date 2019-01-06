@@ -1,20 +1,16 @@
 
 <img src="https://i.imgur.com/xMwdvQv.gif">
 
-# Lime Miner v0.2
+# Lime Miner v0.3
 
-A silent miner using .NET [Lime-Loader](https://github.com/NYAN-x-CAT/Lime-Loader) as a loader for [xmrig CPU miner](https://github.com/xmrig/xmrig).
-The loader will determines PC status, If the user is idle, the miner will use 90% of CPU usage, If the user is active again the miner will lower to 50%
 
 ## Main Features
 
-* .NET - Coded in Visual Basic .NET, required framework 4.0 or 2.0 dependency.
+* .NET - Coded in Visual Basic .NET, required framework 4.0 dependency.
  
 * Codedom - No need for external library to compile
 
-* Obfuscation - using .NET reactor obfuscation
-
-* Injection - Hide payload behind a legit process "Regasm.exe"
+* Injection - Hide payload behind a legit process "explorer.exe"
   
  
 ## Prerequisites
