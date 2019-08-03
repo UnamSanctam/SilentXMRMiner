@@ -1,5 +1,5 @@
 
-<img src="https://i.imgur.com/eE1D2uy.png">
+<img src="https://i.imgur.com/ONJFEFe.png">
 
 # XMRMiner v0.1 - Based on Lime Miner v0.3
 
