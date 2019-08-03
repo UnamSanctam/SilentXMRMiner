@@ -44,3 +44,7 @@ By using this software, you automatically agree to the above.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](/LICENSE) file for details
+
+## Donate
+
+XMR: 4Aw8Echp2Hrhc5ussZ5cX1bKS6AFJUqFMJH9373M819NCLMVs4DctwGgtTg1ixc8oqVhZNeKCSTS776xoihXmX8SNYx7vtv
