@@ -1,7 +1,7 @@
 
 <img src="https://i.imgur.com/Q581tsw.png">
 
-# XMRMiner v0.1 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.1 - Based on Lime Miner v0.3
 
 
 ## Main Features
