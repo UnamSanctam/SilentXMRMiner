@@ -4,7 +4,7 @@
 # XMRMiner v0.1 - Based on Lime Miner v0.3
 
 
-## Main Features (From Lime Miner v0.3)
+## Main Features
 
 * .NET - Coded in Visual Basic .NET, requires .NET Framework 4.0.
  
@@ -15,7 +15,7 @@
 * CPU & GPU Mining - Can mine on Both CPU and GPU (Nvidia & AMD)
   
  
-## Prerequisites (From Lime Miner v0.3)
+## Prerequisites
 
 To open project you need:
 
