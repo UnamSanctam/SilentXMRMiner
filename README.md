@@ -11,6 +11,8 @@
 * Codedom - No need for external libraries to compile
 
 * Injection - Hide payload behind a legit process "explorer.exe"
+
+* CPU & GPU Mining - Can mine on Both CPU and GPU (Nvidia & AMD)
   
  
 ## Prerequisites (From Lime Miner v0.3)
