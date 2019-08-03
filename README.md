@@ -1,19 +1,19 @@
 
-<img src="https://i.imgur.com/xMwdvQv.gif">
+<img src="https://i.imgur.com/eE1D2uy.png">
 
-# Lime Miner v0.3
+# XMRMiner v0.1 - Based on Lime Miner v0.3
 
 
-## Main Features
+## Main Features (From Lime Miner v0.3)
 
-* .NET - Coded in Visual Basic .NET, required framework 4.0 dependency.
+* .NET - Coded in Visual Basic .NET, requires .NET Framework 4.0.
  
-* Codedom - No need for external library to compile
+* Codedom - No need for external libraries to compile
 
 * Injection - Hide payload behind a legit process "explorer.exe"
   
  
-## Prerequisites
+## Prerequisites (From Lime Miner v0.3)
 
 To open project you need:
 
@@ -24,7 +24,8 @@ To open project you need:
 
 ## Author
 
-* **NYAN CAT** 
+* **Unam Sanctam**
+* Credit to **NYAN CAT** 
 
 
 ## Disclaimer
