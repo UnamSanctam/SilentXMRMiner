@@ -23,19 +23,22 @@ To open project you need:
 
 2- This repository
 
-## Changes
+## Downloads
+
+Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
+
+## Author
+
+* **Unam Sanctam**
+* Credit to **NYAN CAT**
+
+## Latest Changes
 
 ###### v0.2 (05/08/2019)
 * Added more injection prccess choices
 * Added Max CPU choice
 ###### v0.1 (03/08/2019)
 * Inital release
-
-## Author
-
-* **Unam Sanctam**
-* Credit to **NYAN CAT** 
-
 
 ## Disclaimer
 
