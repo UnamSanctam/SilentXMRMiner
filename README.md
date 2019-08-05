@@ -25,10 +25,10 @@ To open project you need:
 
 ## Changes
 
-# v0.2 (05/08/2019)
+###### v0.2 (05/08/2019)
 * Added more injection prccess choices
 * Added Max CPU choice
-# v0.1 (03/08/2019)
+###### v0.1 (03/08/2019)
 * Inital release
 
 ## Author
