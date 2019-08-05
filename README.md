@@ -35,7 +35,7 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 ## Latest Changes
 
 ###### v0.2 (05/08/2019)
-* Added more injection prccess choices
+* Added more injection process choices
 * Added Max CPU choice
 ###### v0.1 (03/08/2019)
 * Inital release
