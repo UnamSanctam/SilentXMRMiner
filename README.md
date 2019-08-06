@@ -58,5 +58,7 @@ This project is licensed under the MIT License - see the [LICENSE](/LICENSE) fil
 ## Donate
 
 XMR: 4Aw8Echp2Hrhc5ussZ5cX1bKS6AFJUqFMJH9373M819NCLMVs4DctwGgtTg1ixc8oqVhZNeKCSTS776xoihXmX8SNYx7vtv
+
 BTC: 38Zs9ScPSWNm1DPFcsnkWgJBXtnEjxnuSo
+
 ETH: 0x00863B87B5b4f044A19865c756075450Adb20dbA
