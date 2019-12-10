@@ -1,7 +1,7 @@
 
-<img src="https://i.imgur.com/Q581tsw.png">
+<img src="https://i.imgur.com/TrL7CLp.png">
 
-# SilentXMRMiner v0.2 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.3 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -23,22 +23,22 @@ To open project you need:
 
 2- This repository
 
-## Downloads
+## Changes
 
-Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
-
-## Latest Changes
-
-###### v0.2 (05/08/2019)
-* Added more injection process choices
+# v0.3 (10/12/2019)
+* Updated to work with the new Monero fork
+* Added toggle to enable/disable GPU mining
+# v0.2 (05/08/2019)
+* Added more injection prccess choices
 * Added Max CPU choice
-###### v0.1 (03/08/2019)
+# v0.1 (03/08/2019)
 * Inital release
 
 ## Author
 
 * **Unam Sanctam**
-* Credit to **NYAN CAT**
+* Credit to **NYAN CAT** 
+
 
 ## Disclaimer
 
@@ -58,7 +58,5 @@ This project is licensed under the MIT License - see the [LICENSE](/LICENSE) fil
 ## Donate
 
 XMR: 4Aw8Echp2Hrhc5ussZ5cX1bKS6AFJUqFMJH9373M819NCLMVs4DctwGgtTg1ixc8oqVhZNeKCSTS776xoihXmX8SNYx7vtv
-
 BTC: 38Zs9ScPSWNm1DPFcsnkWgJBXtnEjxnuSo
-
 ETH: 0x00863B87B5b4f044A19865c756075450Adb20dbA

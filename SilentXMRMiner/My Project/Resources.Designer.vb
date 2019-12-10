@@ -61,26 +61,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property amd() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("amd", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property cpu() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("cpu", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         '''</summary>
         Friend ReadOnly Property Monero() As System.Drawing.Icon
@@ -103,9 +83,19 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
-        Friend ReadOnly Property nvidia() As Byte()
+        Friend ReadOnly Property nvrtc_builtins64_101() As Byte()
             Get
-                Dim obj As Object = ResourceManager.GetObject("nvidia", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("nvrtc_builtins64_101", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property nvrtc64_101_0() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("nvrtc64_101_0", resourceCulture)
                 Return CType(obj,Byte())
             End Get
         End Property
@@ -143,6 +133,26 @@ Namespace My.Resources
         Friend ReadOnly Property Project1() As Byte()
             Get
                 Dim obj As Object = ResourceManager.GetObject("Project1", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property xmrig() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("xmrig", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property xmrig_cuda() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("xmrig_cuda", resourceCulture)
                 Return CType(obj,Byte())
             End Get
         End Property

