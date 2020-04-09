@@ -1,12 +1,12 @@
 
 <img src="https://i.imgur.com/TrL7CLp.png">
 
-# SilentXMRMiner v0.4 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.5 - Based on Lime Miner v0.3
 
 
 ## Main Features
 
-* .NET - Coded in Visual Basic .NET, requires .NET Framework 4.0.
+* .NET - Coded in Visual Basic .NET, requires .NET Framework 4.5.
  
 * Codedom - No need for external libraries to compile
 
@@ -29,6 +29,9 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 ## Changes
 
+# v0.5 (09/04/2020)
+* Updated miner
+* Massively improved filesize by compressing libraries
 # v0.4 (18/12/2019)
 * Updated miner
 * Improvement to non-GPU enabled filesize
