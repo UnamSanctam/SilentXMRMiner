@@ -31,7 +31,7 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 # v0.5 (09/04/2020)
 * Updated miner
-* Massively improved filesize by compressing libraries
+* Massively improved file size by compressing libraries
 # v0.4 (18/12/2019)
 * Updated miner
 * Improvement to non-GPU enabled filesize
