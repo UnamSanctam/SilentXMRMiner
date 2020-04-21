@@ -991,7 +991,7 @@ Class MephTabcontrol
         Try : SelectedTab.BackColor = Color.FromArgb(50, 50, 50) : Catch : End Try
         G.Clear(Parent.FindForm.BackColor)
 
-        G.FillRectangle(New SolidBrush(Color.FromArgb(50, 50, 50)), New Rectangle(0, 0, ItemSize.Height + 3, Height - 1)) 'Full Tab Background
+        G.FillRectangle(New SolidBrush(Color.FromArgb(50, 50, 50)), New Rectangle(0, 0, ItemSize.Height, Height - 1)) 'Full Tab Background
 
         For i = 0 To TabCount - 1
             If i = SelectedIndex Then

