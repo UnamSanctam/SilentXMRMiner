@@ -1,7 +1,7 @@
 
-<img src="https://i.imgur.com/KBhYoNs.png">
+<img src="![SilentXMRMiner](SilentXMRMiner.png?raw=true)">
 
-# SilentXMRMiner v0.6 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.7 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -31,6 +31,11 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 ## Changes
 
+# v0.7 (08/10/2020)
+* Updated miner
+* Added help tooltips to clarify options
+* Fixed bugs
+* Reworked some code
 # v0.6 (21/04/2020)
 * Updated miner
 * Added custom Idle option to miner (Starts mining after 15 minutes of inactivity and stops when active again)
@@ -75,8 +80,8 @@ This project is licensed under the MIT License - see the [LICENSE](/LICENSE) fil
 
 ## Donate
 
-XMR: 4Aw8Echp2Hrhc5ussZ5cX1bKS6AFJUqFMJH9373M819NCLMVs4DctwGgtTg1ixc8oqVhZNeKCSTS776xoihXmX8SNYx7vtv
+XMR: 8BbApiMBHsPVKkLEP4rVbST6CnSb3LW2gXygngCi5MGiBuwAFh6bFEzT3UTufiCehFK7fNvAjs5Tv6BKYa6w8hwaSjnsg2N
 
-BTC: 38Zs9ScPSWNm1DPFcsnkWgJBXtnEjxnuSo
+BTC: bc1qu9rvkx7tjw9u003chtwfuf6s42fp3lmcfttk7f
 
-ETH: 0x00863B87B5b4f044A19865c756075450Adb20dbA
+ETH: 0x756b84fe97fB9880B02BDcd33cA58147E56d33a8

