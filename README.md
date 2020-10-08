@@ -1,5 +1,5 @@
 
-<img src="![SilentXMRMiner](SilentXMRMiner.png?raw=true)">
+<img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
 # SilentXMRMiner v0.7 - Based on Lime Miner v0.3
 
