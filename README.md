@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v0.7 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.7.1 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -31,6 +31,8 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 ## Changes
 
+# v0.7.1 (09/10/2020)
+* Fixed a bug
 # v0.7 (08/10/2020)
 * Updated miner
 * Added help tooltips to clarify options

