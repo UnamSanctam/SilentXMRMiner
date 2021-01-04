@@ -27,15 +27,17 @@ Partial Class Form1
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker2 = New System.ComponentModel.BackgroundWorker()
         Me.TooltipHelper = New System.Windows.Forms.ToolTip(Me.components)
+        Me.helpLabelPassword = New System.Windows.Forms.Label()
+        Me.helpLabelWallet = New System.Windows.Forms.Label()
+        Me.helpLabelPool = New System.Windows.Forms.Label()
+        Me.helpLabelInstall = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.helpLabelEnableCPU = New System.Windows.Forms.Label()
         Me.helpLabelMaxCPU = New System.Windows.Forms.Label()
-        Me.helpLabelPool = New System.Windows.Forms.Label()
-        Me.helpLabelWallet = New System.Windows.Forms.Label()
-        Me.helpLabelPassword = New System.Windows.Forms.Label()
-        Me.helpLabelInstall = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
         Me.MephForm1 = New SilentXMRMiner.MephTheme()
         Me.MephTabcontrol2 = New SilentXMRMiner.MephTabcontrol()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -75,6 +77,11 @@ Partial Class Form1
         Me.btnBrowseIcon = New SilentXMRMiner.MephButton()
         Me.txtIconPath = New SilentXMRMiner.MephTextBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.chkAdvanced = New SilentXMRMiner.MephCheckBox()
+        Me.txtAdvParam = New SilentXMRMiner.MephTextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.toggleSSLTLS = New SilentXMRMiner.MephToggleSwitch()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.toggleEnableCPU = New SilentXMRMiner.MephToggleSwitch()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -115,6 +122,66 @@ Partial Class Form1
         Me.TooltipHelper.InitialDelay = 100
         Me.TooltipHelper.IsBalloon = True
         Me.TooltipHelper.ReshowDelay = 100
+        '
+        'helpLabelPassword
+        '
+        Me.helpLabelPassword.AutoSize = True
+        Me.helpLabelPassword.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelPassword.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelPassword.Location = New System.Drawing.Point(588, 162)
+        Me.helpLabelPassword.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.helpLabelPassword.Name = "helpLabelPassword"
+        Me.helpLabelPassword.Size = New System.Drawing.Size(18, 20)
+        Me.helpLabelPassword.TabIndex = 39
+        Me.helpLabelPassword.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelPassword, "The password to connect with. On many pools you should leave this blank but on so" &
+        "me they require you to put some password here or as in the case of SupportXMR yo" &
+        "u should put your Worker name here.")
+        '
+        'helpLabelWallet
+        '
+        Me.helpLabelWallet.AutoSize = True
+        Me.helpLabelWallet.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelWallet.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelWallet.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelWallet.Location = New System.Drawing.Point(588, 91)
+        Me.helpLabelWallet.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.helpLabelWallet.Name = "helpLabelWallet"
+        Me.helpLabelWallet.Size = New System.Drawing.Size(18, 20)
+        Me.helpLabelWallet.TabIndex = 38
+        Me.helpLabelWallet.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelWallet, resources.GetString("helpLabelWallet.ToolTip"))
+        '
+        'helpLabelPool
+        '
+        Me.helpLabelPool.AutoSize = True
+        Me.helpLabelPool.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelPool.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelPool.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelPool.Location = New System.Drawing.Point(588, 17)
+        Me.helpLabelPool.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.helpLabelPool.Name = "helpLabelPool"
+        Me.helpLabelPool.Size = New System.Drawing.Size(18, 20)
+        Me.helpLabelPool.TabIndex = 37
+        Me.helpLabelPool.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelPool, "The pool to mine to. Pool address is formatted as such: ADDRESS:PORT. (Example: x" &
+        "mr.examplepool.com:8080)")
+        '
+        'helpLabelInstall
+        '
+        Me.helpLabelInstall.AutoSize = True
+        Me.helpLabelInstall.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelInstall.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelInstall.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelInstall.Location = New System.Drawing.Point(152, 25)
+        Me.helpLabelInstall.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.helpLabelInstall.Name = "helpLabelInstall"
+        Me.helpLabelInstall.Size = New System.Drawing.Size(18, 20)
+        Me.helpLabelInstall.TabIndex = 38
+        Me.helpLabelInstall.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelInstall, "Enabling Install causes the miner to copy itself to the Save Path and then set to" &
+        " run on startup. This should probably be enabled unless you are just testing.")
         '
         'Label16
         '
@@ -189,65 +256,35 @@ Partial Class Form1
         Me.helpLabelMaxCPU.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.helpLabelMaxCPU, "The max amount of CPU the miner should use.")
         '
-        'helpLabelPool
+        'Label17
         '
-        Me.helpLabelPool.AutoSize = True
-        Me.helpLabelPool.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelPool.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelPool.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelPool.Location = New System.Drawing.Point(588, 17)
-        Me.helpLabelPool.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.helpLabelPool.Name = "helpLabelPool"
-        Me.helpLabelPool.Size = New System.Drawing.Size(18, 20)
-        Me.helpLabelPool.TabIndex = 37
-        Me.helpLabelPool.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelPool, "The pool to mine to. Pool address is formatted as such: ADDRESS:PORT. (Example: x" &
-        "mr.examplepool.com:8080)")
+        Me.Label17.AutoSize = True
+        Me.Label17.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label17.ForeColor = System.Drawing.Color.Teal
+        Me.Label17.Location = New System.Drawing.Point(595, 30)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(18, 20)
+        Me.Label17.TabIndex = 43
+        Me.Label17.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label17, "SSL/TLS increases performance and stability but only works on some pools, check t" &
+        "he pool you're using the see if it supports it. Most pools use a different port " &
+        "for SSL/TLS.")
         '
-        'helpLabelWallet
+        'Label19
         '
-        Me.helpLabelWallet.AutoSize = True
-        Me.helpLabelWallet.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelWallet.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelWallet.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelWallet.Location = New System.Drawing.Point(588, 91)
-        Me.helpLabelWallet.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.helpLabelWallet.Name = "helpLabelWallet"
-        Me.helpLabelWallet.Size = New System.Drawing.Size(18, 20)
-        Me.helpLabelWallet.TabIndex = 38
-        Me.helpLabelWallet.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelWallet, resources.GetString("helpLabelWallet.ToolTip"))
-        '
-        'helpLabelPassword
-        '
-        Me.helpLabelPassword.AutoSize = True
-        Me.helpLabelPassword.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelPassword.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelPassword.Location = New System.Drawing.Point(588, 162)
-        Me.helpLabelPassword.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.helpLabelPassword.Name = "helpLabelPassword"
-        Me.helpLabelPassword.Size = New System.Drawing.Size(18, 20)
-        Me.helpLabelPassword.TabIndex = 39
-        Me.helpLabelPassword.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelPassword, "The password to connect with. On many pools you should leave this blank but on so" &
-        "me they require you to put some password here or as in the case of SupportXMR yo" &
-        "u should put your Worker name here.")
-        '
-        'helpLabelInstall
-        '
-        Me.helpLabelInstall.AutoSize = True
-        Me.helpLabelInstall.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelInstall.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelInstall.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelInstall.Location = New System.Drawing.Point(152, 25)
-        Me.helpLabelInstall.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.helpLabelInstall.Name = "helpLabelInstall"
-        Me.helpLabelInstall.Size = New System.Drawing.Size(18, 20)
-        Me.helpLabelInstall.TabIndex = 38
-        Me.helpLabelInstall.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelInstall, "Install means that the miner will be copied to the Save Path and then set to run " &
-        "on startup. This should probably be enabled unless you are just testing.")
+        Me.Label19.AutoSize = True
+        Me.Label19.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label19.ForeColor = System.Drawing.Color.Teal
+        Me.Label19.Location = New System.Drawing.Point(542, 155)
+        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(18, 20)
+        Me.Label19.TabIndex = 46
+        Me.Label19.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
         '
         'MephForm1
         '
@@ -430,7 +467,7 @@ Partial Class Form1
         '
         'chkInstall
         '
-        Me.chkInstall.AccentColor = System.Drawing.Color.Maroon
+        Me.chkInstall.AccentColor = System.Drawing.Color.ForestGreen
         Me.chkInstall.BackColor = System.Drawing.Color.Transparent
         Me.chkInstall.Checked = False
         Me.chkInstall.Cursor = System.Windows.Forms.Cursors.Hand
@@ -529,7 +566,7 @@ Partial Class Form1
         '
         'chkAssembly
         '
-        Me.chkAssembly.AccentColor = System.Drawing.Color.Maroon
+        Me.chkAssembly.AccentColor = System.Drawing.Color.ForestGreen
         Me.chkAssembly.BackColor = System.Drawing.Color.Transparent
         Me.chkAssembly.Checked = False
         Me.chkAssembly.Cursor = System.Windows.Forms.Cursors.Hand
@@ -738,7 +775,7 @@ Partial Class Form1
         '
         'chkIcon
         '
-        Me.chkIcon.AccentColor = System.Drawing.Color.Maroon
+        Me.chkIcon.AccentColor = System.Drawing.Color.ForestGreen
         Me.chkIcon.BackColor = System.Drawing.Color.Transparent
         Me.chkIcon.Checked = False
         Me.chkIcon.Cursor = System.Windows.Forms.Cursors.Hand
@@ -790,6 +827,13 @@ Partial Class Form1
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.TabPage6.Controls.Add(Me.Label20)
+        Me.TabPage6.Controls.Add(Me.Label19)
+        Me.TabPage6.Controls.Add(Me.chkAdvanced)
+        Me.TabPage6.Controls.Add(Me.txtAdvParam)
+        Me.TabPage6.Controls.Add(Me.Label17)
+        Me.TabPage6.Controls.Add(Me.Label18)
+        Me.TabPage6.Controls.Add(Me.toggleSSLTLS)
         Me.TabPage6.Controls.Add(Me.Label16)
         Me.TabPage6.Controls.Add(Me.Label15)
         Me.TabPage6.Controls.Add(Me.Label14)
@@ -812,6 +856,66 @@ Partial Class Form1
         Me.TabPage6.Size = New System.Drawing.Size(673, 295)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Mining"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(408, 186)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(198, 25)
+        Me.Label20.TabIndex = 47
+        Me.Label20.Text = "Advanced Parameters:"
+        '
+        'chkAdvanced
+        '
+        Me.chkAdvanced.AccentColor = System.Drawing.Color.ForestGreen
+        Me.chkAdvanced.BackColor = System.Drawing.Color.Transparent
+        Me.chkAdvanced.Checked = False
+        Me.chkAdvanced.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.chkAdvanced.ForeColor = System.Drawing.Color.Black
+        Me.chkAdvanced.Location = New System.Drawing.Point(411, 148)
+        Me.chkAdvanced.Name = "chkAdvanced"
+        Me.chkAdvanced.Size = New System.Drawing.Size(166, 24)
+        Me.chkAdvanced.TabIndex = 45
+        Me.chkAdvanced.Text = "Disabled"
+        '
+        'txtAdvParam
+        '
+        Me.txtAdvParam.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.txtAdvParam.Enabled = False
+        Me.txtAdvParam.ForeColor = System.Drawing.Color.Silver
+        Me.txtAdvParam.Location = New System.Drawing.Point(409, 222)
+        Me.txtAdvParam.MaxLength = 32767
+        Me.txtAdvParam.MultiLine = False
+        Me.txtAdvParam.Name = "txtAdvParam"
+        Me.txtAdvParam.Size = New System.Drawing.Size(204, 24)
+        Me.txtAdvParam.TabIndex = 44
+        Me.txtAdvParam.Text = "--coin=monero --asm=auto --cpu-memory-pool=-1 --cpu-priority=5 --cpu-no-yield --r" &
+    "andomx-mode=auto --randomx-no-rdmsr  --cuda-bfactor-hint=12 --cuda-bsleep-hint=1" &
+    "00"
+        Me.txtAdvParam.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        Me.txtAdvParam.UseSystemPasswordChar = False
+        Me.txtAdvParam.WordWrap = False
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(427, 25)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(81, 25)
+        Me.Label18.TabIndex = 42
+        Me.Label18.Text = "SSL/TLS:"
+        '
+        'toggleSSLTLS
+        '
+        Me.toggleSSLTLS.BackColor = System.Drawing.Color.Transparent
+        Me.toggleSSLTLS.Checked = False
+        Me.toggleSSLTLS.ForeColor = System.Drawing.Color.Black
+        Me.toggleSSLTLS.Location = New System.Drawing.Point(517, 21)
+        Me.toggleSSLTLS.Name = "toggleSSLTLS"
+        Me.toggleSSLTLS.Size = New System.Drawing.Size(50, 24)
+        Me.toggleSSLTLS.TabIndex = 41
+        Me.toggleSSLTLS.Text = "Enable SSL/TLS Connection"
         '
         'Label13
         '
@@ -885,7 +989,7 @@ Partial Class Form1
         'toggleEnableGPU
         '
         Me.toggleEnableGPU.BackColor = System.Drawing.Color.Transparent
-        Me.toggleEnableGPU.Checked = True
+        Me.toggleEnableGPU.Checked = False
         Me.toggleEnableGPU.ForeColor = System.Drawing.Color.Black
         Me.toggleEnableGPU.Location = New System.Drawing.Point(147, 123)
         Me.toggleEnableGPU.Name = "toggleEnableGPU"
@@ -1081,4 +1185,11 @@ Partial Class Form1
     Friend WithEvents helpLabelPool As Label
     Friend WithEvents helpLabelPassword As Label
     Friend WithEvents helpLabelInstall As Label
+    Friend WithEvents Label17 As Label
+    Friend WithEvents Label18 As Label
+    Friend WithEvents toggleSSLTLS As MephToggleSwitch
+    Friend WithEvents txtAdvParam As MephTextBox
+    Friend WithEvents Label20 As Label
+    Friend WithEvents Label19 As Label
+    Friend WithEvents chkAdvanced As MephCheckBox
 End Class

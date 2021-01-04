@@ -12,13 +12,13 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("Silent XMR Miner Builder")>
-<Assembly: AssemblyCopyright("Copyright © 2020")>
+<Assembly: AssemblyCopyright("Copyright © 2021")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("ba474dd9-62c6-4e12-9fe8-6a19cf72d8fe")>
+<Assembly: Guid("0733c127-d2e2-4c9e-b360-6c4fe87ceb64")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.6.0.0")>
-<Assembly: AssemblyFileVersion("0.6.0.0")>
+<Assembly: AssemblyVersion("0.8.0.0")>
+<Assembly: AssemblyFileVersion("0.8.0.0")>

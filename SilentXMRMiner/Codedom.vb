@@ -27,8 +27,8 @@ Public Class Codedom
             .ReferencedAssemblies.Add("system.dll")
             .ReferencedAssemblies.Add("Microsoft.VisualBasic.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
-            .ReferencedAssemblies.Add("System.IO.Compression.dll")
-            .ReferencedAssemblies.Add("System.IO.Compression.FileSystem.dll")
+            .ReferencedAssemblies.Add("System.Management.dll")
+            .ReferencedAssemblies.Add("DotNetZip.dll")
 
             F.txtLog.Text = F.txtLog.Text + ("Creating a DLL..." + vbNewLine)
 

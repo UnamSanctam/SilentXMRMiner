@@ -1,16 +1,16 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v0.7.1 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.8 - Based on Lime Miner v0.3
 
 
 ## Main Features
 
-* .NET - Coded in Visual Basic .NET, requires .NET Framework 4.5.
+* .NET - Coded in Visual Basic .NET, requires .NET Framework 4.0.
  
 * Codedom - No need for external libraries to compile
 
-* Injection - Hide payload behind another process
+* Injection (Silent) - Hide payload behind another process
 
 * CPU & GPU Mining - Can mine on Both CPU and GPU (Nvidia & AMD)
 
@@ -31,6 +31,13 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 ## Changes
 
+# v0.8 (04/01/2021)
+* Updated miner
+* Fixed bugs
+* Lowered requirement to .NET 4.0
+* Added SSL/TLS option
+* Added custom parameter option
+* Increased miner performance
 # v0.7.1 (09/10/2020)
 * Fixed a bug
 # v0.7 (08/10/2020)

