@@ -7,7 +7,7 @@ Public Class Codedom
     Public Shared Sub Compiler(ByVal Path As String, ByVal Code As String, ByVal Res As String, Optional ICOPath As String = "")
 
         Dim providerOptions = New Dictionary(Of String, String)
-        providerOptions.Add("CompilerVersion", "v4.5")
+        providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New VBCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
         Dim OP As String = " /target:winexe /platform:x64 /nowarn"
