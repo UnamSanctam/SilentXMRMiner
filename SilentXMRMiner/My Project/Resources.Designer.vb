@@ -104,12 +104,12 @@ Namespace My.Resources
         '''Imports System.Drawing
         '''Imports System.Windows.Forms
         '''Imports System.IO
+        '''Imports System.IO.Compression
         '''Imports System.Net
         '''Imports System.Drawing.Drawing2D
         '''Imports System.Drawing.Imaging
         '''Imports System.Threading
-        '''Imports System.Security
-        '''Import [rest of string was truncated]&quot;;.
+        ''' [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Program() As String
             Get

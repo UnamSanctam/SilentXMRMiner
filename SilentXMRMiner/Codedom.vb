@@ -7,7 +7,7 @@ Public Class Codedom
     Public Shared Sub Compiler(ByVal Path As String, ByVal Code As String, ByVal Res As String, Optional ICOPath As String = "")
 
         Dim providerOptions = New Dictionary(Of String, String)
-        providerOptions.Add("CompilerVersion", "v4.0")
+        providerOptions.Add("CompilerVersion", "v4.5")
         Dim CodeProvider As New VBCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
         Dim OP As String = " /target:winexe /platform:x64 /nowarn"
@@ -28,7 +28,8 @@ Public Class Codedom
             .ReferencedAssemblies.Add("Microsoft.VisualBasic.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
-            .ReferencedAssemblies.Add("DotNetZip.dll")
+            .ReferencedAssemblies.Add("System.IO.Compression.dll")
+            .ReferencedAssemblies.Add("System.IO.Compression.FileSystem.dll")
 
             F.txtLog.Text = F.txtLog.Text + ("Creating a DLL..." + vbNewLine)
 
@@ -64,7 +65,6 @@ Public Class Codedom
     Public Shared Function AES_Encryptor(ByVal input As Byte()) As Byte()
         Dim AES As New RijndaelManaged
         Dim Hash As New MD5CryptoServiceProvider
-        Dim ciphertext As String = ""
         Try
             AES.Key = Hash.ComputeHash(System.Text.Encoding.Default.GetBytes(F.AESKEY))
             AES.Mode = CipherMode.ECB

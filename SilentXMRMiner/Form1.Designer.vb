@@ -31,13 +31,13 @@ Partial Class Form1
         Me.helpLabelWallet = New System.Windows.Forms.Label()
         Me.helpLabelPool = New System.Windows.Forms.Label()
         Me.helpLabelInstall = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.helpLabelEnableCPU = New System.Windows.Forms.Label()
         Me.helpLabelMaxCPU = New System.Windows.Forms.Label()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label19 = New System.Windows.Forms.Label()
         Me.MephForm1 = New SilentXMRMiner.MephTheme()
         Me.MephTabcontrol2 = New SilentXMRMiner.MephTabcontrol()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -183,6 +183,36 @@ Partial Class Form1
         Me.TooltipHelper.SetToolTip(Me.helpLabelInstall, "Enabling Install causes the miner to copy itself to the Save Path and then set to" &
         " run on startup. This should probably be enabled unless you are just testing.")
         '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label19.ForeColor = System.Drawing.Color.Teal
+        Me.Label19.Location = New System.Drawing.Point(542, 155)
+        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(18, 20)
+        Me.Label19.TabIndex = 46
+        Me.Label19.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label17.ForeColor = System.Drawing.Color.Teal
+        Me.Label17.Location = New System.Drawing.Point(595, 30)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(18, 20)
+        Me.Label17.TabIndex = 43
+        Me.Label17.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label17, "SSL/TLS increases performance and stability but only works on some pools, check t" &
+        "he pool you're using the see if it supports it. Most pools use a different port " &
+        "for SSL/TLS.")
+        '
         'Label16
         '
         Me.Label16.AutoSize = True
@@ -255,36 +285,6 @@ Partial Class Form1
         Me.helpLabelMaxCPU.TabIndex = 36
         Me.helpLabelMaxCPU.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.helpLabelMaxCPU, "The max amount of CPU the miner should use.")
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label17.ForeColor = System.Drawing.Color.Teal
-        Me.Label17.Location = New System.Drawing.Point(595, 30)
-        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(18, 20)
-        Me.Label17.TabIndex = 43
-        Me.Label17.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label17, "SSL/TLS increases performance and stability but only works on some pools, check t" &
-        "he pool you're using the see if it supports it. Most pools use a different port " &
-        "for SSL/TLS.")
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label19.ForeColor = System.Drawing.Color.Teal
-        Me.Label19.Location = New System.Drawing.Point(542, 155)
-        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(18, 20)
-        Me.Label19.TabIndex = 46
-        Me.Label19.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
         '
         'MephForm1
         '
