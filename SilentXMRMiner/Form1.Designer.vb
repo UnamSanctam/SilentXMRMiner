@@ -59,6 +59,9 @@ Partial Class Form1
         Me.Label7 = New System.Windows.Forms.Label()
         Me.txtPoolPassowrd = New SilentXMRMiner.MephTextBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.Label38 = New System.Windows.Forms.Label()
+        Me.AutoRemovalDateSwitch = New SilentXMRMiner.MephToggleSwitch()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.toggleEnableHidden = New SilentXMRMiner.MephToggleSwitch()
         Me.chkInstall = New SilentXMRMiner.MephCheckBox()
@@ -117,6 +120,7 @@ Partial Class Form1
         Me.labelGitHub = New System.Windows.Forms.LinkLabel()
         Me.txtLog = New SilentXMRMiner.MephTextBox()
         Me.btnBuild = New SilentXMRMiner.MephButton()
+        Me.Label40 = New System.Windows.Forms.Label()
         Me.MephForm1.SuspendLayout()
         Me.MephTabcontrol2.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -573,6 +577,10 @@ Partial Class Form1
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.TabPage2.Controls.Add(Me.Label40)
+        Me.TabPage2.Controls.Add(Me.DateTimePicker1)
+        Me.TabPage2.Controls.Add(Me.Label38)
+        Me.TabPage2.Controls.Add(Me.AutoRemovalDateSwitch)
         Me.TabPage2.Controls.Add(Me.Label33)
         Me.TabPage2.Controls.Add(Me.Label34)
         Me.TabPage2.Controls.Add(Me.toggleEnableHidden)
@@ -589,6 +597,37 @@ Partial Class Form1
         Me.TabPage2.Size = New System.Drawing.Size(418, 189)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Install"
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.CalendarMonthBackground = System.Drawing.Color.Black
+        Me.DateTimePicker1.Location = New System.Drawing.Point(224, 144)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(171, 24)
+        Me.DateTimePicker1.TabIndex = 46
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.Font = New System.Drawing.Font("Segoe UI", 9.5!)
+        Me.Label38.Location = New System.Drawing.Point(11, 144)
+        Me.Label38.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(123, 17)
+        Me.Label38.TabIndex = 45
+        Me.Label38.Text = "Auto Removal Date:"
+        '
+        'AutoRemovalDateSwitch
+        '
+        Me.AutoRemovalDateSwitch.BackColor = System.Drawing.Color.Transparent
+        Me.AutoRemovalDateSwitch.Checked = False
+        Me.AutoRemovalDateSwitch.ForeColor = System.Drawing.Color.Black
+        Me.AutoRemovalDateSwitch.Location = New System.Drawing.Point(138, 144)
+        Me.AutoRemovalDateSwitch.Margin = New System.Windows.Forms.Padding(2)
+        Me.AutoRemovalDateSwitch.Name = "AutoRemovalDateSwitch"
+        Me.AutoRemovalDateSwitch.Size = New System.Drawing.Size(50, 24)
+        Me.AutoRemovalDateSwitch.TabIndex = 44
+        Me.AutoRemovalDateSwitch.Text = "Enable Auto Removal Date"
         '
         'Label34
         '
@@ -1414,6 +1453,19 @@ Partial Class Form1
         Me.btnBuild.TabIndex = 17
         Me.btnBuild.Text = "Build"
         '
+        'Label40
+        '
+        Me.Label40.AutoSize = True
+        Me.Label40.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label40.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label40.ForeColor = System.Drawing.Color.Teal
+        Me.Label40.Location = New System.Drawing.Point(194, 153)
+        Me.Label40.Name = "Label40"
+        Me.Label40.Size = New System.Drawing.Size(13, 13)
+        Me.Label40.TabIndex = 47
+        Me.Label40.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label40, "Enable if you want the program to be removed after a date")
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1541,4 +1593,8 @@ Partial Class Form1
     Friend WithEvents Label34 As Label
     Friend WithEvents toggleEnableHidden As MephToggleSwitch
     Friend WithEvents Label35 As Label
+    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents Label38 As Label
+    Friend WithEvents AutoRemovalDateSwitch As MephToggleSwitch
+    Friend WithEvents Label40 As Label
 End Class

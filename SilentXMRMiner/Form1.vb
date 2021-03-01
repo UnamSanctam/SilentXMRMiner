@@ -1,6 +1,5 @@
 ﻿Imports System.Security.Cryptography
 Imports System.Text
-
 Public Class Form1
     Public Shared rand As New Random()
     Public advancedParams As String = "--coin=monero --asm=auto --cpu-memory-pool=-1 --randomx-mode=auto --randomx-no-rdmsr  --cuda-bfactor-hint=12 --cuda-bsleep-hint=100"
@@ -11,8 +10,8 @@ Public Class Form1
 
         CheckForIllegalCrossThreadCalls = False
         Codedom.F = Me
-
         BackgroundWorker1.RunWorkerAsync()
+        DateTimePicker1.Enabled = False
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
@@ -153,6 +152,14 @@ Public Class Form1
 
             End If
 
+            If AutoRemovalDateSwitch.Checked Then
+                Debug.WriteLine("Auto Removal on")
+                builder.Replace("#RemovalDate", DateTimePicker1.Value)
+            Else
+                Debug.WriteLine("Auto Removal Date off")
+
+            End If
+
             Source = builder.ToString
 
             If chkIcon.Checked AndAlso txtIconPath.Text IsNot "" Then
@@ -227,6 +234,17 @@ Public Class Form1
             chkInstall.Text = "Disabled"
             txtInstallPathMain.Enabled = False
             txtInstallFileName.Enabled = False
+        End If
+    End Sub
+    Private Sub AutoRemovalDateSwitch_CheckedChanged(sender As Object) Handles AutoRemovalDateSwitch.CheckedChanged
+        If AutoRemovalDateSwitch.Checked Then
+            Debug.WriteLine("Test1" + DateTimePicker1.Value)
+            AutoRemovalDateSwitch.Text = "Enabled"
+            DateTimePicker1.Enabled = True
+        Else
+            Debug.WriteLine("Test2" + DateTimePicker1.Value)
+            AutoRemovalDateSwitch.Text = "Disabled"
+            DateTimePicker1.Enabled = False
         End If
     End Sub
 
