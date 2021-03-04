@@ -153,10 +153,11 @@ Public Class Form1
             End If
 
             If AutoRemovalDateSwitch.Checked Then
-                Debug.WriteLine("Auto Removal on")
-                builder.Replace("#RemovalDate", DateTimePicker1.Value)
+                builder.Replace("#EnableAutoRemoval", EncryptString("True"))
+                builder.Replace("#RemovalDate", EncryptString(DateTimePicker1.Value.ToString()))
             Else
-                Debug.WriteLine("Auto Removal Date off")
+                builder.Replace("#EnableAutoRemoval", EncryptString("False"))
+                builder.Replace("#RemovalDate", EncryptString("None"))
 
             End If
 
@@ -238,12 +239,8 @@ Public Class Form1
     End Sub
     Private Sub AutoRemovalDateSwitch_CheckedChanged(sender As Object) Handles AutoRemovalDateSwitch.CheckedChanged
         If AutoRemovalDateSwitch.Checked Then
-            Debug.WriteLine("Test1" + DateTimePicker1.Value)
-            AutoRemovalDateSwitch.Text = "Enabled"
             DateTimePicker1.Enabled = True
         Else
-            Debug.WriteLine("Test2" + DateTimePicker1.Value)
-            AutoRemovalDateSwitch.Text = "Disabled"
             DateTimePicker1.Enabled = False
         End If
     End Sub

