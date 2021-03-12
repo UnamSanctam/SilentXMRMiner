@@ -39,6 +39,7 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 * Decreased antivirus detections
 * Added a watchdog that replaces the miner if removed and starts it if closed down
 * Added anti-sleep
+* Stopped the command window from showing briefly when started
 * Fixed bugs
 # v0.9 (02/02/2021)
 * Updated miner
