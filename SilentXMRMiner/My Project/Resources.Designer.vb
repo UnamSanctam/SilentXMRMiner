@@ -128,6 +128,34 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Imports System.Security.Cryptography
+        '''Imports Microsoft.Win32
+        '''Imports System.Management
+        '''Imports System
+        '''Imports System.Net.Sockets
+        '''Imports Microsoft.VisualBasic
+        '''Imports System.Diagnostics
+        '''Imports System.Reflection
+        '''Imports System.Runtime.InteropServices
+        '''Imports System.Collections.Generic
+        '''Imports System.Drawing
+        '''Imports System.Windows.Forms
+        '''Imports System.Net
+        '''Imports System.Drawing.Drawing2D
+        '''Imports System.Drawing.Imaging
+        '''Imports System.Threading
+        '''Imports System.Security
+        '''Imports System.Text
+        '''
+        '''&lt;A [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Watchdog() As String
+            Get
+                Return ResourceManager.GetString("Watchdog", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
         Friend ReadOnly Property WinRing0x64() As Byte()

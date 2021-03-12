@@ -149,6 +149,7 @@
     </None>
     <None Include="Resources\libs.zip" />
     <None Include="Resources\Program.vb" />
+    <None Include="Resources\Watchdog.vb" />
     <Compile Include="Theme.vb">
       <SubType>Component</SubType>
     </Compile>
