@@ -108,7 +108,7 @@ This software's main purpose is NOT to be used maliciously, or on any system tha
 
 By using this software, you automatically agree to the above.
 
-##FAQ
+## FAQ
 Is GPU mining supported?
 
 Yes, but it isn’t very efficient for mining XMR. A silent ETH miner is in the making that works better for GPU mining.
