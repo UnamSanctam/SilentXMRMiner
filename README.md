@@ -32,6 +32,11 @@ To open project you need:
 
 Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
+## FAQ
+Is GPU mining supported?
+
+Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algorithm switch. A silent ETH miner is in the making that works better for GPU mining.
+
 ## Changes
 
 # v1.0 (12/03/2021)
@@ -87,7 +92,7 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 * Updated to work with the new Monero fork
 * Added toggle to enable/disable GPU mining
 # v0.2 (05/08/2019)
-* Added more injection prccess choices
+* Added more injection process choices
 * Added Max CPU choice
 # v0.1 (03/08/2019)
 * Inital release
@@ -107,7 +112,6 @@ You bear the full responsibility of your actions and acknowledge that this softw
 This software's main purpose is NOT to be used maliciously, or on any system that you do not own, or have the right to use.
 
 By using this software, you automatically agree to the above.
-
 
 ## License
 
