@@ -435,7 +435,7 @@ Partial Class Form1
         Me.MephForm1.Size = New System.Drawing.Size(802, 418)
         Me.MephForm1.SubHeader = "By Unam Sanctam, Credit to NYAN-x-CAT"
         Me.MephForm1.TabIndex = 0
-        Me.MephForm1.Text = "Silent XMR Miner Builder 1.0"
+        Me.MephForm1.Text = "Silent XMR Miner Builder 1.0.1"
         '
         'MephTabcontrol2
         '
@@ -497,7 +497,7 @@ Partial Class Form1
         Me.txtInjection.FormattingEnabled = True
         Me.txtInjection.ItemHeight = 16
         Me.txtInjection.ItemHighlightColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.txtInjection.Items.AddRange(New Object() {"explorer.exe (%WINDIR%)", "svchost.exe (%WINDIR%\System32)", "nslookup.exe (%WINDIR%\System32)", "cmd.exe (%WINDIR%\System32)", "notepad.exe (%WINDIR%\System32)", "conhost.exe (%WINDIR%\System32)"})
+        Me.txtInjection.Items.AddRange(New Object() {"explorer.exe (%WINDIR%)", "nslookup.exe (%WINDIR%\System32)", "cmd.exe (%WINDIR%\System32)", "notepad.exe (%WINDIR%\System32)"})
         Me.txtInjection.Location = New System.Drawing.Point(118, 240)
         Me.txtInjection.Name = "txtInjection"
         Me.txtInjection.Size = New System.Drawing.Size(488, 22)

