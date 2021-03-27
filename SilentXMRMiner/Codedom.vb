@@ -11,7 +11,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New VBCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /platform:x64 /nowarn"
+        Dim OP As String = " /target:winexe /nowarn"
 
         If ICOPath IsNot Nothing Then
             IO.File.Copy(ICOPath, Environment.GetFolderPath(35) + "\icon.ico", True) 'codedom cant read spaces
@@ -27,7 +27,6 @@ Public Class Codedom
             .ReferencedAssemblies.Add("System.Windows.Forms.dll")
             .ReferencedAssemblies.Add("System.dll")
             .ReferencedAssemblies.Add("Microsoft.VisualBasic.dll")
-            .ReferencedAssemblies.Add("System.Management.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
             .ReferencedAssemblies.Add("System.IO.Compression.dll")
             .ReferencedAssemblies.Add("System.IO.Compression.FileSystem.dll")
@@ -72,7 +71,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New VBCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /platform:x64 /nowarn"
+        Dim OP As String = " /target:winexe /nowarn"
 
         With Parameters
             .GenerateExecutable = True
@@ -83,9 +82,6 @@ Public Class Codedom
             .ReferencedAssemblies.Add("System.dll")
             .ReferencedAssemblies.Add("Microsoft.VisualBasic.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
-            .ReferencedAssemblies.Add("System.Management.dll")
-            .ReferencedAssemblies.Add("System.IO.Compression.dll")
-            .ReferencedAssemblies.Add("System.IO.Compression.FileSystem.dll")
 
             Dim Results = CodeProvider.CompileAssemblyFromSource(Parameters, Code)
             If Results.Errors.Count > 0 Then

