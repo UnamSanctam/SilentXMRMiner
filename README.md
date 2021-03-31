@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.0.3 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.1 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -16,7 +16,7 @@
 
 * Idle Mining - Can be configured to mine with a different Max CPU when computer is idle
   
-* Stealth - Pauses the miner while Task Manager is open
+* Stealth - Pauses the miner while Task Manager, Process Hacker or Process Explorer is open
 
 * Watchdog - Replaces the miner if removed and starts it if closed down
 
@@ -35,6 +35,13 @@ Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algo
 
 ## Changes
 
+# v1.1 (31/03/2021)
+* Updated miner
+* Improved miner performance
+* Recoded injector and watchdog from VB to C#
+* Decreased antivirus detections
+* Added built-in function name obfuscation
+* Added Process Hacker and Process Explorer to stealth targets
 # v1.0.3 (27/03/2021)
 * Updated Watchdog
 * Improved injector workflow reliability

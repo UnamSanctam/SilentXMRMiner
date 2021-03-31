@@ -148,8 +148,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Resources\libs.zip" />
-    <None Include="Resources\Program.vb" />
-    <None Include="Resources\Watchdog.vb" />
     <Compile Include="Theme.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -195,6 +193,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Project1.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Watchdog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

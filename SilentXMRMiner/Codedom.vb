@@ -1,5 +1,6 @@
 ﻿Imports System.CodeDom.Compiler
 Imports System.Security.Cryptography
+Imports Microsoft.CSharp
 
 Public Class Codedom
     Public Shared MinerOK As Boolean = False
@@ -9,9 +10,9 @@ Public Class Codedom
 
         Dim providerOptions = New Dictionary(Of String, String)
         providerOptions.Add("CompilerVersion", "v4.0")
-        Dim CodeProvider As New VBCodeProvider(providerOptions)
+        Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /nowarn"
+        Dim OP As String = " /target:winexe /platform:x64"
 
         If ICOPath IsNot Nothing Then
             IO.File.Copy(ICOPath, Environment.GetFolderPath(35) + "\icon.ico", True) 'codedom cant read spaces
@@ -69,9 +70,9 @@ Public Class Codedom
 
         Dim providerOptions = New Dictionary(Of String, String)
         providerOptions.Add("CompilerVersion", "v4.0")
-        Dim CodeProvider As New VBCodeProvider(providerOptions)
+        Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /nowarn"
+        Dim OP As String = " /target:winexe /platform:x64"
 
         With Parameters
             .GenerateExecutable = True
