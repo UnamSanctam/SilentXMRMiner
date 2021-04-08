@@ -71,6 +71,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property Mandark() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Mandark", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         '''</summary>
         Friend ReadOnly Property Monero() As System.Drawing.Icon
@@ -102,27 +112,19 @@ Namespace My.Resources
         '''using System.Text;
         '''using System.Threading;
         '''using Microsoft.Win32;
+        '''#if DefDebug
+        '''using System.Windows.Forms;
+        '''#endif
         '''
         '''#if DefAssembly
         '''[assembly: AssemblyTitle(&quot;%Title%&quot;)]
         '''[assembly: AssemblyDescription(&quot;%Description%&quot;)]
         '''[assembly: AssemblyCompany(&quot;%Company%&quot;)]
-        '''[assembly: AssemblyProduct(&quot;%Product%&quot;)]
-        '''[assembly: AssemblyCopyright(&quot;%Cop [rest of string was truncated]&quot;;.
+        '''[assembly: AssemblyProduc [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Program() As String
             Get
                 Return ResourceManager.GetString("Program", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property Project1() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Project1", resourceCulture)
-                Return CType(obj,Byte())
             End Get
         End Property
         

