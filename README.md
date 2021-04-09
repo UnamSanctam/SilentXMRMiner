@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.2.1 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.2.2 - Based on Lime Miner v0.3
 
 
 ## Main Features
