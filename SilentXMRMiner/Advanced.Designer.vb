@@ -79,7 +79,7 @@ Partial Class Advanced
         Me.Label1.ForeColor = System.Drawing.Color.Teal
         Me.Label1.Location = New System.Drawing.Point(191, 79)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(13, 13)
+        Me.Label1.Size = New System.Drawing.Size(18, 20)
         Me.Label1.TabIndex = 70
         Me.Label1.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label1, "Pauses the miner compilation when Watchdog is compiled to allow obfuscation of th" &
@@ -95,7 +95,7 @@ Partial Class Advanced
         Me.Label2.Location = New System.Drawing.Point(14, 75)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(118, 17)
+        Me.Label2.Size = New System.Drawing.Size(171, 25)
         Me.Label2.TabIndex = 69
         Me.Label2.Text = "Custom Watchdog:"
         '
@@ -132,7 +132,7 @@ Partial Class Advanced
         Me.Label19.ForeColor = System.Drawing.Color.Teal
         Me.Label19.Location = New System.Drawing.Point(336, 73)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(13, 13)
+        Me.Label19.Size = New System.Drawing.Size(18, 20)
         Me.Label19.TabIndex = 66
         Me.Label19.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
@@ -176,7 +176,7 @@ Partial Class Advanced
         Me.Label26.ForeColor = System.Drawing.Color.Teal
         Me.Label26.Location = New System.Drawing.Point(120, 120)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(13, 13)
+        Me.Label26.Size = New System.Drawing.Size(18, 20)
         Me.Label26.TabIndex = 60
         Me.Label26.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label26, "Will enable DEBUG mode which will display errors when they occur in the miner. !W" &
@@ -191,7 +191,7 @@ Partial Class Advanced
         Me.Label27.Location = New System.Drawing.Point(14, 117)
         Me.Label27.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(52, 17)
+        Me.Label27.Size = New System.Drawing.Size(76, 25)
         Me.Label27.TabIndex = 59
         Me.Label27.Text = "DEBUG:"
         '
@@ -215,9 +215,13 @@ Partial Class Advanced
         Me.Controls.Add(Me.MephTheme1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(396, 151)
+        Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(396, 151)
         Me.Name = "Advanced"
+        Me.Opacity = 0.95R
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Advanced"
         Me.TransparencyKey = System.Drawing.Color.Fuchsia
         Me.MephTheme1.ResumeLayout(False)
