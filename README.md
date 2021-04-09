@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.2 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.2.1 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -35,6 +35,8 @@ Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algo
 
 ## Changes
 
+# v1.2.1 (09/04/2021)
+* Fixed minor injection option bug
 # v1.2 (09/04/2021)
 * Fixed critial bug on some Windows systems
 * Added Task Scheduler startup when miner has administrator privileges
