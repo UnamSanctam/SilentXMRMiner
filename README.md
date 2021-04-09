@@ -35,11 +35,11 @@ Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algo
 
 ## Changes
 
-# v1.2.2 (09/04/2021)
+### v1.2.2 (09/04/2021)
 * Fixed crash when some connections are blocked by the government/ISP in places like Turkey or China
-# v1.2.1 (09/04/2021)
+### v1.2.1 (09/04/2021)
 * Fixed minor injection option bug
-# v1.2 (09/04/2021)
+### v1.2 (09/04/2021)
 * Fixed critial bug on some Windows systems
 * Added Task Scheduler startup when miner has administrator privileges
 * Replaced and improved injector
@@ -47,32 +47,32 @@ Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algo
 * Added debug option to display errors for testing
 * Added ability to obfuscate watchdog
 * Fixed miscellaneous bugs
-# v1.1 (31/03/2021)
+### v1.1 (31/03/2021)
 * Updated miner
 * Improved miner performance
 * Recoded injector and watchdog from VB to C#
 * Decreased antivirus detections
 * Added built-in function name obfuscation
 * Added Process Hacker and Process Explorer to stealth targets
-# v1.0.3 (27/03/2021)
+### v1.0.3 (27/03/2021)
 * Updated Watchdog
 * Improved injector workflow reliability
 * Changed encryption since the code was detected
-# v1.0.2 (19/03/2021)
+### v1.0.2 (19/03/2021)
 * Added 0% Max CPU option
 * Increased salt lengths
 * Improved Watchdog implementation
 * Improved persistance
-# v1.0.1 (14/03/2021)
+### v1.0.1 (14/03/2021)
 * Removed some injection options due to new Windows protections
-# v1.0 (12/03/2021)
+### v1.0 (12/03/2021)
 * Updated miner
 * Decreased antivirus detections
 * Added a watchdog that replaces the miner if removed and starts it if closed down
 * Added anti-sleep
 * Stopped the command window from showing briefly when started
 * Fixed bugs
-# v0.9 (02/02/2021)
+### v0.9 (02/02/2021)
 * Updated miner
 * Greatly decreased antivirus detections
 * Idle Max CPU, added customizable Max CPU usage while the miner is idle
@@ -82,45 +82,45 @@ Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algo
 * Hide file, can now choose to hide the copied miner file when "Install" is enabled
 * Now hides the library folder
 * Encrypted all strings
-# v0.8.1 (07/01/2021)
+### v0.8.1 (07/01/2021)
 * Improved AV bypass
 * Reverted back to .NET Framework 4.5
 * Fixed bug that stopped miner from injecting
 * Improved file size
 * Fixed incorrect scaling with some system languages
-# v0.8 (04/01/2021)
+### v0.8 (04/01/2021)
 * Updated miner
 * Fixed bugs
 * Lowered requirement to .NET 4.0
 * Added SSL/TLS option
 * Added custom parameter option
 * Increased miner performance
-# v0.7.1 (09/10/2020)
+### v0.7.1 (09/10/2020)
 * Fixed a bug
-# v0.7 (08/10/2020)
+### v0.7 (08/10/2020)
 * Updated miner
 * Added help tooltips to clarify options
 * Fixed bugs
 * Reworked some code
-# v0.6 (21/04/2020)
+### v0.6 (21/04/2020)
 * Updated miner
 * Added custom Idle option to miner (Starts mining after 15 minutes of inactivity and stops when active again)
 * Added more options in the builder (Enable/Disable CPU, Nicehash and Idle mining)
 * Fixed driver paths
 * Reworked some code
-# v0.5 (09/04/2020)
+### v0.5 (09/04/2020)
 * Updated miner
 * Massively improved file size by compressing libraries
-# v0.4 (18/12/2019)
+### v0.4 (18/12/2019)
 * Updated miner
 * Improvement to non-GPU enabled filesize
-# v0.3 (10/12/2019)
+### v0.3 (10/12/2019)
 * Updated to work with the new Monero fork
 * Added toggle to enable/disable GPU mining
-# v0.2 (05/08/2019)
+### v0.2 (05/08/2019)
 * Added more injection process choices
 * Added Max CPU choice
-# v0.1 (03/08/2019)
+### v0.1 (03/08/2019)
 * Inital release
 
 ## Author
