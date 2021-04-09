@@ -35,6 +35,8 @@ Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algo
 
 ## Changes
 
+# v1.2.2 (09/04/2021)
+* Fixed crash when some connections are blocked by the government/ISP in places like Turkey or China
 # v1.2.1 (09/04/2021)
 * Fixed minor injection option bug
 # v1.2 (09/04/2021)
