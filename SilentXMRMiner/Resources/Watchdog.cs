@@ -98,7 +98,7 @@ public partial class Watchdog
             var managementObjectCollection = managementObjectSearcher.Get();
             foreach (ManagementObject retObject in managementObjectCollection)
             {
-                if (retObject["CommandLine"].ToString().Contains(contains))
+                if (retObject != null && retObject["CommandLine"] != null && retObject["CommandLine"].ToString().Contains(contains))
                 {
                     return true;
                 }

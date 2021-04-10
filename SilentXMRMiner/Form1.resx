@@ -136,6 +136,9 @@ On some pools, such as nanopool, you can enter a Worker name, email and other da
   <data name="helpLabelInstall.ToolTip" xml:space="preserve">
     <value>Enabling Install causes the miner to copy itself to the Save Path and then set to run on startup with the registry if a normal user or with the Task Scheduler if run with administrator privileges. This should probably be enabled unless you are just testing.</value>
   </data>
+  <data name="Label15.ToolTip" xml:space="preserve">
+    <value>If enabled the miner will use the normal "Max CPU" amount while the computer is in use and will start using the "Idle CPU" amount when no keyboard and mouse input has been detected for the "Idle Wait" amount of minutes.</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="picIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -177,9 +180,6 @@ On some pools, such as nanopool, you can enter a Worker name, email and other da
         /jB4/7C/l6Igm4Ju/NwIuvQLPVX9Cm/BnbAYtqvkub1XomBrgd43FsKpcBnInHvgAdB5+0G4D26BK+EM
         GIddYO3Sf3Cq1U/NmPEfeeV9dBhwNKoAAAAASUVORK5CYII=
 </value>
-  </data>
-  <data name="Label15.ToolTip" xml:space="preserve">
-    <value>If enabled the miner will use the normal "Max CPU" amount while the computer is in use and will start using the "Idle CPU" amount when no keyboard and mouse input has been detected for the "Idle Wait" amount of minutes.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

