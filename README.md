@@ -28,10 +28,9 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 [Silent ETH (Ethereum) Miner](https://github.com/UnamSanctam/SilentETHMiner)
 
-## FAQ
-Is GPU mining supported?
+## Wiki
 
-Yes, but it isn’t very efficient for mining XMR anymore since the RandomX algorithm switch. It is better to use something like my [Silent ETH (Ethereum) Miner](https://github.com/UnamSanctam/SilentETHMiner) to mine with the GPU.
+You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/wiki) or at the top of the page.
 
 ## Changes
 
