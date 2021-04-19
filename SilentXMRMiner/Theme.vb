@@ -216,6 +216,8 @@ Public Class MephTheme : Inherits ContainerControl
         Me.ParentForm.FormBorderStyle = FormBorderStyle.None
         Me.ParentForm.TransparencyKey = Color.Fuchsia
         Dock = DockStyle.Fill
+        Anchor = AnchorStyles.None
+        Font = New Font(Font.Name, 8.25F * 100.0F / CreateGraphics().DpiY, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont)
     End Sub
 End Class
 Public Class MephButton : Inherits Control

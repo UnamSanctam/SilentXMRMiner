@@ -25,15 +25,15 @@ Partial Class Advanced
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Advanced))
         Me.TooltipHelper = New System.Windows.Forms.ToolTip(Me.components)
-        Me.MephTheme1 = New SilentXMRMiner.MephTheme()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.MephTheme1 = New SilentXMRMiner.MephTheme()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.toggleCustomWatchdog = New SilentXMRMiner.MephToggleSwitch()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label19 = New System.Windows.Forms.Label()
         Me.chkAdvanced = New SilentXMRMiner.MephCheckBox()
         Me.txtAdvParam = New SilentXMRMiner.MephTextBox()
-        Me.Label26 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.toggleEnableDebug = New SilentXMRMiner.MephToggleSwitch()
         Me.MephTheme1.SuspendLayout()
@@ -47,28 +47,6 @@ Partial Class Advanced
         Me.TooltipHelper.InitialDelay = 100
         Me.TooltipHelper.IsBalloon = True
         Me.TooltipHelper.ReshowDelay = 100
-        '
-        'MephTheme1
-        '
-        Me.MephTheme1.AccentColor = System.Drawing.Color.DarkRed
-        Me.MephTheme1.BackColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.MephTheme1.Controls.Add(Me.Label1)
-        Me.MephTheme1.Controls.Add(Me.Label2)
-        Me.MephTheme1.Controls.Add(Me.toggleCustomWatchdog)
-        Me.MephTheme1.Controls.Add(Me.Label20)
-        Me.MephTheme1.Controls.Add(Me.Label19)
-        Me.MephTheme1.Controls.Add(Me.chkAdvanced)
-        Me.MephTheme1.Controls.Add(Me.txtAdvParam)
-        Me.MephTheme1.Controls.Add(Me.Label26)
-        Me.MephTheme1.Controls.Add(Me.Label27)
-        Me.MephTheme1.Controls.Add(Me.toggleEnableDebug)
-        Me.MephTheme1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MephTheme1.Location = New System.Drawing.Point(0, 0)
-        Me.MephTheme1.Name = "MephTheme1"
-        Me.MephTheme1.Size = New System.Drawing.Size(396, 151)
-        Me.MephTheme1.SubHeader = "Advanced Options"
-        Me.MephTheme1.TabIndex = 0
-        Me.MephTheme1.Text = "Silent XMR Miner Builder"
         '
         'Label1
         '
@@ -85,6 +63,58 @@ Partial Class Advanced
         Me.TooltipHelper.SetToolTip(Me.Label1, "Pauses the miner compilation when Watchdog is compiled to allow obfuscation of th" &
         "e watchdog until resumed manually.You can find the Watchdog in the same folder a" &
         "s the miner.")
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.BackColor = System.Drawing.Color.Transparent
+        Me.Label19.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label19.ForeColor = System.Drawing.Color.Teal
+        Me.Label19.Location = New System.Drawing.Point(336, 73)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(18, 20)
+        Me.Label19.TabIndex = 66
+        Me.Label19.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.BackColor = System.Drawing.Color.Transparent
+        Me.Label26.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label26.ForeColor = System.Drawing.Color.Teal
+        Me.Label26.Location = New System.Drawing.Point(120, 120)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(18, 20)
+        Me.Label26.TabIndex = 60
+        Me.Label26.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label26, "Will enable DEBUG mode which will display errors when they occur in the miner. !W" &
+        "ARNING! Should only be used when testing!")
+        '
+        'MephTheme1
+        '
+        Me.MephTheme1.AccentColor = System.Drawing.Color.DarkRed
+        Me.MephTheme1.BackColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.MephTheme1.Controls.Add(Me.Label1)
+        Me.MephTheme1.Controls.Add(Me.Label2)
+        Me.MephTheme1.Controls.Add(Me.toggleCustomWatchdog)
+        Me.MephTheme1.Controls.Add(Me.Label20)
+        Me.MephTheme1.Controls.Add(Me.Label19)
+        Me.MephTheme1.Controls.Add(Me.chkAdvanced)
+        Me.MephTheme1.Controls.Add(Me.txtAdvParam)
+        Me.MephTheme1.Controls.Add(Me.Label26)
+        Me.MephTheme1.Controls.Add(Me.Label27)
+        Me.MephTheme1.Controls.Add(Me.toggleEnableDebug)
+        Me.MephTheme1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MephTheme1.Font = New System.Drawing.Font("Microsoft Sans Serif", 5.729167!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.MephTheme1.Location = New System.Drawing.Point(0, 0)
+        Me.MephTheme1.Name = "MephTheme1"
+        Me.MephTheme1.Size = New System.Drawing.Size(396, 151)
+        Me.MephTheme1.SubHeader = "Advanced Options"
+        Me.MephTheme1.TabIndex = 0
+        Me.MephTheme1.Text = "Silent XMR Miner Builder"
         '
         'Label2
         '
@@ -119,23 +149,9 @@ Partial Class Advanced
         Me.Label20.Location = New System.Drawing.Point(250, 99)
         Me.Label20.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(115, 13)
+        Me.Label20.Size = New System.Drawing.Size(130, 15)
         Me.Label20.TabIndex = 67
         Me.Label20.Text = "Advanced Parameters:"
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.BackColor = System.Drawing.Color.Transparent
-        Me.Label19.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label19.ForeColor = System.Drawing.Color.Teal
-        Me.Label19.Location = New System.Drawing.Point(336, 73)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(18, 20)
-        Me.Label19.TabIndex = 66
-        Me.Label19.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
         '
         'chkAdvanced
         '
@@ -166,21 +182,6 @@ Partial Class Advanced
         Me.txtAdvParam.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
         Me.txtAdvParam.UseSystemPasswordChar = False
         Me.txtAdvParam.WordWrap = False
-        '
-        'Label26
-        '
-        Me.Label26.AutoSize = True
-        Me.Label26.BackColor = System.Drawing.Color.Transparent
-        Me.Label26.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label26.ForeColor = System.Drawing.Color.Teal
-        Me.Label26.Location = New System.Drawing.Point(120, 120)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(18, 20)
-        Me.Label26.TabIndex = 60
-        Me.Label26.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label26, "Will enable DEBUG mode which will display errors when they occur in the miner. !W" &
-        "ARNING! Should only be used when testing!")
         '
         'Label27
         '
