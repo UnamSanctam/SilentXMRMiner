@@ -213,11 +213,15 @@ Public Class MephTheme : Inherits ContainerControl
     End Sub
     Protected Overrides Sub OnCreateControl()
         MyBase.OnCreateControl()
-        Me.ParentForm.FormBorderStyle = FormBorderStyle.None
-        Me.ParentForm.TransparencyKey = Color.Fuchsia
-        Dock = DockStyle.Fill
+        ParentForm.FormBorderStyle = FormBorderStyle.None
+        ParentForm.TransparencyKey = Color.Fuchsia
+        ParentForm.Dock = DockStyle.Fill
+        ParentForm.Anchor = AnchorStyles.None
+        ParentForm.Font = New Font("Segoe UI", 9.5F, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont)
+        ParentForm.AutoScaleMode = AutoScaleMode.None
         Anchor = AnchorStyles.None
-        Font = New Font(Font.Name, 8.25F * 100.0F / CreateGraphics().DpiY, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont)
+        Font = New Font("Segoe UI", 9.5F, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont)
+        AutoScaleMode = AutoScaleMode.None
     End Sub
 End Class
 Public Class MephButton : Inherits Control
@@ -411,28 +415,28 @@ End Class
         G.DrawPath(New Pen(Color.FromArgb(50, 50, 50)), Draw.RoundRect(New Rectangle(1, 1, Width - 3, Height - 3), 4))
 
         If Checked Then
-            G.FillPath(New SolidBrush(Color.FromArgb(80, Color.Green)), Draw.RoundRect(New Rectangle(4, 2, 25, Height - 5), 4))
-            G.FillPath(New SolidBrush(Color.FromArgb(35, 35, 35)), Draw.RoundRect(New Rectangle(2, 2, 25, Height - 5), 4))
-            G.DrawPath(New Pen(New SolidBrush(Color.FromArgb(20, 20, 20))), Draw.RoundRect(New Rectangle(2, 2, 25, Height - 5), 4))
-            Select Case State
-                Case MouseState.None
-                    G.DrawString("On", New Font("Tahoma", 8, FontStyle.Regular), Brushes.Silver, New Point(16, Height - 12), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
-                Case MouseState.Over
-                    G.DrawString("On", New Font("Tahoma", 8, FontStyle.Regular), Brushes.White, New Point(16, Height - 12), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
-                Case MouseState.Down
-                    G.DrawString("On", New Font("Tahoma", 8, FontStyle.Regular), Brushes.Silver, New Point(16, Height - 12), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
-            End Select
-        Else
-            G.FillPath(New SolidBrush(Color.FromArgb(60, Color.Red)), Draw.RoundRect(New Rectangle((Width / 2) - 7, 2, Width - 25, Height - 5), 4))
+            G.FillPath(New SolidBrush(Color.FromArgb(60, Color.Green)), Draw.RoundRect(New Rectangle((Width / 2) - 7, 2, Width - 25, Height - 5), 4))
             G.FillPath(New SolidBrush(Color.FromArgb(35, 35, 35)), Draw.RoundRect(New Rectangle((Width / 2) - 5, 2, Width - 23, Height - 5), 4))
             G.DrawPath(New Pen(New SolidBrush(Color.FromArgb(20, 20, 20))), Draw.RoundRect(New Rectangle((Width / 2) - 5, 2, Width - 23, Height - 5), 4))
             Select Case State
                 Case MouseState.None
-                    G.DrawString("Off", New Font("Tahoma", 8, FontStyle.Regular), Brushes.Silver, New Point(34, Height - 11), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
+                    G.DrawString("On", New Font("Tahoma", 8, FontStyle.Regular), Brushes.Silver, New Point(34, Height - 12), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
                 Case MouseState.Over
-                    G.DrawString("Off", New Font("Tahoma", 8, FontStyle.Regular), Brushes.White, New Point(34, Height - 11), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
+                    G.DrawString("On", New Font("Tahoma", 8, FontStyle.Regular), Brushes.White, New Point(34, Height - 12), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
                 Case MouseState.Down
-                    G.DrawString("Off", New Font("Tahoma", 8, FontStyle.Regular), Brushes.Silver, New Point(34, Height - 11), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
+                    G.DrawString("On", New Font("Tahoma", 8, FontStyle.Regular), Brushes.Silver, New Point(34, Height - 12), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
+            End Select
+        Else
+            G.FillPath(New SolidBrush(Color.FromArgb(80, Color.Red)), Draw.RoundRect(New Rectangle(4, 2, 25, Height - 5), 4))
+            G.FillPath(New SolidBrush(Color.FromArgb(35, 35, 35)), Draw.RoundRect(New Rectangle(2, 2, 25, Height - 5), 4))
+            G.DrawPath(New Pen(New SolidBrush(Color.FromArgb(20, 20, 20))), Draw.RoundRect(New Rectangle(2, 2, 25, Height - 5), 4))
+            Select Case State
+                Case MouseState.None
+                    G.DrawString("Off", New Font("Tahoma", 8, FontStyle.Regular), Brushes.Silver, New Point(14, Height - 11), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
+                Case MouseState.Over
+                    G.DrawString("Off", New Font("Tahoma", 8, FontStyle.Regular), Brushes.White, New Point(14, Height - 11), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
+                Case MouseState.Down
+                    G.DrawString("Off", New Font("Tahoma", 8, FontStyle.Regular), Brushes.Silver, New Point(14, Height - 11), New StringFormat() With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center})
             End Select
         End If
 
@@ -972,6 +976,7 @@ Class MephTabcontrol
         DoubleBuffered = True
         SizeMode = TabSizeMode.Fixed
         ItemSize = New Size(35, 85)
+        Font = New Font("Segoe UI", 9.5F, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont)
     End Sub
     Protected Overrides Sub CreateHandle()
         MyBase.CreateHandle()

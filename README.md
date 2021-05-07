@@ -1,8 +1,9 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.2.3 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.3 - Based on Lime Miner v0.3
 
+Can mine all the following algorithms and thus all the cryptocurrencies that use them: cn/upx2, argon2/chukwav2, cn/ccx, kawpow, rx/keva, astrobwt, cn-pico/tlo, rx/sfx, rx/arq, rx/0, argon2/chukwa, argon2/wrkz, rx/wow, cn/fast, cn/rwz, cn/zls, cn/double, cn/r, cn-pico, cn/half, cn/2, cn/xao, cn/rto, cn-heavy/tube, cn-heavy/xhv, cn-heavy/0, cn/1, cn-lite/1, cn-lite/0 and cn/0.
 
 ## Main Features
 
@@ -20,6 +21,8 @@
 
 * Watchdog - Replaces the miner if removed and starts it if closed down
 
+* Remote Configuration - Can get the connection settings remotely from a URL at each startup
+
 ## Downloads
 
 Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
@@ -34,6 +37,19 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 
 ## Changes
 
+### v1.3 (07/05/2021)
+* Updated miner
+* Added a Remote Configuration feature that can get the connection settings remotely from a URL at each startup
+* Added option to auto-create an uninstaller for the miner
+* Added Windows Defender "Killer"
+* Added option to run as administrator
+* Updated CUDA version to 11 to better support newer RTX cards
+* Reworked whole program flow to bypass file scan detections
+* Added link to wiki in builder for quicker access
+* Added better DEBUG messaging
+* Changed command line option prefixes
+* Fixed old limitations
+* Fixed bugs
 ### v1.2.3 (10/04/2021)
 * Fixed watchdog temporary path
 * Updated injector
@@ -133,7 +149,6 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 * **Unam Sanctam**
 * Credit to **NYAN CAT** 
 
-
 ## Disclaimer
 
 I, the creator, am not responsible for any actions, and or damages, caused by this software.
@@ -152,6 +167,16 @@ This project is licensed under the MIT License - see the [LICENSE](/LICENSE) fil
 
 XMR: 8BbApiMBHsPVKkLEP4rVbST6CnSb3LW2gXygngCi5MGiBuwAFh6bFEzT3UTufiCehFK7fNvAjs5Tv6BKYa6w8hwaSjnsg2N
 
-BTC: bc1qu9rvkx7tjw9u003chtwfuf6s42fp3lmcfttk7f
+BTC: bc1q26uwkzv6rgsxqnlapkj908l68vl0j753r46wvq
 
-ETH: 0x756b84fe97fB9880B02BDcd33cA58147E56d33a8
+ETH: 0x40E5bB6C61871776f062d296707Ab7B7aEfFe1Cd
+
+RVN: RFsUdiQJ31Zr1pKZmJ3fXqH6Gomtjd2cQe
+
+CHAIN: 0x40E5bB6C61871776f062d296707Ab7B7aEfFe1Cd
+
+ETC: 0xd513e80ECc106A1BA7Fa15F1C590Ef3c4cd16CF3
+
+DOGE: DNgFYHnZBVLw9FMdRYTQ7vD4X9w3AsWFRv
+
+LTC: Lbr8RLB7wSaDSQtg8VEgfdqKoxqPq5Lkn3

