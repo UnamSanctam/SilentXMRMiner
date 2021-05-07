@@ -48,7 +48,7 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 * Added link to wiki in builder for quicker access
 * Added better DEBUG messaging
 * Changed command line option prefixes
-* Fixed old limitations
+* Fixed config limitations
 * Fixed bugs
 ### v1.2.3 (10/04/2021)
 * Fixed watchdog temporary path
