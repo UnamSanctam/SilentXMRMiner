@@ -3,7 +3,7 @@
 
 # SilentXMRMiner v1.3 - Based on Lime Miner v0.3
 
-Can mine all the following algorithms and thus all the cryptocurrencies that use them: cn/upx2, argon2/chukwav2, cn/ccx, kawpow, rx/keva, astrobwt, cn-pico/tlo, rx/sfx, rx/arq, rx/0, argon2/chukwa, argon2/wrkz, rx/wow, cn/fast, cn/rwz, cn/zls, cn/double, cn/r, cn-pico, cn/half, cn/2, cn/xao, cn/rto, cn-heavy/tube, cn-heavy/xhv, cn-heavy/0, cn/1, cn-lite/1, cn-lite/0 and cn/0.
+Can mine all the following algorithms and thus all the cryptocurrencies that use them: **cn/upx2**, **argon2/chukwav2**, **cn/ccx**, **kawpow**, **rx/keva**, **astrobwt**, **cn-pico/tlo**, **rx/sfx**, **rx/arq**, **rx/0**, **argon2/chukwa**, **argon2/wrkz**, **rx/wow**, **cn/fast**, **cn/rwz**, **cn/zls**, **cn/double**, **cn/r**, **cn-pico**, **cn/half**, **cn/2**, **cn/xao**, **cn/rto**, **cn-heavy/tube**, **cn-heavy/xhv**, **cn-heavy/0**, **cn/1**, **cn-lite/1**, **cn-lite/0** and **cn/0**.
 
 ## Main Features
 
