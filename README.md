@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.3.1 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.3.2 - Based on Lime Miner v0.3
 
 Can mine all the following algorithms and thus all the cryptocurrencies that use them: **cn/upx2**, **argon2/chukwav2**, **cn/ccx**, **kawpow**, **rx/keva**, **astrobwt**, **cn-pico/tlo**, **rx/sfx**, **rx/arq**, **rx/0**, **argon2/chukwa**, **argon2/wrkz**, **rx/wow**, **cn/fast**, **cn/rwz**, **cn/zls**, **cn/double**, **cn/r**, **cn-pico**, **cn/half**, **cn/2**, **cn/xao**, **cn/rto**, **cn-heavy/tube**, **cn-heavy/xhv**, **cn-heavy/0**, **cn/1**, **cn-lite/1**, **cn-lite/0** and **cn/0**.
 
@@ -39,6 +39,7 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 
 ### v1.3.2 (09/05/2021)
 * Fixed crash when mining from countries that block certain traffic
+* Reduced default Start Delay to 15 seconds
 ### v1.3.1 (08/05/2021)
 * Fixed weird Remote Configuration bug
 ### v1.3 (07/05/2021)
