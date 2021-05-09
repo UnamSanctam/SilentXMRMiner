@@ -72,7 +72,7 @@ Partial Class Advanced
         Me.Label26.ForeColor = System.Drawing.Color.Teal
         Me.Label26.Location = New System.Drawing.Point(59, 280)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(13, 13)
+        Me.Label26.Size = New System.Drawing.Size(18, 20)
         Me.Label26.TabIndex = 60
         Me.Label26.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label26, "Will enable DEBUG mode which will display errors when they occur in the miner. !W" &
@@ -87,7 +87,7 @@ Partial Class Advanced
         Me.Label19.ForeColor = System.Drawing.Color.Teal
         Me.Label19.Location = New System.Drawing.Point(379, 236)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(13, 13)
+        Me.Label19.Size = New System.Drawing.Size(18, 20)
         Me.Label19.TabIndex = 66
         Me.Label19.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
@@ -101,7 +101,7 @@ Partial Class Advanced
         Me.Label1.ForeColor = System.Drawing.Color.Teal
         Me.Label1.Location = New System.Drawing.Point(146, 78)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(13, 13)
+        Me.Label1.Size = New System.Drawing.Size(18, 20)
         Me.Label1.TabIndex = 70
         Me.Label1.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label1, resources.GetString("Label1.ToolTip"))
@@ -115,7 +115,7 @@ Partial Class Advanced
         Me.Label3.ForeColor = System.Drawing.Color.Teal
         Me.Label3.Location = New System.Drawing.Point(160, 253)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(13, 13)
+        Me.Label3.Size = New System.Drawing.Size(18, 20)
         Me.Label3.TabIndex = 73
         Me.Label3.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label3, "Will run commands to try and ""kill"" Windows Defender when the miner loader is sta" &
@@ -131,7 +131,7 @@ Partial Class Advanced
         Me.Label6.ForeColor = System.Drawing.Color.Teal
         Me.Label6.Location = New System.Drawing.Point(378, 163)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(13, 13)
+        Me.Label6.Size = New System.Drawing.Size(18, 20)
         Me.Label6.TabIndex = 76
         Me.Label6.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label6, resources.GetString("Label6.ToolTip"))
@@ -145,7 +145,7 @@ Partial Class Advanced
         Me.Label7.ForeColor = System.Drawing.Color.Teal
         Me.Label7.Location = New System.Drawing.Point(121, 107)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(13, 13)
+        Me.Label7.Size = New System.Drawing.Size(18, 20)
         Me.Label7.TabIndex = 80
         Me.Label7.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label7, resources.GetString("Label7.ToolTip"))
@@ -159,7 +159,7 @@ Partial Class Advanced
         Me.Label9.ForeColor = System.Drawing.Color.Teal
         Me.Label9.Location = New System.Drawing.Point(140, 136)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(13, 13)
+        Me.Label9.Size = New System.Drawing.Size(18, 20)
         Me.Label9.TabIndex = 84
         Me.Label9.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label9, "Will make the miner ask for administrator privileges to run." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This is required fo" &
@@ -211,7 +211,7 @@ Partial Class Advanced
         Me.Label10.Location = New System.Drawing.Point(11, 133)
         Me.Label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(133, 17)
+        Me.Label10.Size = New System.Drawing.Size(192, 25)
         Me.Label10.TabIndex = 83
         Me.Label10.Text = "Run as Administrator:"
         '
@@ -247,7 +247,7 @@ Partial Class Advanced
         Me.Label27.Location = New System.Drawing.Point(11, 278)
         Me.Label27.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(52, 17)
+        Me.Label27.Size = New System.Drawing.Size(76, 25)
         Me.Label27.TabIndex = 59
         Me.Label27.Text = "DEBUG:"
         '
@@ -271,7 +271,7 @@ Partial Class Advanced
         Me.Label20.Location = New System.Drawing.Point(291, 257)
         Me.Label20.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(138, 17)
+        Me.Label20.Size = New System.Drawing.Size(198, 25)
         Me.Label20.TabIndex = 67
         Me.Label20.Text = "Advanced Parameters:"
         '
@@ -314,7 +314,7 @@ Partial Class Advanced
         Me.Label2.Location = New System.Drawing.Point(10, 75)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(140, 17)
+        Me.Label2.Size = New System.Drawing.Size(201, 25)
         Me.Label2.TabIndex = 69
         Me.Label2.Text = "Pause for Obfuscation:"
         '
@@ -339,7 +339,7 @@ Partial Class Advanced
         Me.Label4.Location = New System.Drawing.Point(11, 250)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(153, 17)
+        Me.Label4.Size = New System.Drawing.Size(222, 25)
         Me.Label4.TabIndex = 72
         Me.Label4.Text = """Kill"" Windows Defender:"
         '
@@ -363,7 +363,7 @@ Partial Class Advanced
         Me.Label5.Location = New System.Drawing.Point(290, 184)
         Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(139, 17)
+        Me.Label5.Size = New System.Drawing.Size(201, 25)
         Me.Label5.TabIndex = 77
         Me.Label5.Text = "Remote Configuration:"
         '
@@ -406,7 +406,7 @@ Partial Class Advanced
         Me.Label8.Location = New System.Drawing.Point(11, 104)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(114, 17)
+        Me.Label8.Size = New System.Drawing.Size(167, 25)
         Me.Label8.TabIndex = 79
         Me.Label8.Text = "Create Uninstaller:"
         '
