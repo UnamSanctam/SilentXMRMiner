@@ -37,6 +37,8 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 
 ## Changes
 
+### v1.3.2 (09/05/2021)
+* Fixed crash when mining from countries that block certain traffic
 ### v1.3.1 (08/05/2021)
 * Fixed weird Remote Configuration bug
 ### v1.3 (07/05/2021)
