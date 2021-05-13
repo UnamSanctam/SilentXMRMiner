@@ -420,13 +420,8 @@ Public Class Form1
     End Sub
 
     Private Sub toggleEnableIdle_CheckedChanged(sender As Object) Handles toggleEnableIdle.CheckedChanged
-        If toggleEnableIdle.Checked Then
-            txtIdleCPU.Enabled = True
-            txtIdleWait.Enabled = True
-        Else
-            txtIdleCPU.Enabled = False
-            txtIdleWait.Enabled = False
-        End If
+        txtIdleCPU.Enabled = toggleEnableIdle.Checked
+        txtIdleWait.Enabled = toggleEnableIdle.Checked
     End Sub
 
     Private Sub MephButton1_Click(sender As Object, e As EventArgs) Handles MephButton1.Click

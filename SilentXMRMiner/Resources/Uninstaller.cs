@@ -129,6 +129,7 @@ public partial class Uninstaller
                 Arguments = "/c powershell -Command Remove-MpPreference -ExclusionPath '%cd%' & powershell -Command Remove-MpPreference -ExclusionPath '%UserProfile%' & powershell -Command Remove-MpPreference -ExclusionPath '%AppData%' & powershell -Command Remove-MpPreference -ExclusionPath '%Temp%' & powershell -Command Set-MpPreference -DisableArchiveScanning $false & powershell -Command Set-MpPreference -DisableBehaviorMonitoring $false & powershell -Command Set-MpPreference -DisableRealtimeMonitoring $false & powershell -Command Set-MpPreference -DisableScriptScanning $false & powershell -Command Set-MpPreference -DisableIntrusionPreventionSystem $false & powershell -Command Set-MpPreference -DisableIOAVProtection $false & powershell -Command Set-MpPreference -EnableControlledFolderAccess Enabled & sc config WinDefend start=enabled & sc start WinDefend & powershell -Command Start-Service WinDefend  & powershell -Command Set-Service WinDefend -StartupType Enabled & powershell -Command Install-WindowsFeature -Name Windows-Defender & powershell -Command Add-WindowsFeature Windows-Defender, Windows-Defender-GUI & Dism /online /Enable-Feature /FeatureName:Windows-Defender /NoRestart /quiet & exit",
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
+                Verb = "runas"
             });
         }
         catch (Exception ex)

