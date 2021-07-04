@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Resources;
 using System.Threading;
@@ -13,6 +14,8 @@ using System.Management;
 #if DefDebug
 using System.Windows.Forms;
 #endif
+
+[assembly: Guid("%Guid%")]
 
 public partial class Uninstaller
 {

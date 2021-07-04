@@ -30,7 +30,6 @@
     Private Sub toggleKillWD_CheckedChanged(sender As Object) Handles toggleKillWD.CheckedChanged
         If toggleKillWD.Checked Then
             toggleAdministrator.Checked = True
-            toggleUninstaller.Checked = True
         End If
     End Sub
 End Class

