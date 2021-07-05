@@ -19,15 +19,14 @@ using System.Windows.Forms;
 
 public partial class Uninstaller
 {
-    public static string lb = RGetString("#LIBSPATH");
-    public static string bD = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + lb;
+    public static string rbD = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH");
 
     public static void Main()
     {
 #if DefInstall
         try
         {
-            foreach (Process proc in Process.GetProcessesByName("sihost64"))
+            foreach (Process proc in Process.GetProcessesByName(RGetString("#WATCHDOG")))
             {
                 proc.Kill();
             }
@@ -110,7 +109,7 @@ public partial class Uninstaller
         Thread.Sleep(3000);
         try
         {
-            Directory.Delete(bD, true);
+            Directory.Delete(rbD, true);
 #if DefInstall
             File.Delete(PayloadPath);
 #endif

