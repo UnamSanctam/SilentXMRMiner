@@ -204,9 +204,6 @@
     <None Include="Resources\Watchdog.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Mandark.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\microsoft-admin.png" />
     <Content Include="Resources\Uninstaller.cs" />
     <Content Include="Resources\Loader.cs" />

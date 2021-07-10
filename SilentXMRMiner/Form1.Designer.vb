@@ -346,7 +346,7 @@ Partial Class Form1
         Me.MephForm1.Size = New System.Drawing.Size(535, 272)
         Me.MephForm1.SubHeader = "By Unam Sanctam, Credit to NYAN-x-CAT"
         Me.MephForm1.TabIndex = 0
-        Me.MephForm1.Text = "Silent XMR Miner Builder 1.4"
+        Me.MephForm1.Text = "Silent XMR Miner Builder 1.4.1"
         '
         'MephTabcontrol2
         '
@@ -620,7 +620,7 @@ Partial Class Form1
         Me.txtInstallFileName.Name = "txtInstallFileName"
         Me.txtInstallFileName.Size = New System.Drawing.Size(127, 24)
         Me.txtInstallFileName.TabIndex = 8
-        Me.txtInstallFileName.Text = "Services.exe"
+        Me.txtInstallFileName.Text = "services64.exe"
         Me.txtInstallFileName.TextAlignment = System.Windows.Forms.HorizontalAlignment.Left
         Me.txtInstallFileName.UseSystemPasswordChar = False
         Me.txtInstallFileName.WordWrap = False

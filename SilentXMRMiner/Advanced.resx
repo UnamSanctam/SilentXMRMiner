@@ -120,6 +120,11 @@
   <metadata name="TooltipHelper.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="Label7.ToolTip" xml:space="preserve">
+    <value>Will try to install to System32, if unsuccessful it will try to install to the path chosen in the "Install" tab. It's recommended to enable this when using 'Run as Administrator'.
+This command requires Administrator privileges!
+</value>
+  </data>
   <data name="Label1.ToolTip" xml:space="preserve">
     <value>Pauses the miner compilation when the Watchdog DLL and/or Miner DLL is compiled to allow manual obfuscation of the file. 
 You can find the file in the same folder as the miner location you specified with the name MINERFILE-watchdog.dll or MINERFILE-miner.dll. 

