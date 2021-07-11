@@ -25,33 +25,33 @@ Partial Class Advanced
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Advanced))
         Me.TooltipHelper = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.MephTheme1 = New SilentXMRMiner.MephTheme()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.toggleInstallSystem32 = New SilentXMRMiner.MephToggleSwitch()
-        Me.Label11 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.toggleDownloader = New SilentXMRMiner.MephToggleSwitch()
-        Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.toggleAdministrator = New SilentXMRMiner.MephToggleSwitch()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Label26 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.toggleEnableDebug = New SilentXMRMiner.MephToggleSwitch()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label19 = New System.Windows.Forms.Label()
         Me.chkAdvanced = New SilentXMRMiner.MephCheckBox()
         Me.txtAdvParam = New SilentXMRMiner.MephTextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.toggleObfuscation = New SilentXMRMiner.MephToggleSwitch()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.toggleKillWD = New SilentXMRMiner.MephToggleSwitch()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.chkRemoteConfig = New SilentXMRMiner.MephCheckBox()
         Me.txtRemoteConfig = New SilentXMRMiner.MephTextBox()
         Me.MephTheme1.SuspendLayout()
@@ -67,6 +67,125 @@ Partial Class Advanced
         Me.TooltipHelper.InitialDelay = 100
         Me.TooltipHelper.IsBalloon = True
         Me.TooltipHelper.ReshowDelay = 100
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.BackColor = System.Drawing.Color.Transparent
+        Me.Label7.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label7.ForeColor = System.Drawing.Color.Teal
+        Me.Label7.Location = New System.Drawing.Point(127, 198)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(13, 13)
+        Me.Label7.TabIndex = 90
+        Me.Label7.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label7, resources.GetString("Label7.ToolTip"))
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.BackColor = System.Drawing.Color.Transparent
+        Me.Label11.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label11.ForeColor = System.Drawing.Color.Teal
+        Me.Label11.Location = New System.Drawing.Point(119, 108)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(13, 13)
+        Me.Label11.TabIndex = 87
+        Me.Label11.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label11, "Enable this to download the miner from online (GitHub) instead of embedding it in" &
+        " the file." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This will greatly decrease the file size and usually greatly decreas" &
+        "es detections.")
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.BackColor = System.Drawing.Color.Transparent
+        Me.Label9.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label9.ForeColor = System.Drawing.Color.Teal
+        Me.Label9.Location = New System.Drawing.Point(140, 138)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(13, 13)
+        Me.Label9.TabIndex = 84
+        Me.Label9.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label9, "Will make the miner ask for administrator privileges to run." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This is required fo" &
+        "r the Bypass Windows Defender option. This option will also increase the hashrat" &
+        "e.")
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.BackColor = System.Drawing.Color.Transparent
+        Me.Label26.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label26.ForeColor = System.Drawing.Color.Teal
+        Me.Label26.Location = New System.Drawing.Point(59, 280)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(13, 13)
+        Me.Label26.TabIndex = 60
+        Me.Label26.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label26, "Will enable DEBUG mode which will display errors when they occur in the miner. !W" &
+        "ARNING! Should only be used when testing!")
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.BackColor = System.Drawing.Color.Transparent
+        Me.Label19.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label19.ForeColor = System.Drawing.Color.Teal
+        Me.Label19.Location = New System.Drawing.Point(379, 236)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(13, 13)
+        Me.Label19.TabIndex = 66
+        Me.Label19.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
+        Me.Label1.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label1.ForeColor = System.Drawing.Color.Teal
+        Me.Label1.Location = New System.Drawing.Point(146, 78)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(13, 13)
+        Me.Label1.TabIndex = 70
+        Me.Label1.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label1, resources.GetString("Label1.ToolTip"))
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.BackColor = System.Drawing.Color.Transparent
+        Me.Label3.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label3.ForeColor = System.Drawing.Color.Teal
+        Me.Label3.Location = New System.Drawing.Point(173, 168)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(13, 13)
+        Me.Label3.TabIndex = 73
+        Me.Label3.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label3, "Will run commands to exclude the general folders that the miner uses or can use. " &
+        "This is good to enable to bypass future detections." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This command requires Admin" &
+        "istrator privileges!" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10))
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.BackColor = System.Drawing.Color.Transparent
+        Me.Label6.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label6.ForeColor = System.Drawing.Color.Teal
+        Me.Label6.Location = New System.Drawing.Point(378, 163)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(13, 13)
+        Me.Label6.TabIndex = 76
+        Me.Label6.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label6, resources.GetString("Label6.ToolTip"))
         '
         'MephTheme1
         '
@@ -120,20 +239,6 @@ Partial Class Advanced
         Me.PictureBox2.TabIndex = 91
         Me.PictureBox2.TabStop = False
         '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.BackColor = System.Drawing.Color.Transparent
-        Me.Label7.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label7.ForeColor = System.Drawing.Color.Teal
-        Me.Label7.Location = New System.Drawing.Point(127, 198)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(13, 13)
-        Me.Label7.TabIndex = 90
-        Me.Label7.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label7, resources.GetString("Label7.ToolTip"))
-        '
         'Label8
         '
         Me.Label8.AutoSize = True
@@ -159,22 +264,6 @@ Partial Class Advanced
         Me.toggleInstallSystem32.TabIndex = 88
         Me.toggleInstallSystem32.Text = "Enable Nicehash Mining"
         '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.BackColor = System.Drawing.Color.Transparent
-        Me.Label11.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label11.ForeColor = System.Drawing.Color.Teal
-        Me.Label11.Location = New System.Drawing.Point(119, 108)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(13, 13)
-        Me.Label11.TabIndex = 87
-        Me.Label11.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label11, "Enable this to download the miner from online (GitHub) instead of embedding it in" &
-        " the file." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This will greatly decrease the file size and usually greatly decreas" &
-        "es detections.")
-        '
         'Label12
         '
         Me.Label12.AutoSize = True
@@ -199,22 +288,6 @@ Partial Class Advanced
         Me.toggleDownloader.Size = New System.Drawing.Size(50, 24)
         Me.toggleDownloader.TabIndex = 85
         Me.toggleDownloader.Text = "Enable Nicehash Mining"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.BackColor = System.Drawing.Color.Transparent
-        Me.Label9.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label9.ForeColor = System.Drawing.Color.Teal
-        Me.Label9.Location = New System.Drawing.Point(140, 138)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(13, 13)
-        Me.Label9.TabIndex = 84
-        Me.Label9.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label9, "Will make the miner ask for administrator privileges to run." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This is required fo" &
-        "r the Bypass Windows Defender option. This option will also increase the hashrat" &
-        "e.")
         '
         'Label10
         '
@@ -251,21 +324,6 @@ Partial Class Advanced
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 81
         Me.PictureBox1.TabStop = False
-        '
-        'Label26
-        '
-        Me.Label26.AutoSize = True
-        Me.Label26.BackColor = System.Drawing.Color.Transparent
-        Me.Label26.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label26.ForeColor = System.Drawing.Color.Teal
-        Me.Label26.Location = New System.Drawing.Point(59, 280)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(13, 13)
-        Me.Label26.TabIndex = 60
-        Me.Label26.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label26, "Will enable DEBUG mode which will display errors when they occur in the miner. !W" &
-        "ARNING! Should only be used when testing!")
         '
         'Label27
         '
@@ -304,20 +362,6 @@ Partial Class Advanced
         Me.Label20.TabIndex = 67
         Me.Label20.Text = "Advanced Parameters:"
         '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.BackColor = System.Drawing.Color.Transparent
-        Me.Label19.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label19.ForeColor = System.Drawing.Color.Teal
-        Me.Label19.Location = New System.Drawing.Point(379, 236)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(13, 13)
-        Me.Label19.TabIndex = 66
-        Me.Label19.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label19, "The parameters to mine with. ONLY CHANGE THESE IF YOU KNOW WHAT YOU ARE DOING.")
-        '
         'chkAdvanced
         '
         Me.chkAdvanced.AccentColor = System.Drawing.Color.ForestGreen
@@ -348,20 +392,6 @@ Partial Class Advanced
         Me.txtAdvParam.UseSystemPasswordChar = False
         Me.txtAdvParam.WordWrap = False
         '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label1.ForeColor = System.Drawing.Color.Teal
-        Me.Label1.Location = New System.Drawing.Point(146, 78)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(13, 13)
-        Me.Label1.TabIndex = 70
-        Me.Label1.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label1, resources.GetString("Label1.ToolTip"))
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
@@ -386,22 +416,6 @@ Partial Class Advanced
         Me.toggleObfuscation.Size = New System.Drawing.Size(50, 24)
         Me.toggleObfuscation.TabIndex = 68
         Me.toggleObfuscation.Text = "Enable Nicehash Mining"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label3.ForeColor = System.Drawing.Color.Teal
-        Me.Label3.Location = New System.Drawing.Point(173, 168)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(13, 13)
-        Me.Label3.TabIndex = 73
-        Me.Label3.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label3, "Will run commands to exclude the general folders that the miner uses or can use. " &
-        "This is good to enable to bypass future detections." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "This command requires Admin" &
-        "istrator privileges!" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10))
         '
         'Label4
         '
@@ -439,20 +453,6 @@ Partial Class Advanced
         Me.Label5.Size = New System.Drawing.Size(139, 17)
         Me.Label5.TabIndex = 77
         Me.Label5.Text = "Remote Configuration:"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.BackColor = System.Drawing.Color.Transparent
-        Me.Label6.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label6.ForeColor = System.Drawing.Color.Teal
-        Me.Label6.Location = New System.Drawing.Point(378, 163)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(13, 13)
-        Me.Label6.TabIndex = 76
-        Me.Label6.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label6, resources.GetString("Label6.ToolTip"))
         '
         'chkRemoteConfig
         '
