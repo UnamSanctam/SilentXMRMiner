@@ -78,7 +78,7 @@ public partial class RLoader
     {
         using (var mStream = new MemoryStream())
         {
-            using (var cStream = new CryptoStream(mStream, new RijndaelManaged().CreateDecryptor(new Rfc2898DeriveBytes("#KEY", Encoding.ASCII.GetBytes("#SALT"), 100).GetBytes(16), Encoding.ASCII.GetBytes("#IV")), CryptoStreamMode.Write))
+            using (var cStream = new CryptoStream(mStream, new RijndaelManaged() { KeySize = 256, Mode = CipherMode.CBC }.CreateDecryptor(new Rfc2898DeriveBytes("#KEY", Encoding.ASCII.GetBytes("#SALT"), 100).GetBytes(16), Encoding.ASCII.GetBytes("#IV")), CryptoStreamMode.Write))
             {
                 cStream.Write(rarg1, 0, rarg1.Length);
                 cStream.Close();

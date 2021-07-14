@@ -122,7 +122,8 @@
   </metadata>
   <data name="Label7.ToolTip" xml:space="preserve">
     <value>Will try to install to System32, if unsuccessful it will try to install to the path chosen in the "Install" tab. It's recommended to enable this when using 'Run as Administrator'.
-This command requires Administrator privileges!</value>
+This command requires Administrator privileges!
+</value>
   </data>
   <data name="Label1.ToolTip" xml:space="preserve">
     <value>Pauses the miner compilation when the Watchdog DLL and/or Miner DLL is compiled to allow manual obfuscation of the file. 

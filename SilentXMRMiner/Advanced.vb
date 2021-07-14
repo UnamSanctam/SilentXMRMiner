@@ -26,27 +26,4 @@
             txtRemoteConfig.Enabled = False
         End If
     End Sub
-
-    Private Sub toggleKillWD_CheckedChanged(sender As Object) Handles toggleKillWD.CheckedChanged
-        If toggleKillWD.Checked Then
-            toggleAdministrator.Checked = True
-            toggleInstallSystem32.Checked = True
-        End If
-    End Sub
-
-    Private Sub toggleInstallSystem32_CheckedChanged(sender As Object) Handles toggleInstallSystem32.CheckedChanged
-        If toggleInstallSystem32.Checked Then
-            toggleAdministrator.Checked = True
-        End If
-    End Sub
-
-    Private Sub toggleAdministrator_CheckedChanged(sender As Object) Handles toggleAdministrator.CheckedChanged
-        If toggleAdministrator.Checked Then
-            toggleInstallSystem32.Checked = True
-            toggleKillWD.Checked = True
-        Else
-            toggleInstallSystem32.Checked = False
-            toggleKillWD.Checked = False
-        End If
-    End Sub
 End Class

