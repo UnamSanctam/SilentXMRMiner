@@ -24,7 +24,7 @@ public partial class RProgram
 {
     public static byte[] rxM = { };
     public static int rcheckcount = 0;
-    public static string rplp = (PayloadPath).ToLower();
+    public static string rplp = PayloadPath;
 
     public static void Main()
     {
