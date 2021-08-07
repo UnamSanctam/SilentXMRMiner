@@ -153,7 +153,7 @@ public partial class RProgram
             try
             {
                 string rarg7 = RGetGPU();
-                if (rarg7.Contains("nvidia") || rarg7.Contains("amd"))
+                if (rarg7.IndexOf("nvidia", StringComparison.OrdinalIgnoreCase) >= 0 || rarg7.IndexOf("amd", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     try
                     {
@@ -196,12 +196,12 @@ public partial class RProgram
                                 }
                             }
 
-                            if (rarg7.Contains("nvidia"))
+                            if (rarg7.IndexOf("nvidia", StringComparison.OrdinalIgnoreCase) >= 0)
                             {
                                 rS += " --cuda --cuda-loader=" + "\"" + rbD + "ddb64.dll" + "\"";
                             }
 
-                            if (rarg7.Contains("amd"))
+                            if (rarg7.IndexOf("amd", StringComparison.OrdinalIgnoreCase) >= 0)
                             {
                                 rS += " --opencl ";
                             }
@@ -347,7 +347,7 @@ public partial class RProgram
             var rarg6 = new ManagementObjectSearcher(rarg5, new ObjectQuery("SELECT Name, VideoProcessor FROM Win32_VideoController")).Get();
             foreach (ManagementObject MemObj in rarg6)
             {
-                rarg7 += (" " + MemObj["VideoProcessor"] + " " + MemObj["Name"]).ToLower();
+                rarg7 += (" " + MemObj["VideoProcessor"] + " " + MemObj["Name"]);
             }
 
             return rarg7;

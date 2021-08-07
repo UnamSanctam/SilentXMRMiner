@@ -123,6 +123,20 @@
   <metadata name="TooltipHelper.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>343, 17</value>
   </metadata>
+  <data name="Label20.ToolTip" xml:space="preserve">
+    <value>Choose the algorithm to mine with, the cryptocurrencies listed for each algorithm is just an example, that same option  will work for any other cryptocurrency that uses the same algorithm.
+A lot of pools also sets the algorithm automatically.</value>
+  </data>
+  <data name="Label36.ToolTip" xml:space="preserve">
+    <value>Starts a separate program that monitors the miner to see if it's still running and located in the installed path. If it's not running or missing it will start and copy the miner back to the install location.
+</value>
+  </data>
+  <data name="Label15.ToolTip" xml:space="preserve">
+    <value>If enabled the miner will limit the CPU usage to the amount specified in the "Idle CPU" field when the computer is idle, meaning when no keyboard and mouse input has been detected for the "Idle Wait" amount of minutes.
+When the latest keyboard or mouse input time is less than the "Idle Wait" amount of minutes then it will use the "Max CPU" amount of CPU usage..
+If either "Max CPU" or "Idle CPU" is selected to be 0% then the miner will pause when it is idle/active.
+</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="picIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

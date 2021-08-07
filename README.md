@@ -1,31 +1,58 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.4.3 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.4.4 - Based on Lime Miner v0.3
 
-Can mine all the following algorithms and thus all the cryptocurrencies that use them: **cn/upx2**, **argon2/chukwav2**, **cn/ccx**, **kawpow**, **rx/keva**, **astrobwt**, **cn-pico/tlo**, **rx/sfx**, **rx/arq**, **rx/0**, **argon2/chukwa**, **argon2/wrkz**, **rx/wow**, **cn/fast**, **cn/rwz**, **cn/zls**, **cn/double**, **cn/r**, **cn-pico**, **cn/half**, **cn/2**, **cn/xao**, **cn/rto**, **cn-heavy/tube**, **cn-heavy/xhv**, **cn-heavy/0**, **cn/1**, **cn-lite/1**, **cn-lite/0** and **cn/0**.
+Can mine all the following algorithms and thus all the cryptocurrencies that use them:
+<details>
+ <summary>List of algorithms</summary>
+ <table>
+	<tr><th>Algorithm</th><th>Example Cryptocurrency</th></tr>
+	<tr><td>rx/0</td><td>Monero</td></tr>
+	<tr><td>argon2/chukwa</td><td>2ACoin</td></tr>
+	<tr><td>rx/arq</td><td>ArQmA</td></tr>
+	<tr><td>cn-heavy/xhv</td><td>Haven, Blockcloud</td></tr>
+	<tr><td>cn/ccx</td><td>Conceal</td></tr>
+	<tr><td>astrobwt</td><td>Dero</td></tr>
+	<tr><td>cn/fast</td><td>Electronero, ElectroneroXP</td></tr>
+	<tr><td>cn/rwz</td><td>Graft</td></tr>
+	<tr><td>rx/keva</td><td>Kevacoin</td></tr>
+	<tr><td>cn-pico</td><td>Kryptokrona</td></tr>
+	<tr><td>cn/half</td><td>Masari</td></tr>
+	<tr><td>argon2/ninja</td><td>NinjaCoin</td></tr>
+	<tr><td>kawpow</td><td>Ravencoin</td></tr>
+	<tr><td>rx/sfx</td><td>Safex</td></tr>
+	<tr><td>cn/r</td><td>Sumokoin</td></tr>
+	<tr><td>cn-pico/tlo</td><td>Talleo</td></tr>
+	<tr><td>argon2/chukwav2</td><td>Turtlecoin</td></tr>
+	<tr><td>cn/upx2</td><td>Uplexa</td></tr>
+	<tr><td>rx/wow</td><td>Wownero</td></tr>
+	<tr><td>cn/zls</td><td></td></tr>
+	<tr><td>cn/double</td><td></td></tr>
+	<tr><td>cn/2</td><td></td></tr>
+	<tr><td>cn/xao</td><td></td></tr>
+	<tr><td>cn/rto</td><td></td></tr>
+	<tr><td>cn-heavy/tube</td><td></td></tr>
+	<tr><td>cn-heavy/0</td><td></td></tr>
+	<tr><td>cn/1</td><td></td></tr>
+	<tr><td>cn-lite/1</td><td></td></tr>
+	<tr><td>cn-lite/0</td><td></td></tr>
+	<tr><td>cn/0</td><td></td></tr>
+</table>
+
+</details>
 
 ## Main Features
 
-* .NET - Coded in Visual Basic .NET, requires .NET Framework 4.5.
- 
-* Codedom - No need for external libraries to compile
-
-* Injection (Silent) - Hide payload behind another process
-
+* .NET - Coded in C#, requires .NET Framework 4.5
+* Injection (Silent/Hidden) - Hide payload behind another process like explorer.exe, conhost.exe, svchost.exe or some other process
 * CPU & GPU Mining - Can mine on Both CPU and GPU (Nvidia & AMD)
-
-* Idle Mining - Can be configured to mine with a different Max CPU when computer is idle
-  
-* Stealth - Pauses the miner while Task Manager, Process Hacker or Process Explorer is open
-
-* Watchdog - Replaces the miner if removed and starts it if closed down
-
-* Remote Configuration - Can get the connection settings remotely from a URL at each startup
-
+* Idle Mining - Can be configured to mine at different usages or not at all while computer is or isn't in use
+* Stealth - Pauses the miner and clears the GPU memory while any of the programs in the "Stealth Targets" option are open
+* Watchdog - Replaces the miner file if removed and starts it if the injected miner is closed down
+* Remote Configuration - Can get the miner settings remotely from a URL every 100 minutes
 * Bypass Windows Defender - Adds exclusions into Windows Defender for the general folders the miner uses
-
-* Online Downloader - Can download the miner binary during runtime (from GitHub) to greatly decrease file size and detections
+* Online Downloader - Can download the miner binary during runtime to greatly decrease file size and detections
 
 ## Downloads
 
@@ -39,151 +66,25 @@ Pre-Compiled: https://github.com/UnamSanctam/SilentXMRMiner/releases
 
 You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/wiki) or at the top of the page.
 
-## Changes
+## Changelog
 
-### v1.4.3 (19/07/2021)
-* Greatly reduced Windows Defender detections when "Bypass Windows Defender" is enabled by replacing Assembly.Load with simply writing the payload to Temp and executing it since the folders are excluded
-* Fixed the paths for systems that have custom lowercase characters like Turkish
-### v1.4.2 (14/07/2021)
-* Remade watchdog to reduce detections
-* Obfuscated more strings to reduce new Windows Defender detections
-* Reworked a lot of the injector
-* Fixed a bug where two environment variables for paths could return different results
-### v1.4.1 (10/07/2021)
-* Fixed possible critical bug that makes the miner unable to see if a miner is running or not thus opening multiple miners
-* Added backup servers for Online Downloader
-* Added Install to System32 option (requires administrator permissions)
-* Moved RunPE injector (Mandark) into miner to avoid internal Assembly.Load and improved it a bit
-* Fixed possiblity of duplicate random obfuscation strings
-* Improved Loader
-* Improved Watchdog
-* Improved obfuscation
-### v1.4 (05/07/2021)
-**v1.4.\* is the final update before the new, greatly improved unified miner that I'm working on.**
-* Added the Online Downloader option that makes the miner download the miner binary (from GitHub) during runtime to greatly decrease file size (to less then 100kb) and detections - Also added a cache so that it won't have to download the miner on every start
-* Made the Task Scheduler task start for all users
-* Improved Watchdog program flow
-* Renamed "Kill" Windows Defender to Bypass Windows Defender to better represent the new functionality
-* Improved obfuscation/encryption
-* Improved overall code
-### v1.3.4 (14/05/2021)
-* Made the Windows Defender Killer less intrusive, ironically to reduce detections
-### v1.3.3 (13/05/2021)
-* Fixed possible CPU fluctuation
-* Added Stealth support for Windows 7 Task Manager
-* Decreased Watchdog detections
-* Fixed possible Run as Administrator issue on computers with low privileges
-### v1.3.2 (09/05/2021)
-* Fixed crash when mining from countries that block certain traffic
-* Reduced default Start Delay to 15 seconds
-### v1.3.1 (08/05/2021)
-* Fixed weird Remote Configuration bug
-### v1.3 (07/05/2021)
-* Updated miner
-* Added a Remote Configuration feature that can get the connection settings remotely from a URL at each startup
-* Added option to auto-create an uninstaller for the miner
-* Added Windows Defender "Killer"
-* Added option to run as administrator
-* Updated CUDA version to 11 to better support newer RTX cards
-* Reworked whole program flow to bypass file scan detections
-* Added link to wiki in builder for quicker access
-* Added better DEBUG messaging
-* Changed command line option prefixes
-* Fixed config limitations
-* Fixed bugs
-### v1.2.3 (10/04/2021)
-* Fixed watchdog temporary path
-* Updated injector
-* Readded injector options svchost.exe and conhost.exe
-* Decreased injector detections
-* Improved error handling
-### v1.2.2 (09/04/2021)
-* Fixed crash when some connections are blocked by the government/ISP in places like Turkey or China
-### v1.2.1 (09/04/2021)
-* Fixed minor injection option bug
-### v1.2 (09/04/2021)
-* Fixed critial bug on some Windows systems
-* Added Task Scheduler startup when miner has administrator privileges
-* Replaced and improved injector
-* Added advanced options form
-* Added debug option to display errors for testing
-* Added ability to obfuscate watchdog
-* Fixed miscellaneous bugs
-### v1.1 (31/03/2021)
-* Updated miner
-* Improved miner performance
-* Recoded injector and watchdog from VB to C#
-* Decreased antivirus detections
-* Added built-in function name obfuscation
-* Added Process Hacker and Process Explorer to stealth targets
-### v1.0.3 (27/03/2021)
-* Updated Watchdog
-* Improved injector workflow reliability
-* Changed encryption since the code was detected
-### v1.0.2 (19/03/2021)
-* Added 0% Max CPU option
-* Increased salt lengths
-* Improved Watchdog implementation
-* Improved persistance
-### v1.0.1 (14/03/2021)
-* Removed some injection options due to new Windows protections
-### v1.0 (12/03/2021)
-* Updated miner
-* Decreased antivirus detections
-* Added a watchdog that replaces the miner if removed and starts it if closed down
-* Added anti-sleep
-* Stopped the command window from showing briefly when started
-* Fixed bugs
-### v0.9 (02/02/2021)
-* Updated miner
-* Greatly decreased antivirus detections
-* Idle Max CPU, added customizable Max CPU usage while the miner is idle
-* Idle Wait, added customizable time to wait before the miner is idle
-* Stealth, currently pauses the miner while Task Manager is open
-* Start Delay, added a customizable start delay before the miner is injected and starts, decreases detection by a lot
-* Hide file, can now choose to hide the copied miner file when "Install" is enabled
-* Now hides the library folder
-* Encrypted all strings
-### v0.8.1 (07/01/2021)
-* Improved AV bypass
-* Reverted back to .NET Framework 4.5
-* Fixed bug that stopped miner from injecting
-* Improved file size
-* Fixed incorrect scaling with some system languages
-### v0.8 (04/01/2021)
-* Updated miner
-* Fixed bugs
-* Lowered requirement to .NET 4.0
-* Added SSL/TLS option
-* Added custom parameter option
-* Increased miner performance
-### v0.7.1 (09/10/2020)
-* Fixed a bug
-### v0.7 (08/10/2020)
-* Updated miner
-* Added help tooltips to clarify options
-* Fixed bugs
-* Reworked some code
-### v0.6 (21/04/2020)
-* Updated miner
-* Added custom Idle option to miner (Starts mining after 15 minutes of inactivity and stops when active again)
-* Added more options in the builder (Enable/Disable CPU, Nicehash and Idle mining)
-* Fixed driver paths
-* Reworked some code
-### v0.5 (09/04/2020)
-* Updated miner
-* Massively improved file size by compressing libraries
-### v0.4 (18/12/2019)
-* Updated miner
-* Improvement to non-GPU enabled filesize
-### v0.3 (10/12/2019)
-* Updated to work with the new Monero fork
-* Added toggle to enable/disable GPU mining
-### v0.2 (05/08/2019)
-* Added more injection process choices
-* Added Max CPU choice
-### v0.1 (03/08/2019)
-* Inital release
+### v1.4.4 (07/08/2021)
+**Any old miner using "Online Download" will automatically get this update for any new clients**
+* Now gets the Remote Configuration every 100 minutes
+* Added failover capability for the Remote Configuration URL, add several URLs by seperating them by a comma (,)
+* Changed the Remote Configuration scheme from INI to JSON, can still read INI files for backwards compatability
+* Added capabilites to change more miner settings with Remote Configuration
+* Migrated from {%COMPUTERNAME%}, {%USERNAME%} and {%RANDOM%} to {COMPUTERNAME}, {USERNAME} and {RANDOM} but the old ones will still work for backwards compatability
+* Now replaces {COMPUTERNAME}, {USERNAME} and {RANDOM} with their respective values when using Remote Configuration
+* Fixed possible Idle activation crash on Windows 7
+* Added the Stealth Targets option which allows you to enter which programs the Stealth option should pause for
+* Added algorithm selection to make it easier to use
+* Fixed the GPU detection for systems that have custom lowercase characters like Turkish, seems like I failed the "Turkey Test" again
+* Fixed broken builder help tooltips
+* Major miner update/rework
+* Improved miner stability
+
+[You can view the full Changelog here](CHANGELOG.md)
 
 ## Author
 
@@ -214,7 +115,7 @@ ETH: 0x40E5bB6C61871776f062d296707Ab7B7aEfFe1Cd
 
 RVN: RFsUdiQJ31Zr1pKZmJ3fXqH6Gomtjd2cQe
 
-CHAIN: 0x40E5bB6C61871776f062d296707Ab7B7aEfFe1Cd
+LINK: 0x40E5bB6C61871776f062d296707Ab7B7aEfFe1Cd
 
 ETC: 0xd513e80ECc106A1BA7Fa15F1C590Ef3c4cd16CF3
 
