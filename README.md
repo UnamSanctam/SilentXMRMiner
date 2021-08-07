@@ -39,7 +39,6 @@ Can mine all the following algorithms and thus all the cryptocurrencies that use
 	<tr><td>cn-lite/0</td><td></td></tr>
 	<tr><td>cn/0</td><td></td></tr>
 </table>
-
 </details>
 
 ## Main Features
