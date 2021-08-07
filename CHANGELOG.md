@@ -1,10 +1,10 @@
 ### v1.4.4 (07/08/2021)
 **Any old miner using "Online Download" will automatically get this update for any new clients**
 * Now gets the Remote Configuration every 100 minutes
-* Added failover capability for the Remote Configuration URL, add several URLs by seperating them by a comma (,)
-* Changed the Remote Configuration scheme from INI to JSON, can still read INI files for backwards compatability
-* Added capabilites to change more miner settings with Remote Configuration
-* Migrated from {%COMPUTERNAME%}, {%USERNAME%} and {%RANDOM%} to {COMPUTERNAME}, {USERNAME} and {RANDOM} but the old ones will still work for backwards compatability
+* Added failover capability for the Remote Configuration URL, add several URLs by separating them by a comma (,)
+* Changed the Remote Configuration scheme from INI to JSON, can still read INI files for backwards compatibility
+* Added capabilities to change more miner settings with Remote Configuration
+* Migrated from {%COMPUTERNAME%}, {%USERNAME%} and {%RANDOM%} to {COMPUTERNAME}, {USERNAME} and {RANDOM} but the old ones will still work for backwards compatibility
 * Now replaces {COMPUTERNAME}, {USERNAME} and {RANDOM} with their respective values when using Remote Configuration
 * Fixed possible Idle activation crash on Windows 7
 * Added the Stealth Targets option which allows you to enter which programs the Stealth option should pause for
