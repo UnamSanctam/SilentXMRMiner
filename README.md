@@ -69,7 +69,7 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 ## Changelog
 
 ### v1.4.4 (07/08/2021)
-**Any old miner using "Online Download" will automatically get this update for any new clients**
+* **Any old miner using "Online Download" will automatically get this update for any new clients**
 * Now gets the Remote Configuration every 100 minutes
 * Added failover capability for the Remote Configuration URL, add several URLs by separating them by a comma (,)
 * Changed the Remote Configuration scheme from INI to JSON, can still read INI files for backwards compatibility
