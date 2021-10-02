@@ -97,6 +97,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -150,6 +152,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Resources\administrator.manifest-miner" />
+    <None Include="Resources\Compilers.zip" />
     <None Include="Resources\libs.zip" />
     <Compile Include="Theme.vb">
       <SubType>Component</SubType>
@@ -205,8 +208,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\microsoft-admin.png" />
+    <None Include="Resources\Program.c" />
+    <None Include="Resources\resource.rc" />
     <Content Include="Resources\Uninstaller.cs" />
-    <Content Include="Resources\Loader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

