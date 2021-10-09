@@ -1,3 +1,10 @@
+### v1.5.1 (09/10/2021)
+* Added Process Killer feature that constantly checks for the "Kill Targets" programs and kills them if found
+* Changed system calls to direct system calls thus reducing detections
+* Changed native loader code to reduce detections
+* Removed Online Download feature due to domain being taken down
+* Improved overall code
+* Updated miner
 ### v1.5.0 (02/10/2021)
 **The previous version was supposed to be the last one before the unified miner but I recieved great results by loading everything by Shellcode making it worthwhile to update**
 * Added new Shellcode loader, the miner, watchdog and uninstaller will now be converted into shellcode and injected using a native C loader which greatly reduces detections

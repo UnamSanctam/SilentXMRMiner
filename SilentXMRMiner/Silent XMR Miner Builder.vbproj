@@ -148,11 +148,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="bin\Release\Includes.zip" />
     <None Include="My Project\app.manifest">
       <SubType>Designer</SubType>
     </None>
     <None Include="Resources\administrator.manifest-miner" />
     <None Include="Resources\Compilers.zip" />
+    <None Include="Resources\Includes.zip" />
     <None Include="Resources\libs.zip" />
     <Compile Include="Theme.vb">
       <SubType>Component</SubType>

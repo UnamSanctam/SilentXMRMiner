@@ -31,18 +31,6 @@ public partial class RUninstaller
             {
                 proc.Kill();
             }
-
-            try
-            {
-                File.Delete(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + ".log"));
-            } 
-            catch {}
-
-            try
-            {
-                File.Delete(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + "-2.log"));
-            } 
-            catch {}
         }
         catch (Exception ex)
         {
@@ -53,11 +41,11 @@ public partial class RUninstaller
 
         try
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(_rGetString_("#REGKEY"), true))
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
             {
                 if (key != null)
                 {
-                    key.DeleteValue(Path.GetFileName(PayloadPath));
+                    key.DeleteValue(Path.GetFileNameWithoutExtension(PayloadPath));
                 }
             }
         }
@@ -122,7 +110,7 @@ public partial class RUninstaller
 
     public static string _rGetString_(string _rarg1_)
     {
-        return Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String(_rarg1_)));
+        return Encoding.UTF8.GetString(_rAESMethod_(Convert.FromBase64String(_rarg1_)));
     }
 
     public static byte[] _rAESMethod_(byte[] _rarg1_, bool _rarg2_ = false)

