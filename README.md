@@ -1,7 +1,8 @@
-
 <img src="https://github.com/UnamSanctam/SilentXMRMiner/blob/master/SilentXMRMiner.png?raw=true">
 
 # SilentXMRMiner v1.5.1 - Based on Lime Miner v0.3
+
+# The new unified Silent Crypto Miner is now released https://github.com/UnamSanctam/SilentCryptoMiner
 
 Can mine all the following algorithms and thus all the cryptocurrencies that use them:
 <details>
